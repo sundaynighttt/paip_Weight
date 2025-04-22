@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R2 관리 대시보드</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 20px;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background-color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    .last-update {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .filter-section {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      background-color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .filter-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .filter-btn {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .filter-btn.active {
+      background-color: #0066cc;
+      color: white;
+      border-color: #0066cc;
+    }
+    
+    .search-box {
+      position: relative;
+    }
+    
+    .search-box input {
+      padding: 6px 12px;
+      padding-left: 32px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 250px;
+    }
+    
+    .search-box:before {
+      content: "🔍";
+      position: absolute;
+      left: 10px;
+      top: 7px;
+      color: #999;
+    }
+    
+    .version-info {
+      font-size: 0.9rem;
+      color: #666;
+      background-color: #f8f8f8;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    
+    .version-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background-color: #e6f7ed;
+      color: #00a650;
+      font-size: 0.8rem;
+      margin-right: 5px;
+    }
+    
+    .main-table {
+      width: 100%;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 12px 15px;
+      background-color: #f2f2f2;
+      border-bottom: 1px solid #ddd;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      font-size: 0.9rem;
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    tr:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .status {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 0.8rem;
+      display: inline-block;
+      min-width: 60px;
+      text-align: center;
+    }
+    
+    .status.ok {
+      background-color: #e6f7ed;
+      color: #00a650;
+    }
+    
+    .status.ng {
+      background-color: #ffebe6;
+      color: #ff4d4f;
+    }
+    
+    .action-btn {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+    
+    .action-btn.approve {
+      background-color: #f2f9f6;
+      border-color: #00a650;
+      color: #00a650;
+    }
+    
+    .action-btn.adjust {
+      background-color: #f5f5f5;
+      color: #666;
+    }
+    
+    .detail-panel {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .panel-subtitle {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .graph-container {
+      height: 300px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      background-color: #fafafa;
+      margin-bottom: 15px;
+    }
+    
+    .r2-control {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .r2-table {
+      border: 1px solid #eee;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .r2-table table {
+      width: 100%;
+    }
+    
+    .r2-adjust {
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 15px;
+    }
+    
+    .r2-adjust-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .form-group label {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .form-group textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: white;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background-color: #0066cc;
+      color: white;
+      border-color: #0066cc;
+    }
+    
+    .btn-secondary {
+      background-color: #f5f5f5;
+      color: #666;
+    }
+    
+    .error {
+      color: #ff4d4f;
+    }
+    
+    .success {
+      color: #00a650;
+    }
+    
+    .alert-area {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 15px 20px;
+    }
+    
+    .alert-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .alert-list {
+      list-style: none;
+    }
+    
+    .alert-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .alert-item:last-child {
+      border-bottom: none;
+    }
+    
+    .alert-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: white;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+    
+    .alert-icon.warning {
+      background-color: #faad14;
+    }
+    
+    .alert-icon.error {
+      background-color: #ff4d4f;
+    }
+    
+    .alert-message {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+    
+    .alert-time {
+      color: #999;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>R2 관리 대시보드</h1>
+    <div class="version-info">
+      시스템 버전: V2.3 | 모델 버전: M1.5 | CCTV 엔진: E1.2 | 중량 조정 범위: ±50g | Ratio 조정 단위: ±15g
+    </div>
+  </header>
+  
+  <div class="filter-section">
+    <div class="filter-buttons">
+      <button class="filter-btn active">모든 농장</button>
+      <button class="filter-btn">OK 상태</button>
+      <button class="filter-btn">NG 상태</button>
+      <select style="padding: 6px 12px; border: 1px solid #ddd; border-radius: 4px; margin-left: 10px;">
+        <option>모든 버전</option>
+        <option>시스템 V2.3</option>
+        <option>시스템 V2.2</option>
+        <option>모델 M1.5</option>
+        <option>모델 M1.4</option>
+      </select>
+      <div style="margin-left: 20px; display: flex; align-items: center;">
+        <span style="margin-right: 10px; font-size: 0.9rem;">보기:</span>
+        <button id="viewByDong" class="filter-btn active" style="margin-right: 5px;">동별</button>
+        <button id="viewByFarm" class="filter-btn">농장별</button>
+      </div>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="농장명 검색...">
+    </div>
+  </div>
+  
+  <div class="main-table">
+    <div style="max-height: 800px; overflow-y: auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>농장ID<br>농장명</th>
+            <th>회차</th>
+            <th>동</th>
+            <th>일령</th>
+            <th>WM값</th>
+            <th>FCR</th>
+            <th>체중계</th>
+            <th>현재 R2</th>
+            <th>예측 WC</th>
+            <th>오차(g)</th>
+            <th>육성률(%)</th>
+            <th id="statusHeader" style="cursor: pointer;">상태 <span id="sortIcon">▼</span></th>
+            <th>버전</th>
+            <th>작업</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0300" data-farm-name="대성농장" style="cursor: pointer;">
+              <strong>FA0300</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">대성농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H02</td>
+            <td>33</td>
+            <td>1,670g</td>
+            <td>1,692g</td>
+            <td>1,755g</td>
+            <td>0.980</td>
+            <td>1,637g</td>
+            <td>-118</td>
+            <td>99.2%</td>
+            <td><span class="status ng">NG</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0326" data-farm-name="신농장" style="cursor: pointer;">
+              <strong>FA0326</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">신농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H03</td>
+            <td>33</td>
+            <td>1,650g</td>
+            <td>1,640g</td>
+            <td>1,644g</td>
+            <td>0.951</td>
+            <td>1,569g</td>
+            <td>-75</td>
+            <td>98.7%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0253" data-farm-name="SG컴퍼니" style="cursor: pointer;">
+              <strong>FA0253</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">SG컴퍼니</span>
+            </td>
+            <td>2025-2</td>
+            <td>H01</td>
+            <td>33</td>
+            <td>1,551g</td>
+            <td>1,570g</td>
+            <td>1,615g</td>
+            <td>0.970</td>
+            <td>1,504g</td>
+            <td>-111</td>
+            <td>100.0%</td>
+            <td><span class="status ng">NG</span></td>
+            <td><span class="version-badge">V2.2</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0329" data-farm-name="대성농장" style="cursor: pointer;">
+              <strong>FA0329</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">대성농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H02</td>
+            <td>33</td>
+            <td>1,621g</td>
+            <td>1,630g</td>
+            <td>1,820g</td>
+            <td>0.899</td>
+            <td>1,457g</td>
+            <td>-363</td>
+            <td>98.9%</td>
+            <td><span class="status ng">NG</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0336" data-farm-name="SG컴퍼니" style="cursor: pointer;">
+              <strong>FA0336</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">SG컴퍼니</span>
+            </td>
+            <td>2025-1</td>
+            <td>H05</td>
+            <td>35</td>
+            <td>1,750g</td>
+            <td>1,740g</td>
+            <td>1,514g</td>
+            <td>1.146</td>
+            <td>2,005g</td>
+            <td>+491</td>
+            <td>102.9%</td>
+            <td><span class="status ng">NG</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0401" data-farm-name="한마음농장" style="cursor: pointer;">
+              <strong>FA0401</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">한마음농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H01</td>
+            <td>32</td>
+            <td>1,590g</td>
+            <td>1,610g</td>
+            <td>1,625g</td>
+            <td>0.985</td>
+            <td>1,565g</td>
+            <td>-60</td>
+            <td>98.7%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0402" data-farm-name="푸른들농장" style="cursor: pointer;">
+              <strong>FA0402</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">푸른들농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H03</td>
+            <td>32</td>
+            <td>1,580g</td>
+            <td>1,595g</td>
+            <td>1,610g</td>
+            <td>0.990</td>
+            <td>1,564g</td>
+            <td>-46</td>
+            <td>99.1%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0403" data-farm-name="태양농장" style="cursor: pointer;">
+              <strong>FA0403</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">태양농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H02</td>
+            <td>33</td>
+            <td>1,620g</td>
+            <td>1,635g</td>
+            <td>1,650g</td>
+            <td>0.982</td>
+            <td>1,590g</td>
+            <td>-60</td>
+            <td>98.8%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0404" data-farm-name="하늘농장" style="cursor: pointer;">
+              <strong>FA0404</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">하늘농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H04</td>
+            <td>33</td>
+            <td>1,640g</td>
+            <td>1,655g</td>
+            <td>1,670g</td>
+            <td>0.985</td>
+            <td>1,615g</td>
+            <td>-55</td>
+            <td>98.9%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0405" data-farm-name="미래농장" style="cursor: pointer;">
+              <strong>FA0405</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">미래농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H01</td>
+            <td>34</td>
+            <td>1,680g</td>
+            <td>1,695g</td>
+            <td>1,710g</td>
+            <td>0.990</td>
+            <td>1,663g</td>
+            <td>-47</td>
+            <td>99.2%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0406" data-farm-name="우리농장" style="cursor: pointer;">
+              <strong>FA0406</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">우리농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H02</td>
+            <td>34</td>
+            <td>1,690g</td>
+            <td>1,705g</td>
+            <td>1,720g</td>
+            <td>0.988</td>
+            <td>1,670g</td>
+            <td>-50</td>
+            <td>99.1%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0407" data-farm-name="행복농장" style="cursor: pointer;">
+              <strong>FA0407</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">행복농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H03</td>
+            <td>34</td>
+            <td>1,700g</td>
+            <td>1,715g</td>
+            <td>1,730g</td>
+            <td>0.992</td>
+            <td>1,686g</td>
+            <td>-44</td>
+            <td>99.3%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0408" data-farm-name="희망농장" style="cursor: pointer;">
+              <strong>FA0408</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">희망농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H04</td>
+            <td>35</td>
+            <td>1,730g</td>
+            <td>1,745g</td>
+            <td>1,760g</td>
+            <td>0.986</td>
+            <td>1,705g</td>
+            <td>-55</td>
+            <td>99.0%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0409" data-farm-name="그린농장" style="cursor: pointer;">
+              <strong>FA0409</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">그린농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H05</td>
+            <td>35</td>
+            <td>1,740g</td>
+            <td>1,755g</td>
+            <td>1,770g</td>
+            <td>0.989</td>
+            <td>1,721g</td>
+            <td>-49</td>
+            <td>99.2%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0410" data-farm-name="블루농장" style="cursor: pointer;">
+              <strong>FA0410</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">블루농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H01</td>
+            <td>35</td>
+            <td>1,750g</td>
+            <td>1,765g</td>
+            <td>1,780g</td>
+            <td>0.991</td>
+            <td>1,734g</td>
+            <td>-46</td>
+            <td>99.3%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0411" data-farm-name="레드농장" style="cursor: pointer;">
+              <strong>FA0411</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">레드농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H02</td>
+            <td>36</td>
+            <td>1,780g</td>
+            <td>1,795g</td>
+            <td>1,810g</td>
+            <td>0.993</td>
+            <td>1,767g</td>
+            <td>-43</td>
+            <td>99.4%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0412" data-farm-name="옐로우농장" style="cursor: pointer;">
+              <strong>FA0412</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">옐로우농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H03</td>
+            <td>36</td>
+            <td>1,790g</td>
+            <td>1,805g</td>
+            <td>1,820g</td>
+            <td>0.995</td>
+            <td>1,781g</td>
+            <td>-39</td>
+            <td>99.5%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0413" data-farm-name="퍼플농장" style="cursor: pointer;">
+              <strong>FA0413</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">퍼플농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H04</td>
+            <td>36</td>
+            <td>1,800g</td>
+            <td>1,815g</td>
+            <td>1,830g</td>
+            <td>0.992</td>
+            <td>1,786g</td>
+            <td>-44</td>
+            <td>99.3%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0414" data-farm-name="오렌지농장" style="cursor: pointer;">
+              <strong>FA0414</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">오렌지농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H05</td>
+            <td>37</td>
+            <td>1,830g</td>
+            <td>1,845g</td>
+            <td>1,860g</td>
+            <td>0.994</td>
+            <td>1,819g</td>
+            <td>-41</td>
+            <td>99.4%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="farm-info" data-farm-id="FA0415" data-farm-name="핑크농장" style="cursor: pointer;">
+              <strong>FA0415</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">핑크농장</span>
+            </td>
+            <td>2025-2</td>
+            <td>H01</td>
+            <td>37</td>
+            <td>1,840g</td>
+            <td>1,855g</td>
+            <td>1,870g</td>
+            <td>0.996</td>
+            <td>1,832g</td>
+            <td>-38</td>
+            <td>99.6%</td>
+            <td><span class="status ok">OK</span></td>
+            <td><span class="version-badge">V2.3</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display: flex; justify-content: flex-end; margin-top: 15px;">
+      <div class="last-update" style="text-align: right; font-size: 0.7rem; color: #666;">
+        마지막 업데이트: 2025-04-21 10:30 | 다음 업데이트: 2025-04-21 22:30      
+      </div>
+    </div>
+  </div>
+  
+  <!-- 농장 정보 모달 -->
+  <div id="farmModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000;">
+    <div style="background-color: white; border-radius: 8px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 id="modalFarmTitle" style="font-size: 1.2rem; font-weight: 600;">농장 정보</h3>
+        <button id="closeModal" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+      </div>
+      
+      <div id="modalFarmInfo" style="margin-bottom: 20px;">
+        <p id="modalFarmSubtitle" class="panel-subtitle"></p>
+      </div>
+      
+      <div class="graph-container" style="height: 300px; border: 1px solid #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 20px;">
+        [최근 7일간 WM, 체중계, WC 값 추이 그래프]
+        <div style="position: absolute; right: 10px; top: 10px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 4px; padding: 5px; font-size: 0.8rem;">
+          <div style="margin-bottom: 3px; color: #666;">버전 변경 포인트</div>
+          <div><span style="display: inline-block; width: 10px; height: 10px; background-color: red; border-radius: 50%; margin-right: 5px;"></span> V2.2 → V2.3 (04-20)</div>
+          <div><span style="display: inline-block; width: 10px; height: 10px; background-color: blue; border-radius: 50%; margin-right: 5px;"></span> 모델 M1.4 → M1.5 (04-20)</div>
+        </div>
+      </div>
+      
+      <div class="r2-control" style="display: flex; gap: 20px;">
+        <div class="r2-table">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="font-size: 1rem;">중량별 R2 테이블</h3>
+            <select style="padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
+              <option>현재 버전 (V2.3)</option>
+              <option>이전 버전 (V2.2)</option>
+              <option>이전 버전 (V2.1)</option>
+            </select>
+          </div>
+          
+          <table>
+            <thead>
+              <tr>
+                <th>중량 범위</th>
+                <th>R2 값</th>
+                <th>적용 시점</th>
+                <th>변경 사유</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1,601g~</td>
+                <td>1.020</td>
+                <td>2025-04-21</td>
+                <td><button class="action-btn" style="padding: 2px 5px; font-size: 0.8rem;">보기</button></td>
+              </tr>
+              <tr>
+                <td>1,301g~1,600g</td>
+                <td>1.020</td>
+                <td>2025-04-20</td>
+                <td><button class="action-btn" style="padding: 2px 5px; font-size: 0.8rem;">보기</button></td>
+              </tr>
+              <tr>
+                <td>1,001g~1,300g</td>
+                <td>0.950</td>
+                <td>2025-04-20</td>
+                <td><button class="action-btn" style="padding: 2px 5px; font-size: 0.8rem;">보기</button></td>
+              </tr>
+              <tr>
+                <td>701g~1,000g</td>
+                <td>0.920</td>
+                <td>2025-04-20</td>
+                <td><button class="action-btn" style="padding: 2px 5px; font-size: 0.8rem;">보기</button></td>
+              </tr>
+              <tr>
+                <td>~700g</td>
+                <td>0.885</td>
+                <td>2025-04-20</td>
+                <td><button class="action-btn" style="padding: 2px 5px; font-size: 0.8rem;">보기</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="r2-adjust" style="flex: 1;">
+          <form class="r2-adjust-form">
+            <div style="font-size: 1rem; font-weight: 600; margin-bottom: 15px;">R2 값 조정</div>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">현재 중량 범위</label>
+              <input type="text" value="1,601g~" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">현재 R2 값</label>
+              <input type="text" value="1.02" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">WM 값</label>
+              <input type="text" value="1,620g" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">체중계 값</label>
+              <input type="text" value="1,710g" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">새 R2 값</label>
+              <input type="text" value="1.06" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">조정 결과(WC)</label>
+              <input type="text" value="1,717g" readonly style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+            </div>
+            <div style="margin-bottom: 15px;">
+              <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">조정 사유</label>
+              <textarea placeholder="R2 값 조정 사유를 입력하세요..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; height: 80px;">체중계 값과의 오차가 임계치를 초과하여 R2 값을 조정합니다.</textarea>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-primary" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #0066cc; background-color: #0066cc; color: white; cursor: pointer; font-weight: 500;">적용</button>
+              <button class="btn btn-secondary" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #ddd; background-color: #f5f5f5; color: #666; cursor: pointer; font-weight: 500;">취소</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // 농장 정보 클릭 이벤트 처리
+    const farmInfoElements = document.querySelectorAll('.farm-info');
+    const farmModal = document.getElementById('farmModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalFarmTitle = document.getElementById('modalFarmTitle');
+    const modalFarmSubtitle = document.getElementById('modalFarmSubtitle');
+    
+    // 모달 닫기 버튼 이벤트
+    closeModal.addEventListener('click', () => {
+      farmModal.style.display = 'none';
+    });
+    
+    // 모달 외부 클릭 시 닫기
+    farmModal.addEventListener('click', (event) => {
+      if (event.target === farmModal) {
+        farmModal.style.display = 'none';
+      }
+    });
+    
+    // 농장 정보 클릭 시 모달 표시
+    farmInfoElements.forEach((element) => {
+      element.addEventListener('click', () => {
+        const farmId = element.getAttribute('data-farm-id');
+        const farmName = element.getAttribute('data-farm-name');
+        
+        // 모달 내용 설정
+        modalFarmTitle.textContent = `${farmId} (${farmName})`;
+        
+        // 해당 행의 정보 가져오기
+        const row = element.closest('tr');
+        const round = row.children[1].textContent;
+        const building = row.children[2].textContent;
+        const days = row.children[3].textContent;
+        const version = row.querySelector('.version-badge').textContent;
+        
+        modalFarmSubtitle.textContent = `회차: ${round} | 동: ${building} | 일령: ${days} | 시스템 버전: ${version}`;
+        
+        // 모달 표시
+        farmModal.style.display = 'flex';
+      });
+    });
+    
+    // 상태 정렬 기능
+    const statusHeader = document.getElementById('statusHeader');
+    const sortIcon = document.getElementById('sortIcon');
+    let sortDirection = 'desc'; // 초기 정렬 방향 (내림차순: NG가 먼저)
+    
+    statusHeader.addEventListener('click', () => {
+      const tableBody = document.querySelector('tbody');
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+      
+      // 정렬 방향 전환
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+      sortIcon.textContent = sortDirection === 'asc' ? '▲' : '▼';
+      
+      // 상태에 따라 행 정렬
+      rows.sort((a, b) => {
+        const statusA = a.querySelector('.status').textContent;
+        const statusB = b.querySelector('.status').textContent;
+        
+        if (sortDirection === 'asc') {
+          // 오름차순: OK가 먼저
+          return statusA === 'OK' ? -1 : statusB === 'OK' ? 1 : 0;
+        } else {
+          // 내림차순: NG가 먼저
+          return statusA === 'NG' ? -1 : statusB === 'NG' ? 1 : 0;
+        }
+      });
+      
+      // 정렬된 행을 테이블에 다시 추가
+      rows.forEach(row => tableBody.appendChild(row));
+    });
+    
+    // 농장별/동별 보기 전환 기능
+    const viewByDong = document.getElementById('viewByDong');
+    const viewByFarm = document.getElementById('viewByFarm');
+    const tableBody = document.querySelector('tbody');
+    
+    // 원본 데이터 저장
+    const originalRows = Array.from(tableBody.querySelectorAll('tr'));
+    
+    viewByFarm.addEventListener('click', () => {
+      if (!viewByFarm.classList.contains('active')) {
+        // 버튼 상태 변경
+        viewByFarm.classList.add('active');
+        viewByDong.classList.remove('active');
+        
+        // 테이블 내용 비우기
+        while (tableBody.firstChild) {
+          tableBody.removeChild(tableBody.firstChild);
+        }
+        
+        // 샘플 농장 데이터 (실제 연동이 아닌 시각적 데모용)
+        const farmData = [
+          { id: 'FA03', name: '대성농장', status: 'NG', version: 'V2.3' },
+          { id: 'FA02', name: '신농장', status: 'OK', version: 'V2.3' },
+          { id: 'FA02', name: 'SG컴퍼니', status: 'NG', version: 'V2.2' },
+          { id: 'FA04', name: '한마음농장', status: 'OK', version: 'V2.3' },
+          { id: 'FA04', name: '푸른들농장', status: 'OK', version: 'V2.3' },
+          { id: 'FA04', name: '태양농장', status: 'OK', version: 'V2.3' },
+          { id: 'FA04', name: '하늘농장', status: 'OK', version: 'V2.3' },
+          { id: 'FA04', name: '미래농장', status: 'OK', version: 'V2.3' }
+        ];
+        
+        // 각 농장별 행 생성
+        farmData.forEach(farm => {
+          // 농장 행 생성
+          const farmRow = document.createElement('tr');
+          farmRow.classList.add('farm-row');
+          farmRow.setAttribute('data-farm-name', farm.name);
+          
+          farmRow.innerHTML = `
+            <td class="farm-info" data-farm-id="${farm.id}" data-farm-name="${farm.name}" style="cursor: pointer;">
+              <strong>${farm.id}</strong><br>
+              <span style="font-size: 0.85rem; color: #666; display: inline-block; width: 100px; overflow: hidden; text-overflow: ellipsis;">${farm.name}</span>
+              <button class="detail-btn" data-farm-name="${farm.name}" style="margin-left: 10px; padding: 3px 8px; background-color: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">동별보기</button>
+            </td>
+            <td>평균</td>
+            <td>전체</td>
+            <td>-</td>
+            <td>1,680g</td>
+            <td>1,695g</td>
+            <td>1,710g</td>
+            <td>0.990</td>
+            <td>1,663g</td>
+            <td>-47</td>
+            <td>99.2%</td>
+            <td><span class="status ${farm.status.toLowerCase()}">${farm.status}</span></td>
+            <td><span class="version-badge">${farm.version}</span></td>
+            <td>
+              <button class="action-btn approve">승인</button>
+              <button class="action-btn adjust">조정</button>
+            </td>
+          `;
+          
+          // 농장 행을 테이블에 추가
+          tableBody.appendChild(farmRow);
+          
+          // 각 농장별 동 행 생성 (처음에는 숨김 상태)
+          const dongNames = ['H01', 'H02', 'H03', 'H04', 'H05'];
+          const dongRows = []; // 동 행들을 저장할 배열
+          
+          dongNames.forEach((dong, index) => {
+            const dongRow = document.createElement('tr');
+            dongRow.classList.add('dong-row');
+            dongRow.classList.add(`${farm.name.replace(/\s+/g, '-')}-dong`);
+            dongRow.style.display = 'none';
+            dongRow.style.backgroundColor = '#e8e8e8';
+            
+            // 동별 데이터 생성 (샘플 데이터)
+            const wmValue = 1600 + (index * 30);
+            const fcrValue = 1620 + (index * 30);
+            const weightValue = 1650 + (index * 30);
+            const r2Value = (0.97 + (index * 0.005)).toFixed(3);
+            const wcValue = 1580 + (index * 30);
+            const errorValue = -70 + (index * 5);
+            const rateValue = (98.5 + (index * 0.2)).toFixed(1);
+            
+            // 농장 상태가 NG인 경우, 일부 동을 NG로 설정
+            let dongStatus = 'OK';
+            if (farm.status === 'NG') {
+              // 대성농장은 첫 번째 동을 NG로
+              if (farm.name === '대성농장' && index === 0) {
+                dongStatus = 'NG';
+              }
+              // SG컴퍼니는 첫 번째와 세 번째 동을 NG로
+              else if (farm.name === 'SG컴퍼니' && (index === 0 || index === 2)) {
+                dongStatus = 'NG';
+              }
+            }
+            
+            dongRow.innerHTML = `
+              <td style="padding-left: 20px;">
+                <div class="farm-info" data-farm-id="${farm.id}${index}" data-farm-name="${farm.name}" style="cursor: pointer;">
+                  <strong>${farm.id}${index}</strong><br>
+                  <span style="font-size: 0.85rem; color: #666;">${dong}동</span>
+                </div>
+              </td>
+              <td>2025-2</td>
+              <td>${dong}</td>
+              <td>${33 + index}</td>
+              <td>${wmValue.toLocaleString()}g</td>
+              <td>${fcrValue.toLocaleString()}g</td>
+              <td>${weightValue.toLocaleString()}g</td>
+              <td>${r2Value}</td>
+              <td>${wcValue.toLocaleString()}g</td>
+              <td>${errorValue}</td>
+              <td>${rateValue}%</td>
+              <td><span class="status ${dongStatus.toLowerCase()}">${dongStatus}</span></td>
+              <td><span class="version-badge">${farm.version}</span></td>
+              <td>
+                <button class="action-btn approve">승인</button>
+                <button class="action-btn adjust">조정</button>
+              </td>
+            `;
+            
+            // 동 행을 테이블에 추가 (농장 행 바로 다음에)
+            tableBody.appendChild(dongRow);
+            dongRows.push(dongRow); // 동 행 배열에 추가
+          });
+          
+          // 해당 농장의 동별보기 버튼에 이벤트 리스너 추가
+          const detailBtn = farmRow.querySelector('.detail-btn');
+          detailBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); // 이벤트 버블링 방지
+            
+            // 토글: 보이면 숨기고, 숨겨져 있으면 보이게
+            const isVisible = dongRows[0].style.display === 'table-row';
+            
+            dongRows.forEach(row => {
+              row.style.display = isVisible ? 'none' : 'table-row';
+            });
+            
+            // 버튼 텍스트 변경
+            detailBtn.textContent = isVisible ? '동별보기' : '접기';
+          });
+        });
+        
+        // 농장 정보 클릭 이벤트 다시 바인딩
+        const newFarmInfoElements = document.querySelectorAll('.farm-info');
+        newFarmInfoElements.forEach((element) => {
+          element.addEventListener('click', () => {
+            const farmId = element.getAttribute('data-farm-id');
+            const farmName = element.getAttribute('data-farm-name');
+            
+            modalFarmTitle.textContent = `${farmId} (${farmName})`;
+            
+            const row = element.closest('tr');
+            
+            // 동별 행인지 농장 행인지 확인
+            if (row.classList.contains('dong-row')) {
+              const round = row.children[1].textContent;
+              const building = row.children[2].textContent;
+              const days = row.children[3].textContent;
+              const version = row.querySelector('.version-badge').textContent;
+              
+              modalFarmSubtitle.textContent = `회차: ${round} | 동: ${building} | 일령: ${days} | 시스템 버전: ${version}`;
+            } else {
+              modalFarmSubtitle.textContent = `농장 전체 평균 | 시스템 버전: ${row.querySelector('.version-badge').textContent}`;
+            }
+            
+            farmModal.style.display = 'flex';
+          });
+        });
+      }
+    });
+    
+    viewByDong.addEventListener('click', () => {
+      if (!viewByDong.classList.contains('active')) {
+        // 버튼 상태 변경
+        viewByDong.classList.add('active');
+        viewByFarm.classList.remove('active');
+        
+        // 테이블 내용 비우기
+        while (tableBody.firstChild) {
+          tableBody.removeChild(tableBody.firstChild);
+        }
+        
+        // 원본 데이터로 복원
+        originalRows.forEach(row => {
+          tableBody.appendChild(row.cloneNode(true));
+        });
+        
+        // 농장 정보 클릭 이벤트 다시 바인딩
+        const newFarmInfoElements = document.querySelectorAll('.farm-info');
+        newFarmInfoElements.forEach((element) => {
+          element.addEventListener('click', () => {
+            const farmId = element.getAttribute('data-farm-id');
+            const farmName = element.getAttribute('data-farm-name');
+            
+            modalFarmTitle.textContent = `${farmId} (${farmName})`;
+            
+            const row = element.closest('tr');
+            const round = row.children[1].textContent;
+            const building = row.children[2].textContent;
+            const days = row.children[3].textContent;
+            const version = row.querySelector('.version-badge').textContent;
+            
+            modalFarmSubtitle.textContent = `회차: ${round} | 동: ${building} | 일령: ${days} | 시스템 버전: ${version}`;
+            
+            farmModal.style.display = 'flex';
+          });
+        });
+      }
+    });
+  </script>
+  
+  <div class="alert-area">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h3 class="alert-title">알림</h3>
+      <div>
+        <select style="padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; margin-right: 5px;">
+          <option>모든 알림</option>
+          <option>값 변화 알림</option>
+          <option>버전 변경 알림</option>
+          <option>R2 조정 알림</option>
+        </select>
+        <button class="btn" style="background-color: #f2f2f2; padding: 4px 8px; border-radius: 4px; border: 1px solid #ddd; font-size: 0.9rem;">히스토리</button>
+      </div>
+    </div>
+    <ul class="alert-list">
+      <li class="alert-item">
+        <div class="alert-icon error">!</div>
+        <div class="alert-message">대성농장의 WC 값과 체중계 값의 차이가 임계치(±3%)를 초과했습니다.</div>
+        <div class="alert-time">10:30</div>
+      </li>
+      <li class="alert-item">
+        <div class="alert-icon warning">!</div>
+        <div class="alert-message">태광농장의 WC 값과 체중계 값의 차이가 임계치에 가깝습니다.</div>
+        <div class="alert-time">10:30</div>
+      </li>
+      <li class="alert-item">
+        <div class="alert-icon warning">!</div>
+        <div class="alert-message">대성농장의 FCR 값과 체중계 값 간 불일치가 있습니다. 체중계 확인이 필요합니다.</div>
+        <div class="alert-time">10:30</div>
+      </li>
+      <li class="alert-item" style="background-color: #f8f8f8;">
+        <div class="alert-icon" style="background-color: #0066cc;">i</div>
+        <div class="alert-message">시스템 버전이 V2.2에서 V2.3으로 업데이트되었습니다. <a href="#" style="color: #0066cc; text-decoration: none;">변경 내용 보기</a></div>
+        <div class="alert-time">어제</div>
+      </li>
+      <li class="alert-item" style="background-color: #f8f8f8;">
+        <div class="alert-icon" style="background-color: #0066cc;">i</div>
+        <div class="alert-message">모델 버전이 M1.4에서 M1.5로 업데이트되었습니다. <a href="#" style="color: #0066cc; text-decoration: none;">변경 내용 보기</a></div>
+        <div class="alert-time">04-20</div>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- 버전 히스토리 모달 (숨겨진 상태) -->
+  <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center;">
+    <div style="background-color: white; border-radius: 8px; width: 80%; max-width: 800px; max-height: 80vh; overflow-y: auto; padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 1.2rem; font-weight: 600;">버전 히스토리</h3>
+        <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <h4 style="font-size: 1rem; margin-bottom: 10px;">시스템 버전</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background-color: #f2f2f2;">
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">버전</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">적용 날짜</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">주요 변경사항</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">담당자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">V2.3</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-20</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">R2 값 자동 조정 로직 최적화, 알림 시스템 개선</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">이병권</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">V2.2</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-15</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">FCR 값 계산 로직 수정, 체중계 데이터 동기화 개선</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">이병권</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div>
+        <h4 style="font-size: 1rem; margin-bottom: 10px;">모델 버전</h4>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background-color: #f2f2f2;">
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">버전</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">적용 날짜</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">주요 변경사항</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">담당자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">M1.5</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-20</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">WM 모델 정확도 향상, 새로운 농장 데이터 추가 학습</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">윤성진</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">M1.4</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-01</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">중량별 예측 개선, 계절 변수 추가</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">윤성진</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 변경 기록 모달 (숨겨진 상태) -->
+  <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center;">
+    <div style="background-color: white; border-radius: 8px; width: 80%; max-width: 800px; max-height: 80vh; overflow-y: auto; padding: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 1.2rem; font-weight: 600;">변경 기록 - 대성농장</h3>
+        <button style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+      </div>
+      
+      <div>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background-color: #f2f2f2;">
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">날짜/시간</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">변경 항목</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">이전 값</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">변경 값</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">변경 사유</th>
+              <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">담당자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-21 09:15</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">R2 값 (1,601g~)</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">1.01</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">1.02</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">체중계 값과의 오차가 -3.9%에서 -3.4%로 감소</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">변영덕</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-20 14:30</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">모델 버전</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">M1.4</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">M1.5</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">시스템 업데이트</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">시스템</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-20 13:45</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">R2 값 (1,301g~1,600g)</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">1.00</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">1.02</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">체중계 값 비교 후 자동 조정</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">조영연</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">2025-04-18 10:20</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">시스템 버전</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">V2.1</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">V2.2</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">시스템 업데이트</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">시스템</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div style="margin-top: 20px;">
+        <h4 style="font-size: 1rem; margin-bottom: 10px;">변경 영향 분석</h4>
+        <div style="padding: 15px; background-color: #f8f8f8; border-radius: 4px;">
+          <div style="margin-bottom: 10px;">
+            <strong>R2 값 변경 (2025-04-21)</strong>: 체중계 값과의 오차가 -3.9%에서 -3.4%로 감소
+          </div>
+          <div style="margin-bottom: 10px;">
+            <strong>모델 버전 변경 (M1.4 → M1.5)</strong>: WM 값의 안정성 향상, 일간 변동폭 감소
+          </div>
+          <div>
+            <strong>시스템 버전 변경 (V2.1 → V2.2)</strong>: FCR 값 반영 정확도 향상
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
