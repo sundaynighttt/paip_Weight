@@ -7,8 +7,67 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* 버전 선택 네비게이션 스타일 */
+    .version-nav {
+      background-color: #333;
+      padding: 10px;
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 1000;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .version-nav-container {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .version-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .version-btn {
+      padding: 5px 12px;
+      background-color: #555;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+    
+    .version-btn:hover {
+      background-color: #777;
+    }
+    
+    .version-btn.active {
+      background-color: #0066cc;
+    }
+  </style>
 </head>
 <body>
+  <!-- 버전 선택 네비게이션 -->
+  <div class="version-nav">
+    <div class="version-nav-container">
+      <div class="version-buttons">
+        <a href="#" class="version-btn active">버전 1</a>
+        <a href="#" class="version-btn">버전 2</a>
+        <a href="#" class="version-btn">버전 3</a>
+        <a href="#" class="version-btn">버전 4</a>
+        <a href="#" class="version-btn">버전 5</a>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <header>
       <h1>R2 관리 대시보드</h1>
@@ -335,31 +394,31 @@
                         <tr>
                           <td>1,601g~</td>
                           <td>1.020</td>
-                          <td>25-04-29</td>
+                          <td>25-04-29, 10:30</td>
                           <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
                         </tr>
                         <tr>
                           <td>1,301g~1,600g</td>
                           <td>1.020</td>
-                          <td>25-04-27</td>
+                          <td>25-04-27, 00:27</td>
                           <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
                         </tr>
                         <tr>
                           <td>1,001g~1,300g</td>
                           <td>0.950</td>
-                          <td>25-04-25</td>
+                          <td>25-04-25, 16:53</td>
                           <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
                         </tr>
                         <tr>
                           <td>701g~1,000g</td>
                           <td>0.920</td>
-                          <td>25-04-23</td>
+                          <td>25-04-23, 11:30</td>
                           <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
                         </tr>
                         <tr>
                           <td>~700g</td>
                           <td>0.885</td>
-                          <td>25-04-20</td>
+                          <td>25-04-20, 11:30</td>
                           <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
                         </tr>
                       </tbody>
