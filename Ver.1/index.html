@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R2 관리 대시보드</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../nav.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -18,10 +21,10 @@
   
     <div class="filter-section">
       <div class="filter-buttons">
-        <button class="filter-btn active" style="padding: 3px 8px; font-size: 0.75rem;">모든농장</button>
-        <button class="filter-btn" style="padding: 3px 8px; font-size: 0.75rem;">OK</button>
-        <button class="filter-btn" style="padding: 3px 8px; font-size: 0.75rem;">NG</button>
-        <select style="padding: 3px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.75rem; margin-left: 4px;">
+        <button class="filter-btn active">모든농장</button>
+        <button class="filter-btn">OK</button>
+        <button class="filter-btn">NG</button>
+        <select>
           <option>모든 버전</option>
           <option>시스템 V2.3</option>
           <option>시스템 V2.2</option>
@@ -29,13 +32,13 @@
           <option>모델 M1.4</option>
         </select>
         <div style="margin-left: 15px; display: flex; align-items: center;">
-          <span style="margin-right: 5px; font-size: 0.75rem;"></span>
-          <button id="viewByDong" class="filter-btn active" style="margin-right: 3px; padding: 3px 8px; font-size: 0.75rem;">동별</button>
-          <button id="viewByFarm" class="filter-btn" style="padding: 3px 8px; font-size: 0.75rem;">농장별</button>
+          <span style="margin-right: 5px;"></span>
+          <button id="viewByDong" class="filter-btn active" style="margin-right: 3px;">동별</button>
+          <button id="viewByFarm" class="filter-btn">농장별</button>
         </div>
       </div>
       <div class="search-box">
-        <input type="text" placeholder="농장명 검색..." style="padding: 3px 8px; font-size: 0.75rem; padding-left: 25px;">
+        <input type="text" placeholder="농장명 검색...">
       </div>
     </div>
     
@@ -928,5 +931,9 @@
         </div>
       </div>
     </div>
-  </body>
-  </html>
+  </div>
+
+  <script src="../nav.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
