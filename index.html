@@ -41,15 +41,133 @@
         </div>
       </div>
       
-      <!-- 중앙 패널: 농장/동 목록 -->
+      <!-- 중간 패널: 농장/동 목록 -->
       <div class="middle-panel">
+        <!-- 첫 번째 농장 목록 카테고리 -->
         <div class="data-category">
           <div class="data-category-header">
-            <span>농장 목록</span>
-            <i class="fas fa-chevron-down"></i>
+            <span>1) 사육 (7개농장)</span>
+            <button class="toggle-category-btn" onclick="toggleCategory(this)">
+              <i class="fas fa-chevron-down"></i>
+            </button>
           </div>
-          
           <div class="farm-list">
+            <!-- 농장 항목 1 (새로 추가) - NG 있음 (2개 동) -->
+            <div class="data-item" data-farm-id="FA0701">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>FA0701</strong> - 미래농장
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">회차: 2025-2</span>
+                      <span class="detail-item">일령: 34</span>
+                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ng">NG (2개 동)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                </div>
+              </div>
+              <!-- 동 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0701', 'H01', '미래농장', 34, 'NG', '-85g', '1,680g', '1,765g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 34</span>
+                          <span class="detail-item">WM: 1,680g</span>
+                          <span class="detail-item">체중계: 1,765g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -85g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0701', 'H02', '미래농장', 34, 'NG', '-95g', '1,670g', '1,765g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 34</span>
+                          <span class="detail-item">WM: 1,670g</span>
+                          <span class="detail-item">체중계: 1,765g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -95g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0701', 'H03', '미래농장', 34, 'OK', '0g', '1,690g', '1,690g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 34</span>
+                          <span class="detail-item">WM: 1,690g</span>
+                          <span class="detail-item">체중계: 1,690g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0701', 'H04', '미래농장', 34, 'OK', '0g', '1,685g', '1,685g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 34</span>
+                          <span class="detail-item">WM: 1,685g</span>
+                          <span class="detail-item">체중계: 1,685g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <!-- 농장 항목 1 -->
             <div class="data-item" data-farm-id="FA0300">
               <div class="farm-item-content">
@@ -65,18 +183,39 @@
                       <span class="detail-item"><span class="version-badge">V2.3</span></span>
                     </div>
                     <div class="farm-item-status">
-                      <span class="status ng">NG <span class="error-value">오차: -118g</span></span>
+                      <span class="status ng">NG (2개 동)</span>
                     </div>
                   </div>
                 </div>
                 <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                  <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
+                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
                 </div>
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0300', 'H01', '대성농장', 33, 'NG', '-118g', '1,620g', '1,710g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,620g</span>
+                          <span class="detail-item">체중계: 1,710g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -118g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0300', 'H02', '대성농장', 33, 'NG', '-90g', '1,590g', '1,680g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -85,19 +224,20 @@
                         </div>
                         <div class="farm-item-details">
                           <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,590g</span>
+                          <span class="detail-item">체중계: 1,680g</span>
                         </div>
                         <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -118g</span></span>
+                          <span class="status ng">NG <span class="error-value">오차: -90g</span></span>
                         </div>
                       </div>
                     </div>
                     <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                      <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
+                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
                     </div>
                   </div>
                 </div>
-                <div class="data-item">
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0300', 'H03', '대성농장', 33, 'OK', '', '1,605g', '1,625g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -106,6 +246,8 @@
                         </div>
                         <div class="farm-item-details">
                           <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,605g</span>
+                          <span class="detail-item">체중계: 1,625g</span>
                         </div>
                         <div class="farm-item-status">
                           <span class="status ok">OK</span>
@@ -114,11 +256,10 @@
                     </div>
                     <div class="farm-item-actions">
                       <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                      <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
                     </div>
                   </div>
                 </div>
-                <div class="data-item">
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0300', 'H04', '대성농장', 33, 'OK', '', '1,615g', '1,630g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -127,6 +268,8 @@
                         </div>
                         <div class="farm-item-details">
                           <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,615g</span>
+                          <span class="detail-item">체중계: 1,630g</span>
                         </div>
                         <div class="farm-item-status">
                           <span class="status ok">OK</span>
@@ -135,40 +278,60 @@
                     </div>
                     <div class="farm-item-actions">
                       <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                      <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <!-- 농장 항목 2 -->
-            <div class="data-item" data-farm-id="FA0326">
+            <!-- 농장 항목 3 (새로 추가) - NG 없음 -->
+            <div class="data-item" data-farm-id="FA0401">
               <div class="farm-item-content">
                 <div class="farm-item-info">
                   <i class="fas fa-chevron-right farm-toggle-icon"></i>
                   <div>
                     <div class="farm-item-header">
-                      <strong>FA0326</strong> - 신농장
+                      <strong>FA0401</strong> - 해피농장
                     </div>
                     <div class="farm-item-details">
                       <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 33</span>
+                      <span class="detail-item">일령: 35</span>
                       <span class="detail-item"><span class="version-badge">V2.3</span></span>
                     </div>
                     <div class="farm-item-status">
-                      <span class="status ok">OK</span>
+                      <span class="status ok">OK (4개 동)</span>
                     </div>
                   </div>
                 </div>
                 <div class="farm-item-actions">
                   <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                  <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
                 </div>
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '해피농장', 35, 'OK', '0g', '1,750g', '1,750g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,750g</span>
+                          <span class="detail-item">체중계: 1,750g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '해피농장', 35, 'OK', '0g', '1,730g', '1,730g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -176,7 +339,9 @@
                           <strong>H02</strong>
                         </div>
                         <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,730g</span>
+                          <span class="detail-item">체중계: 1,730g</span>
                         </div>
                         <div class="farm-item-status">
                           <span class="status ok">OK</span>
@@ -185,11 +350,10 @@
                     </div>
                     <div class="farm-item-actions">
                       <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                      <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
                     </div>
                   </div>
                 </div>
-                <div class="data-item">
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '해피농장', 35, 'OK', '0g', '1,740g', '1,740g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -197,7 +361,9 @@
                           <strong>H03</strong>
                         </div>
                         <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,740g</span>
+                          <span class="detail-item">체중계: 1,740g</span>
                         </div>
                         <div class="farm-item-status">
                           <span class="status ok">OK</span>
@@ -206,7 +372,144 @@
                     </div>
                     <div class="farm-item-actions">
                       <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                      <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '해피농장', 35, 'OK', '0g', '1,760g', '1,760g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,760g</span>
+                          <span class="detail-item">체중계: 1,760g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 농장 항목 4 (새로 추가) - NG 없음 -->
+            <div class="data-item" data-farm-id="FA0502">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>FA0502</strong> - 그린농장
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">회차: 2025-2</span>
+                      <span class="detail-item">일령: 32</span>
+                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ok">OK (4개 동)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                </div>
+              </div>
+              <!-- 동 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0502', 'H01', '그린농장', 32, 'OK', '0g', '1,620g', '1,620g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 32</span>
+                          <span class="detail-item">WM: 1,620g</span>
+                          <span class="detail-item">체중계: 1,620g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0502', 'H02', '그린농장', 32, 'OK', '0g', '1,630g', '1,630g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 32</span>
+                          <span class="detail-item">WM: 1,630g</span>
+                          <span class="detail-item">체중계: 1,630g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0502', 'H03', '그린농장', 32, 'OK', '0g', '1,640g', '1,640g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 32</span>
+                          <span class="detail-item">WM: 1,640g</span>
+                          <span class="detail-item">체중계: 1,640g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0502', 'H04', '그린농장', 32, 'OK', '0g', '1,610g', '1,610g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 32</span>
+                          <span class="detail-item">WM: 1,610g</span>
+                          <span class="detail-item">체중계: 1,610g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
                     </div>
                   </div>
                 </div>
@@ -228,22 +531,773 @@
                       <span class="detail-item"><span class="version-badge">V2.2</span></span>
                     </div>
                     <div class="farm-item-status">
+                      <span class="status ok">OK (5개 동)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                </div>
+              </div>
+              <!-- 동 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0253', 'H01', 'SG컴퍼니', 33, 'OK', '', '1,610g', '1,625g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,610g</span>
+                          <span class="detail-item">체중계: 1,625g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0253', 'H02', 'SG컴퍼니', 33, 'OK', '', '1,615g', '1,630g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,615g</span>
+                          <span class="detail-item">체중계: 1,630g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0253', 'H03', 'SG컴퍼니', 33, 'OK', '', '1,620g', '1,635g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,620g</span>
+                          <span class="detail-item">체중계: 1,635g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0253', 'H04', 'SG컴퍼니', 33, 'OK', '', '1,625g', '1,640g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,625g</span>
+                          <span class="detail-item">체중계: 1,640g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H05" onclick="updateRightPanel('FA0253', 'H05', 'SG컴퍼니', 33, 'OK', '', '1,630g', '1,645g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H05</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 33</span>
+                          <span class="detail-item">WM: 1,630g</span>
+                          <span class="detail-item">체중계: 1,645g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 농장 항목 5 (새로 추가) - NG 없음 -->
+            <div class="data-item" data-farm-id="FA0603">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>FA0603</strong> - 청정농장
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">회차: 2025-2</span>
+                      <span class="detail-item">일령: 30</span>
+                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ok">OK (4개 동)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                </div>
+              </div>
+              <!-- 동 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0603', 'H01', '청정농장', 30, 'OK', '0g', '1,520g', '1,520g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,520g</span>
+                          <span class="detail-item">체중계: 1,520g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0603', 'H02', '청정농장', 30, 'OK', '0g', '1,530g', '1,530g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,530g</span>
+                          <span class="detail-item">체중계: 1,530g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0603', 'H03', '청정농장', 30, 'OK', '0g', '1,540g', '1,540g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,540g</span>
+                          <span class="detail-item">체중계: 1,540g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0603', 'H04', '청정농장', 30, 'OK', '0g', '1,510g', '1,510g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,510g</span>
+                          <span class="detail-item">체중계: 1,510g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 농장 항목 2 (새로 추가) - NG 있음 (1개 동) -->
+            <div class="data-item" data-farm-id="FA0802">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>FA0802</strong> - 푸른농장
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">회차: 2025-2</span>
+                      <span class="detail-item">일령: 31</span>
+                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ng">NG (1개 동)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                </div>
+              </div>
+              <!-- 동 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0802', 'H01', '푸른농장', 31, 'NG', '-80g', '1,580g', '1,660g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 31</span>
+                          <span class="detail-item">WM: 1,580g</span>
+                          <span class="detail-item">체중계: 1,660g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -80g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0802', 'H02', '푸른농장', 31, 'OK', '0g', '1,570g', '1,570g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 31</span>
+                          <span class="detail-item">WM: 1,570g</span>
+                          <span class="detail-item">체중계: 1,570g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0802', 'H03', '푸른농장', 31, 'OK', '0g', '1,590g', '1,590g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 31</span>
+                          <span class="detail-item">WM: 1,590g</span>
+                          <span class="detail-item">체중계: 1,590g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0802', 'H04', '푸른농장', 31, 'OK', '0g', '1,585g', '1,585g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 31</span>
+                          <span class="detail-item">WM: 1,585g</span>
+                          <span class="detail-item">체중계: 1,585g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 두 번째 농장 목록 카테고리 -->
+        <div class="data-category">
+          <div class="data-category-header">
+            <span>2) 출하 (2개농장)</span>
+            <button class="toggle-category-btn" onclick="toggleCategory(this)">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="farm-list">
+            <!-- 농장 항목 2 -->
+            <div class="data-item" data-farm-id="FA0326">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>FA0326</strong> - 신농장
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">회차: 2025-2</span>
+                      <span class="detail-item">일령: 35</span>
+                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ng">NG (1개 동)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                </div>
+              </div>
+              <!-- 동 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0326', 'H01', '신농장', 35, 'NG', '-85g', '1,710g', '1,795g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,710g</span>
+                          <span class="detail-item">체중계: 1,795g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -85g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0326', 'H02', '신농장', 35, 'OK', '', '1,695g', '1,720g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,695g</span>
+                          <span class="detail-item">체중계: 1,720g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0326', 'H03', '신농장', 35, 'OK', '', '1,705g', '1,725g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 35</span>
+                          <span class="detail-item">WM: 1,705g</span>
+                          <span class="detail-item">체중계: 1,725g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 추가 농장 항목 -->
+            <div class="data-item" data-farm-id="FA0401">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>FA0401</strong> - 한마음농장
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">회차: 2025-2</span>
+                      <span class="detail-item">일령: 30</span>
+                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
+                    </div>
+                    <div class="farm-item-status">
                       <span class="status ok">OK</span>
                     </div>
                   </div>
                 </div>
                 <div class="farm-item-actions">
                   <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                  <button class="action-btn adjust" style="padding: 3px 8px; font-size: 0.75rem;">조정</button>
                 </div>
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <!-- 동 항목들 -->
+                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '한마음농장', 30, 'OK', '', '1,520g', '1,535g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H01</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,520g</span>
+                          <span class="detail-item">체중계: 1,535g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '한마음농장', 30, 'NG', '-95g', '1,490g', '1,585g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H02</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,490g</span>
+                          <span class="detail-item">체중계: 1,585g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -95g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '한마음농장', 30, 'OK', '', '1,510g', '1,525g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H03</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,510g</span>
+                          <span class="detail-item">체중계: 1,525g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '한마음농장', 30, 'OK', '', '1,515g', '1,530g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H04</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,515g</span>
+                          <span class="detail-item">체중계: 1,530g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-dong-id="H05" onclick="updateRightPanel('FA0401', 'H05', '한마음농장', 30, 'NG', '-85g', '1,500g', '1,585g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>H05</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">일령: 30</span>
+                          <span class="detail-item">WM: 1,500g</span>
+                          <span class="detail-item">체중계: 1,585g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -85g</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 통계 요약 카테고리 -->
+        <div class="data-category">
+          <div class="data-category-header">
+            <span>통계 요약</span>
+            <button class="toggle-category-btn" onclick="toggleCategory(this)">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+          <div class="farm-list">
+            <!-- 통계 항목 1 -->
+            <div class="data-item" data-stat-id="STAT001">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>일령별 평균</strong>
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">데이터 수: 125</span>
+                      <span class="detail-item">최근 업데이트: 2025-04-23</span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ok">양호</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                </div>
+              </div>
+              <!-- 세부 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-stat-detail-id="SD001" onclick="updateRightPanel('STAT001', 'SD001', '일령별 평균', 33, 'OK', '', '1,620g', '1,650g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>일령 30-35</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">평균 WM: 1,620g</span>
+                          <span class="detail-item">평균 체중계: 1,650g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-stat-detail-id="SD002" onclick="updateRightPanel('STAT001', 'SD002', '일령별 평균', 28, 'OK', '', '1,450g', '1,470g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>일령 25-30</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">평균 WM: 1,450g</span>
+                          <span class="detail-item">평균 체중계: 1,470g</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             
-            <!-- 추가 농장 항목들 -->
+            <!-- 통계 항목 2 -->
+            <div class="data-item" data-stat-id="STAT002">
+              <div class="farm-item-content">
+                <div class="farm-item-info">
+                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
+                  <div>
+                    <div class="farm-item-header">
+                      <strong>농장별 오차율</strong>
+                    </div>
+                    <div class="farm-item-details">
+                      <span class="detail-item">데이터 수: 87</span>
+                      <span class="detail-item">최근 업데이트: 2025-04-22</span>
+                    </div>
+                    <div class="farm-item-status">
+                      <span class="status ng">NG (2개 항목)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="farm-item-actions">
+                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                </div>
+              </div>
+              <!-- 세부 목록 -->
+              <div class="dong-list">
+                <div class="data-item" data-stat-detail-id="SD003" onclick="updateRightPanel('STAT002', 'SD003', '농장별 오차율', 0, 'NG', '-5.2%', '1,600g', '1,685g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>대성농장</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">평균 오차율: 5.2%</span>
+                          <span class="detail-item">동 수: 4</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -5.2%</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-stat-detail-id="SD004" onclick="updateRightPanel('STAT002', 'SD004', '농장별 오차율', 0, 'NG', '-4.8%', '1,710g', '1,795g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>신농장</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">평균 오차율: 4.8%</span>
+                          <span class="detail-item">동 수: 3</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ng">NG <span class="error-value">오차: -4.8%</span></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="data-item" data-stat-detail-id="SD005" onclick="updateRightPanel('STAT002', 'SD005', '농장별 오차율', 0, 'OK', '', '1,520g', '1,535g')">
+                  <div class="farm-item-content">
+                    <div class="farm-item-info">
+                      <div>
+                        <div class="farm-item-header">
+                          <strong>SG컴퍼니</strong>
+                        </div>
+                        <div class="farm-item-details">
+                          <span class="detail-item">평균 오차율: 1.0%</span>
+                          <span class="detail-item">동 수: 5</span>
+                        </div>
+                        <div class="farm-item-status">
+                          <span class="status ok">OK</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="farm-item-actions">
+                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -479,147 +1533,160 @@
 
   <script src="nav.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // 농장 항목 클릭 이벤트 처리
-      const farmItems = document.querySelectorAll('.farm-list .data-item');
+    // 동을 클릭했을 때 오른쪽 패널 업데이트 함수
+    function updateRightPanel(farmId, dongId, farmName, days, status, errorValue, wmValue, scaleValue) {
+      // 기본 정보 업데이트
+      document.querySelector('.farm-id').textContent = farmId;
+      document.querySelector('.farm-name').textContent = farmName;
+      document.querySelector('.dong').textContent = dongId;
+      document.querySelector('.days').textContent = days;
       
-      farmItems.forEach(farmItem => {
-        farmItem.addEventListener('click', function(e) {
-          // 버튼 클릭 시 이벤트 전파 방지
-          if (e.target.classList.contains('action-btn') || 
-              e.target.closest('.action-btn')) {
-            return;
-          }
-          
-          // 현재 선택된 농장 항목 표시
-          document.querySelectorAll('.farm-list .data-item').forEach(item => {
-            item.classList.remove('active');
-          });
-          this.classList.add('active');
-          
-          // 동 목록 토글
-          const dongList = this.querySelector('.dong-list');
-          const toggleIcon = this.querySelector('.farm-toggle-icon');
-          
-          // 다른 모든 동 목록 닫기
-          document.querySelectorAll('.farm-list .dong-list').forEach(list => {
-            if (list !== dongList) {
-              list.style.display = 'none';
-              const icon = list.closest('.data-item').querySelector('.farm-toggle-icon');
-              if (icon) {
-                icon.classList.remove('open');
-                icon.style.transform = 'rotate(0deg)';
-              }
-            }
-          });
-          
-          // 현재 동 목록 토글
-          if (dongList.style.display === 'block') {
-            dongList.style.display = 'none';
-            toggleIcon.classList.remove('open');
-            toggleIcon.style.transform = 'rotate(0deg)';
-          } else {
-            dongList.style.display = 'block';
-            toggleIcon.classList.add('open');
-            toggleIcon.style.transform = 'rotate(90deg)';
-          }
-          
-          // 오른쪽 패널 업데이트
-          updateRightPanel(this.dataset.farmId);
-        });
-      });
-      
-      // 동 항목 클릭 이벤트 처리
-      const dongItems = document.querySelectorAll('.dong-list .data-item');
-      
-      dongItems.forEach(dongItem => {
-        dongItem.addEventListener('click', function(e) {
-          // 버튼 클릭 시 이벤트 전파 방지
-          if (e.target.classList.contains('action-btn') || 
-              e.target.closest('.action-btn')) {
-            return;
-          }
-          
-          e.stopPropagation(); // 상위 농장 항목으로 이벤트 전파 방지
-          
-          // 현재 선택된 동 항목 표시
-          document.querySelectorAll('.dong-list .data-item').forEach(item => {
-            item.classList.remove('active');
-          });
-          this.classList.add('active');
-          
-          // 오른쪽 패널 업데이트 (동 정보)
-          const farmId = this.closest('.data-item[data-farm-id]').dataset.farmId;
-          const dongId = this.querySelector('.farm-item-header strong').textContent;
-          updateRightPanel(farmId, dongId);
-        });
-      });
-      
-      // 승인 버튼 클릭 이벤트
-      document.querySelectorAll('.action-btn.approve').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation(); // 상위 항목으로 이벤트 전파 방지
-          alert('승인 처리되었습니다.');
-        });
-      });
-      
-      // 조정 버튼 클릭 이벤트
-      document.querySelectorAll('.action-btn.adjust').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation(); // 상위 항목으로 이벤트 전파 방지
-          alert('조정 모드가 활성화되었습니다.');
-        });
-      });
-      
-      // 오른쪽 패널 업데이트 함수
-      function updateRightPanel(farmId, dongId) {
-        const farmName = document.querySelector(`.data-item[data-farm-id="${farmId}"] .farm-item-header`).textContent.trim().split('-')[1].trim();
-        const round = document.querySelector(`.data-item[data-farm-id="${farmId}"] .detail-item:nth-child(1)`).textContent;
-        const days = document.querySelector(`.data-item[data-farm-id="${farmId}"] .detail-item:nth-child(2)`).textContent;
-        const status = document.querySelector(`.data-item[data-farm-id="${farmId}"] .detail-item.status`).textContent;
-        
-        document.querySelector('.farm-info .farm-id').textContent = farmId;
-        document.querySelector('.farm-info .farm-name').textContent = farmName;
-        document.querySelector('.farm-info .round').textContent = round;
-        document.querySelector('.farm-info .days').textContent = days;
-        
-        if (dongId) {
-          document.querySelector('.farm-info .dong').textContent = `동: ${dongId}`;
-        } else {
-          document.querySelector('.farm-info .dong').textContent = '동: 전체';
-        }
-        
-        // 탭 활성화
-        document.getElementById('tab-graph').click();
+      // 상태 업데이트
+      const statusElement = document.querySelector('.basic-info-right .status');
+      if (status === 'NG') {
+        statusElement.className = 'status ng';
+        statusElement.innerHTML = 'NG <span class="error-value">오차: ' + errorValue + '</span>';
+      } else {
+        statusElement.className = 'status ok';
+        statusElement.textContent = 'OK';
       }
       
-      // 탭 전환 기능
-      document.querySelectorAll('.tab-btn').forEach(tab => {
-        tab.addEventListener('click', function() {
-          // 모든 탭 비활성화
-          document.querySelectorAll('.tab-btn').forEach(t => {
-            t.classList.remove('active');
-          });
+      // R2 조정 폼 업데이트
+      const wmInput = document.querySelector('.r2-adjust-form input[value="1,620g"]');
+      const scaleInput = document.querySelector('.r2-adjust-form input[value="1,710g"]');
+      
+      if (wmInput) wmInput.value = wmValue;
+      if (scaleInput) scaleInput.value = scaleValue;
+      
+      // 알림 섹션 첫 번째 항목 업데이트
+      if (status === 'NG') {
+        const notificationTitle = document.querySelector('.notification-list .notification-item:first-child .notification-title');
+        const notificationDesc = document.querySelector('.notification-list .notification-item:first-child .notification-desc');
+        
+        if (notificationTitle) notificationTitle.textContent = dongId + ' 동 중량 오차 발생';
+        if (notificationDesc) notificationDesc.textContent = '오차: ' + errorValue + ', 확인이 필요합니다.';
+      }
+    }
+    
+    // 카테고리 토글 함수
+    function toggleCategory(button) {
+      const category = button.closest('.data-category');
+      const icon = button.querySelector('i');
+      
+      if (category.classList.contains('collapsed')) {
+        // 펼치기
+        category.classList.remove('collapsed');
+        category.classList.add('expanded');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      } else {
+        // 접기
+        category.classList.remove('expanded');
+        category.classList.add('collapsed');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      }
+    }
+    
+    // 페이지 로드 시 동 목록 토글 기능 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+      // 모든 농장 항목의 화살표 아이콘에 클릭 이벤트 추가
+      document.querySelectorAll('.farm-toggle-icon').forEach(function(icon) {
+        icon.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const farmItem = this.closest('.data-item');
+          const dongList = farmItem.querySelector('.dong-list');
           
-          // 모든 탭 콘텐츠 숨김
-          document.querySelectorAll('.tab-content').forEach(content => {
-            content.style.display = 'none';
-          });
-          
-          // 선택한 탭 활성화
-          this.classList.add('active');
-          
-          // 선택한 탭 콘텐츠 표시
-          const tabId = this.id;
-          const contentId = tabId.replace('tab-', 'content-');
-          document.getElementById(contentId).style.display = 'block';
+          // 동 목록 토글
+          if (dongList.style.display === 'block') {
+            dongList.style.display = 'none';
+            this.classList.remove('fa-chevron-down');
+            this.classList.add('fa-chevron-right');
+          } else {
+            dongList.style.display = 'block';
+            this.classList.remove('fa-chevron-right');
+            this.classList.add('fa-chevron-down');
+          }
         });
       });
       
-      // 초기 탭 설정
-      document.getElementById('tab-graph').click();
+      // 농장 항목 클릭 시 동 목록 토글
+      document.querySelectorAll('.data-item[data-farm-id] .farm-item-content, .data-item[data-stat-id] .farm-item-content').forEach(function(content) {
+        content.addEventListener('click', function(e) {
+          // 버튼 클릭은 제외
+          if (e.target.closest('.farm-item-actions')) {
+            return;
+          }
+          
+          const farmItem = this.closest('.data-item');
+          const dongList = farmItem.querySelector('.dong-list');
+          const toggleIcon = farmItem.querySelector('.farm-toggle-icon');
+          
+          // 동 목록 토글
+          if (dongList.style.display === 'block') {
+            dongList.style.display = 'none';
+            toggleIcon.classList.remove('fa-chevron-down');
+            toggleIcon.classList.add('fa-chevron-right');
+          } else {
+            dongList.style.display = 'block';
+            toggleIcon.classList.remove('fa-chevron-right');
+            toggleIcon.classList.add('fa-chevron-down');
+          }
+        });
+      });
+      
+      // 동 항목에 클릭 이벤트 전파 중지 추가
+      document.querySelectorAll('.dong-list .data-item').forEach(function(dongItem) {
+        dongItem.addEventListener('click', function(e) {
+          // 이벤트 전파 중지 (동을 클릭했을 때 동 목록이 접히지 않도록)
+          e.stopPropagation();
+        });
+      });
+      
+      // 카테고리 초기 상태 설정
+      document.querySelectorAll('.data-category').forEach(function(category) {
+        const toggleBtn = category.querySelector('.toggle-category-btn');
+        const icon = toggleBtn.querySelector('i');
+        
+        // 초기 상태는 모두 펼쳐진 상태로 설정
+        category.classList.add('expanded');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      });
     });
+    
+    // 농장 상세 정보 표시 함수
+    function showFarmDetails(farmName) {
+      console.log(`${farmName} 상세 정보 표시`);
+      // 여기에 오른쪽 패널 업데이트 로직 추가
+    }
+    
+    // 동 상세 정보 표시 함수
+    function showDongDetails(farmName, dongName) {
+      console.log(`${farmName} ${dongName} 상세 정보 표시`);
+      // 여기에 오른쪽 패널 업데이트 로직 추가
+    }
+    
+    // 동 승인 함수
+    function approveDong(farmName, dongName) {
+      console.log(`${farmName} ${dongName} 승인 처리`);
+      // 여기에 승인 처리 로직 추가
+      event.stopPropagation();
+    }
+    
+    // 통계 상세 정보 표시 함수
+    function showStatDetails(statName) {
+      console.log(`${statName} 상세 정보 표시`);
+      // 여기에 오른쪽 패널 업데이트 로직 추가
+    }
+    
+    // 통계 세부 항목 상세 정보 표시 함수
+    function showStatSubDetails(statName, subItemName) {
+      console.log(`${statName} ${subItemName} 상세 정보 표시`);
+      // 여기에 오른쪽 패널 업데이트 로직 추가
+    }
   </script>
 </body>
 </html>

@@ -31,9 +31,6 @@ function loadNavigation() {
       // 현재 페이지 URL에 따라 활성 버튼 설정
       setActiveButton();
       
-      // 버튼 클릭 이벤트 리스너 추가
-      addButtonListeners();
-      
       // 메모 내용 저장 기능 추가
       addNotesSaveFunction();
     })
@@ -83,17 +80,6 @@ function setActiveButton() {
   } else if (currentUrl.includes('/Ver.5')) {
     document.getElementById('ver5-btn')?.classList.add('active');
   }
-}
-
-// 버튼 클릭 이벤트 리스너 추가
-function addButtonListeners() {
-  const buttons = document.querySelectorAll('.version-btn');
-  buttons.forEach(button => {
-    button.addEventListener('click', function() {
-      // 버튼 클릭 시 해당 URL로 이동하므로 추가 작업 필요 없음
-      console.log('버튼 클릭:', this.textContent);
-    });
-  });
 }
 
 // 메모 내용 저장 기능 추가
