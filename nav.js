@@ -65,7 +65,7 @@ function setActiveButton() {
     } else {
       console.warn('버전 1 버튼을 찾을 수 없음');
     }
-  } else if (!currentUrl.includes('/Ver.')) {
+  } else if (currentUrl.includes('/Ver.2')) {
     const ver2Btn = document.getElementById('ver2-btn');
     if (ver2Btn) {
       ver2Btn.classList.add('active');
@@ -79,6 +79,15 @@ function setActiveButton() {
     document.getElementById('ver4-btn')?.classList.add('active');
   } else if (currentUrl.includes('/Ver.5')) {
     document.getElementById('ver5-btn')?.classList.add('active');
+  } else if (!currentUrl.includes('/Ver.')) {
+    // 루트 디렉토리의 index.html인 경우 버전 3 버튼 활성화
+    const ver3Btn = document.getElementById('ver3-btn');
+    if (ver3Btn) {
+      ver3Btn.classList.add('active');
+      console.log('버전 3 버튼 활성화');
+    } else {
+      console.warn('버전 3 버튼을 찾을 수 없음');
+    }
   }
 }
 
