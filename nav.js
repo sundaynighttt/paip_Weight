@@ -8,8 +8,9 @@ function loadNavigation() {
   // 현재 경로에 따라 nav.html 경로 설정
   let navPath = 'nav.html';
   
-// 현재 URL이 Ver.1, Ver.2, Ver.3, Ver.4 또는 Ver.5 폴더에 있는 경우 상위 경로 추가
-if (window.location.href.includes('/Ver.1/') || 
+// 현재 URL이 Ver.0, Ver.1, Ver.2, Ver.3, Ver.4 또는 Ver.5 폴더에 있는 경우 상위 경로 추가
+if (window.location.href.includes('/Ver.0/') ||
+    window.location.href.includes('/Ver.1/') || 
     window.location.href.includes('/Ver.2/') || 
     window.location.href.includes('/Ver.3/') ||
     window.location.href.includes('/Ver.4/') ||
@@ -84,13 +85,13 @@ function setActiveButton() {
   } else if (currentUrl.includes('/Ver.5')) {
     document.getElementById('ver5-btn')?.classList.add('active');
   } else if (!currentUrl.includes('/Ver.')) {
-    // 루트 디렉토리의 index.html인 경우 버전 3 버튼 활성화
-    const ver3Btn = document.getElementById('ver3-btn');
-    if (ver3Btn) {
-      ver3Btn.classList.add('active');
-      console.log('버전 3 버튼 활성화');
+    // 루트 디렉토리의 index.html인 경우 버전 0 버튼 활성화
+    const ver0Btn = document.getElementById('ver0-btn');
+    if (ver0Btn) {
+      ver0Btn.classList.add('active');
+      console.log('버전 0 버튼 활성화');
     } else {
-      console.warn('버전 3 버튼을 찾을 수 없음');
+      console.warn('버전 0 버튼을 찾을 수 없음');
     }
   }
 }

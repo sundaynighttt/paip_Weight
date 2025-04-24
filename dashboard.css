@@ -496,6 +496,11 @@ body {
   color: #888;
 }
 
+/* 네비게이션 바와 대시보드 컨테이너 간의 간격 조정 */
+.version-nav + .dashboard-container {
+  margin-left: 220px; /* 네비게이션 바 너비에 맞게 조정 */
+}
+
 /* 반응형 스타일 */
 @media (max-width: 1200px) {
   .dashboard-grid {
@@ -511,6 +516,11 @@ body {
   
   .kpi-card {
     width: calc(25% - 15px);
+  }
+  
+  .version-nav + .dashboard-container {
+    margin-left: 0;
+    margin-top: 60px; /* 모바일에서는 네비게이션 바 아래로 대시보드 표시 */
   }
 }
 
