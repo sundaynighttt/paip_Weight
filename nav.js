@@ -8,8 +8,12 @@ function loadNavigation() {
   // 현재 경로에 따라 nav.html 경로 설정
   let navPath = 'nav.html';
   
-// 현재 URL이 Ver.1 또는 Ver.2 폴더에 있는 경우 상위 경로 추가
-if (window.location.href.includes('/Ver.1/') || window.location.href.includes('/Ver.2/')) {
+// 현재 URL이 Ver.1, Ver.2, Ver.3, Ver.4 또는 Ver.5 폴더에 있는 경우 상위 경로 추가
+if (window.location.href.includes('/Ver.1/') || 
+    window.location.href.includes('/Ver.2/') || 
+    window.location.href.includes('/Ver.3/') ||
+    window.location.href.includes('/Ver.4/') ||
+    window.location.href.includes('/Ver.5/')) {
   navPath = '../nav.html';
 }
   
