@@ -33,6 +33,47 @@
     .dong-item {
       transition: background-color 0.2s ease-in-out, border-left 0.2s ease-in-out;
     }
+    
+    /* 중량추이 박스 스타일 */
+    .chart-box {
+      position: relative;
+      margin-bottom: 15px;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .chart-box-remove-btn {
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+    
+    .chart-box-remove-btn:hover {
+      background-color: #ff3333;
+      transform: scale(1.1);
+    }
+    
+    .add-chart-box-btn {
+      transition: opacity 0.3s ease;
+    }
+    
+    .add-chart-box-btn[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -1362,6 +1403,7 @@
                   <button class="tab-btn">WC</button>
                 </div>
                 <div class="card-actions">
+                  <button class="icon-btn add-chart-box-btn" onclick="addChartBox('.breeding-panel')"><i class="fas fa-plus"></i></button>
                   <button class="icon-btn"><i class="fas fa-filter"></i></button>
                   <button class="icon-btn"><i class="fas fa-expand"></i></button>
                   <button class="icon-btn"><i class="fas fa-times"></i></button>
@@ -1369,18 +1411,20 @@
               </div>
             </div>
             <div class="card-content">
-              <div class="graph-container">
-                <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
-                  [최근 7일간 WM, 체중계, WC 값 추이 그래프]
-                  <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
-                    <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
-                    <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
-                    <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+              <div class="chart-boxes-container">
+                <div class="chart-box" id="breeding-chart-1">
+                  <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
+                    [최근 7일간 WM, 체중계, WC 값 추이 그래프]
+                    <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
+                      <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
+                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
+                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+                    </div>
+                    <button class="chart-box-remove-btn" style="display: none;">×</button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           
           <!-- R2 관리와 알림을 가로로 배치하는 컨테이너 -->
           <div class="horizontal-layout">
@@ -1589,6 +1633,7 @@
                   <button class="tab-btn">WC</button>
                 </div>
                 <div class="card-actions">
+                  <button class="icon-btn add-chart-box-btn" onclick="addChartBox('.shipping-panel')"><i class="fas fa-plus"></i></button>
                   <button class="icon-btn"><i class="fas fa-filter"></i></button>
                   <button class="icon-btn"><i class="fas fa-expand"></i></button>
                   <button class="icon-btn"><i class="fas fa-times"></i></button>
@@ -1596,18 +1641,20 @@
               </div>
             </div>
             <div class="card-content">
-              <div class="graph-container">
-                <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
-                  [최근 7일간 WM, 체중계, WC 값 추이 그래프]
-                  <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
-                    <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
-                    <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
-                    <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+              <div class="chart-boxes-container">
+                <div class="chart-box" id="shipping-chart-1">
+                  <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
+                    [최근 7일간 WM, 체중계, WC 값 추이 그래프]
+                    <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
+                      <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
+                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
+                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+                    </div>
+                    <button class="chart-box-remove-btn" style="display: none;">×</button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
           
           <!-- R2 관리와 알림을 가로로 배치하는 컨테이너 -->
           <div class="horizontal-layout">
@@ -2244,6 +2291,148 @@
       });
     }
     
+    // 중량추이 박스 관리 함수들
+    
+    // 박스 추가 함수
+    function addChartBox(panelSelector) {
+      // 현재 패널 선택
+      const panel = document.querySelector(panelSelector);
+      if (!panel) return;
+      
+      // 박스 컨테이너 선택
+      const boxesContainer = panel.querySelector('.chart-boxes-container');
+      if (!boxesContainer) return;
+      
+      // 현재 박스 개수 확인
+      const chartBoxes = boxesContainer.querySelectorAll('.chart-box');
+      const boxCount = chartBoxes.length;
+      
+      // 최대 3개 제한
+      if (boxCount >= 3) {
+        alert('최대 3개의 박스만 추가할 수 있습니다.');
+        return;
+      }
+      
+      // 새 박스 ID 설정
+      const prefix = panelSelector === '.breeding-panel' ? 'breeding' : 'shipping';
+      const newBoxId = `${prefix}-chart-${Date.now()}`;
+      
+      // 새 박스 생성
+      const newBox = document.createElement('div');
+      newBox.className = 'chart-box';
+      newBox.id = newBoxId;
+      
+      // 박스 내용 추가
+      newBox.innerHTML = `
+        <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
+          [새로운 중량 추이 박스 ${boxCount + 1}]
+          <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
+            <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
+            <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
+            <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+          </div>
+          <button class="chart-box-remove-btn">×</button>
+        </div>
+      </div>`;
+      
+      // 박스 컨테이너에 추가
+      boxesContainer.appendChild(newBox);
+      
+      // 삭제 버튼에 이벤트 리스너 추가
+      const removeBtn = newBox.querySelector('.chart-box-remove-btn');
+      if (removeBtn) {
+        removeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          removeChartBox(newBoxId, panelSelector);
+        });
+      }
+      
+      // 박스 상태 업데이트
+      updateChartBoxes(panelSelector);
+    }
+    
+    // 박스 삭제 함수
+    function removeChartBox(boxId, panelSelector) {
+      // 현재 패널 선택
+      const panel = document.querySelector(panelSelector);
+      if (!panel) return;
+      
+      // 박스 찾기
+      const box = document.getElementById(boxId);
+      if (!box) return;
+      
+      // 박스 삭제
+      box.remove();
+      
+      // 박스 상태 업데이트
+      updateChartBoxes(panelSelector);
+    }
+    
+    // 박스 상태 업데이트 함수
+    function updateChartBoxes(panelSelector) {
+      // 현재 패널 선택
+      const panel = document.querySelector(panelSelector);
+      if (!panel) return;
+      
+      // 박스 컨테이너 선택
+      const boxesContainer = panel.querySelector('.chart-boxes-container');
+      if (!boxesContainer) return;
+      
+      // 현재 박스 개수 확인
+      const chartBoxes = boxesContainer.querySelectorAll('.chart-box');
+      const boxCount = chartBoxes.length;
+      
+      // 삭제 버튼 표시/숨김 처리
+      chartBoxes.forEach(box => {
+        const removeBtn = box.querySelector('.chart-box-remove-btn');
+        if (removeBtn) {
+          if (boxCount === 1) {
+            removeBtn.style.display = 'none';
+          } else {
+            removeBtn.style.display = 'block';
+          }
+        }
+      });
+      
+      // 플러스 버튼 활성화/비활성화
+      const addButton = panel.querySelector('.add-chart-box-btn');
+      if (addButton) {
+        if (boxCount >= 3) {
+          addButton.disabled = true;
+          addButton.style.opacity = '0.5';
+          addButton.style.cursor = 'not-allowed';
+        } else {
+          addButton.disabled = false;
+          addButton.style.opacity = '1';
+          addButton.style.cursor = 'pointer';
+        }
+      }
+    }
+    
+    // 중량추이 박스 초기화 함수
+    function initChartBoxes() {
+      // 사육 패널과 출하 패널 모두에 적용
+      const panels = ['.breeding-panel', '.shipping-panel'];
+      
+      panels.forEach(panelSelector => {
+        // 초기 박스 상태 설정
+        updateChartBoxes(panelSelector);
+        
+        // 초기 박스의 삭제 버튼에 이벤트 리스너 추가
+        const initialBoxId = panelSelector === '.breeding-panel' ? 'breeding-chart-1' : 'shipping-chart-1';
+        const initialBox = document.getElementById(initialBoxId);
+        if (initialBox) {
+          const removeBtn = initialBox.querySelector('.chart-box-remove-btn');
+          if (removeBtn) {
+            removeBtn.addEventListener('click', function(e) {
+              e.stopPropagation();
+              removeChartBox(initialBoxId, panelSelector);
+            });
+          }
+        }
+      });
+    }
+    
     // 페이지 로드 시 이벤트 리스너 등록
     document.addEventListener('DOMContentLoaded', function() {
       // 모든 농장 항목의 화살표 아이콘에 클릭 이벤트 추가
@@ -2312,6 +2501,9 @@
       
       // 초기 flex 비율 설정
       updateCategoryFlexRatio();
+      
+      // 중량추이 박스 초기화
+      initChartBoxes();
     });
     
     // 농장 상세 정보 표시 함수
