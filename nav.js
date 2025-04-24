@@ -8,10 +8,10 @@ function loadNavigation() {
   // 현재 경로에 따라 nav.html 경로 설정
   let navPath = 'nav.html';
   
-  // 현재 URL이 Ver.1 폴더에 있는 경우 상위 경로 추가
-  if (window.location.href.includes('/Ver.1/')) {
-    navPath = '../nav.html';
-  }
+// 현재 URL이 Ver.1 또는 Ver.2 폴더에 있는 경우 상위 경로 추가
+if (window.location.href.includes('/Ver.1/') || window.location.href.includes('/Ver.2/')) {
+  navPath = '../nav.html';
+}
   
   console.log('네비게이션 바 로드 시도:', navPath);
   
