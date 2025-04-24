@@ -1,0 +1,165 @@
+{
+  "categories": [
+    {
+      "id": "breeding",
+      "name": "사육",
+      "count": 7,
+      "farms": [
+        {
+          "id": "FA0701",
+          "name": "미래농장",
+          "round": "2025-2",
+          "days": 34,
+          "version": "V2.3",
+          "status": "NG",
+          "dongCount": 4,
+          "ngCount": 2,
+          "dongs": [
+            {
+              "id": "H01",
+              "days": 34,
+              "wm": "1,680g",
+              "scale": "1,765g",
+              "status": "NG",
+              "error": "-85g"
+            },
+            {
+              "id": "H02",
+              "days": 34,
+              "wm": "1,670g",
+              "scale": "1,765g",
+              "status": "NG",
+              "error": "-95g"
+            },
+            {
+              "id": "H03",
+              "days": 34,
+              "wm": "1,690g",
+              "scale": "1,690g",
+              "status": "OK"
+            },
+            {
+              "id": "H04",
+              "days": 34,
+              "wm": "1,685g",
+              "scale": "1,685g",
+              "status": "OK"
+            }
+          ]
+        },
+        {
+          "id": "FA0300",
+          "name": "대성농장",
+          "round": "2025-2",
+          "days": 33,
+          "version": "V2.3",
+          "status": "NG",
+          "dongCount": 4,
+          "ngCount": 2,
+          "dongs": [
+            {
+              "id": "H01",
+              "days": 33,
+              "wm": "1,620g",
+              "scale": "1,710g",
+              "status": "NG",
+              "error": "-118g"
+            },
+            {
+              "id": "H02",
+              "days": 33,
+              "wm": "1,590g",
+              "scale": "1,680g",
+              "status": "NG",
+              "error": "-90g"
+            },
+            {
+              "id": "H03",
+              "days": 33,
+              "wm": "1,605g",
+              "scale": "1,625g",
+              "status": "OK"
+            },
+            {
+              "id": "H04",
+              "days": 33,
+              "wm": "1,615g",
+              "scale": "1,630g",
+              "status": "OK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shipping",
+      "name": "출하",
+      "count": 2,
+      "farms": [
+        {
+          "id": "FA0326",
+          "name": "신농장",
+          "round": "2025-2",
+          "days": 35,
+          "version": "V2.3",
+          "status": "NG",
+          "dongCount": 3,
+          "ngCount": 1,
+          "dongs": [
+            {
+              "id": "H01",
+              "days": 35,
+              "wm": "1,710g",
+              "scale": "1,795g",
+              "status": "NG",
+              "error": "-85g"
+            },
+            {
+              "id": "H02",
+              "days": 35,
+              "wm": "1,695g",
+              "scale": "1,720g",
+              "status": "OK"
+            },
+            {
+              "id": "H03",
+              "days": 35,
+              "wm": "1,705g",
+              "scale": "1,725g",
+              "status": "OK"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "statistics",
+      "name": "통계 요약",
+      "items": [
+        {
+          "id": "STAT001",
+          "name": "일령별 평균",
+          "dataCount": 125,
+          "lastUpdate": "2025-04-23",
+          "status": "양호",
+          "details": [
+            {
+              "id": "SD001",
+              "name": "일령 30-35",
+              "avgWM": "1,620g",
+              "avgScale": "1,650g",
+              "status": "OK"
+            },
+            {
+              "id": "SD002",
+              "name": "일령 25-30",
+              "avgWM": "1,450g",
+              "avgScale": "1,470g",
+              "status": "OK"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

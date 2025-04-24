@@ -1,0 +1,162 @@
+<!-- 오른쪽 패널 (출하) -->
+<div class="right-panel shipping-panel" style="display: none;">
+  <div class="data-view">
+    <!-- 기본 정보 -->
+    <div class="info-card farm-info">
+      <div class="card-header">
+        <div class="basic-info-container">
+          <div class="basic-info-left">
+            <span class="info-item"><strong>농장ID:</strong> <span class="farm-id">FA0326</span></span>
+            <span class="info-item"><strong>농장명:</strong> <span class="farm-name">신농장</span></span>
+          </div>
+          <div class="basic-info-right">
+            <span class="info-item"><strong>회차:</strong> <span class="round">2025-2</span></span>
+            <span class="info-item"><strong>동:</strong> <span class="dong">S01</span></span>
+            <span class="info-item"><strong>일령:</strong> <span class="days">35</span></span>
+            <span class="info-item"><strong>버전:</strong> <span class="version-badge">V2.3</span></span>
+            <span class="info-item"><strong>상태:</strong> <span class="status ok">OK</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 중량 추이 -->
+    <div class="info-card">
+      <div class="card-header">
+        <h4>중량 추이</h4>
+        <div class="card-controls">
+          <div class="graph-controls">
+            <button class="tab-btn active">WM</button>
+            <button class="tab-btn">체중계</button>
+            <button class="tab-btn">WC</button>
+          </div>
+          <div class="card-actions">
+            <button class="icon-btn add-chart-box-btn" onclick="addChartBox('.shipping-panel')"><i class="fas fa-plus"></i></button>
+            <button class="icon-btn"><i class="fas fa-filter"></i></button>
+            <button class="icon-btn"><i class="fas fa-expand"></i></button>
+            <button class="icon-btn"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="chart-boxes-container">
+          <div class="chart-box" id="shipping-chart-1">
+            <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
+              [최근 7일간 WM, 체중계, WC 값 추이 그래프]
+              <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
+                <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
+                <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
+                <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+              </div>
+              <button class="chart-box-remove-btn" style="display: none;">×</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- R2 관리와 알림을 가로로 배치하는 컨테이너 -->
+    <div class="horizontal-layout">
+      <!-- R2 관리 -->
+      <div class="info-card r2-management">
+        <div class="card-header">
+          <h4>R2 관리</h4>
+          <div class="card-controls">
+            <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+              <option>현재 버전 (V2.3)</option>
+              <option>이전 버전 (V2.2)</option>
+              <option>이전 버전 (V2.1)</option>
+            </select>
+            <div class="card-actions">
+              <button class="icon-btn"><i class="fas fa-filter"></i></button>
+              <button class="icon-btn"><i class="fas fa-expand"></i></button>
+              <button class="icon-btn"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="r2-control" style="display: flex; gap: 10px;">
+            <div class="r2-table" style="flex: 1;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>중량 범위</th>
+                    <th>R2 값</th>
+                    <th>적용 시점</th>
+                    <th>변경 사유</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- R2 데이터가 들어갈 자리 -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="r2-adjust" style="flex: 1;">
+              <form class="r2-adjust-form">
+                <div style="font-size: 0.8rem; font-weight: 500; margin-bottom: 10px;">R2 값 조정</div>
+                <div style="margin-bottom: 8px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 중량 범위</label>
+                  <input type="text" value="1,601g~" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 R2 값</label>
+                  <input type="text" value="1.02" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">WM 값</label>
+                  <input type="text" class="wm-value" value="1,620g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">체중계 값</label>
+                  <input type="text" class="scale-value" value="1,710g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">새 R2 값</label>
+                  <input type="text" value="1.06" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 결과(WC)</label>
+                  <input type="text" value="1,717g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                  <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 사유</label>
+                  <textarea placeholder="R2 값 조정 사유를 입력하세요..." style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; height: 50px; font-size: 0.7rem;">체중계 값과의 오차가 임계치를 초과하여 R2 값을 조정합니다.</textarea>
+                </div>
+                <div style="display: flex; gap: 5px;">
+                  <button class="btn btn-primary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #0066cc; background-color: #0066cc; color: white; cursor: pointer; font-weight: 500; font-size: 0.7rem;">적용</button>
+                  <button class="btn btn-secondary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #ddd; background-color: #f5f5f5; color: #666; cursor: pointer; font-weight: 500; font-size: 0.7rem;">취소</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 알림 -->
+      <div class="info-card notifications">
+        <div class="card-header">
+          <h4>알림</h4>
+          <div class="card-controls">
+            <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+              <option>모든 알림</option>
+              <option>값 변화 알림</option>
+              <option>버전 변경 알림</option>
+              <option>R2 조정 알림</option>
+            </select>
+            <div class="card-actions">
+              <button class="icon-btn"><i class="fas fa-filter"></i></button>
+              <button class="icon-btn"><i class="fas fa-expand"></i></button>
+              <button class="icon-btn"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="notification-list">
+            <!-- 알림 항목들이 들어갈 자리 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
