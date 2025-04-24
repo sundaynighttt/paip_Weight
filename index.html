@@ -1302,7 +1302,7 @@
         </div>
       </div>
       
-      <!-- 오른쪽 패널: 상세 데이터 및 시각화 -->
+      <!-- 오른쪽 패널 -->
       <div class="right-panel">
         <div class="data-view">
           <!-- 기본 정보 -->
@@ -1537,14 +1537,23 @@
   <script>
     // 동을 클릭했을 때 오른쪽 패널 업데이트 함수
     function updateRightPanel(farmId, dongId, farmName, days, status, errorValue, wmValue, scaleValue) {
+      // 농장 ID로 카테고리 구분 (사육 또는 출하)
+      const isBreeding = isBreedingFarm(farmId);
+      
+      // 적절한 패널 표시
+      showCorrectPanel(isBreeding);
+      
+      // 패널 선택 (사육 또는 출하)
+      const panelSelector = isBreeding ? '.breeding-panel' : '.shipping-panel';
+      
       // 기본 정보 업데이트
-      document.querySelector('.farm-id').textContent = farmId;
-      document.querySelector('.farm-name').textContent = farmName;
-      document.querySelector('.dong').textContent = dongId;
-      document.querySelector('.days').textContent = days;
+      document.querySelector(panelSelector + ' .farm-id').textContent = farmId;
+      document.querySelector(panelSelector + ' .farm-name').textContent = farmName;
+      document.querySelector(panelSelector + ' .dong').textContent = dongId;
+      document.querySelector(panelSelector + ' .days').textContent = days;
       
       // 상태 업데이트
-      const statusElement = document.querySelector('.basic-info-right .status');
+      const statusElement = document.querySelector(panelSelector + ' .basic-info-right .status');
       if (status === 'NG') {
         statusElement.className = 'status ng';
         statusElement.innerHTML = 'NG <span class="error-value">오차: ' + errorValue + '</span>';
@@ -1554,19 +1563,42 @@
       }
       
       // R2 조정 폼 업데이트
-      const wmInput = document.querySelector('.r2-adjust-form input[value="1,620g"]');
-      const scaleInput = document.querySelector('.r2-adjust-form input[value="1,710g"]');
+      const wmInput = document.querySelector(panelSelector + ' .r2-adjust-form .wm-value');
+      const scaleInput = document.querySelector(panelSelector + ' .r2-adjust-form .scale-value');
       
       if (wmInput) wmInput.value = wmValue;
       if (scaleInput) scaleInput.value = scaleValue;
       
       // 알림 섹션 첫 번째 항목 업데이트
       if (status === 'NG') {
-        const notificationTitle = document.querySelector('.notification-list .notification-item:first-child .notification-title');
-        const notificationDesc = document.querySelector('.notification-list .notification-item:first-child .notification-desc');
+        const notificationTitle = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-title');
+        const notificationDesc = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-desc');
         
         if (notificationTitle) notificationTitle.textContent = dongId + ' 동 중량 오차 발생';
         if (notificationDesc) notificationDesc.textContent = '오차: ' + errorValue + ', 확인이 필요합니다.';
+      }
+    }
+    
+    // 농장 ID로 카테고리 구분 (사육 또는 출하)
+    function isBreedingFarm(farmId) {
+      // 출하 카테고리에 속하는 농장 ID 목록
+      const shippingFarmIds = ['FA0326', 'FA0401']; // 신농장, 한마음농장
+      
+      // 출하 카테고리에 속하면 false, 사육 카테고리에 속하면 true 반환
+      return !shippingFarmIds.includes(farmId);
+    }
+    
+    // 적절한 패널 표시 함수
+    function showCorrectPanel(isBreeding) {
+      const breedingPanel = document.querySelector('.breeding-panel');
+      const shippingPanel = document.querySelector('.shipping-panel');
+      
+      if (isBreeding) {
+        breedingPanel.style.display = 'block';
+        shippingPanel.style.display = 'none';
+      } else {
+        breedingPanel.style.display = 'none';
+        shippingPanel.style.display = 'block';
       }
     }
     
@@ -1587,7 +1619,38 @@
         category.classList.add('collapsed');
         icon.classList.remove('fa-chevron-down');
         icon.classList.add('fa-chevron-up');
+        
+        // 접힌 카테고리의 인라인 스타일 즉시 제거
+        category.style.removeProperty('flex');
       }
+      
+      // 펼쳐진 카테고리들의 flex 비율 조정
+      updateCategoryFlexRatio();
+    }
+    
+    // 펼쳐진 카테고리들의 flex 비율을 조정하는 함수
+    function updateCategoryFlexRatio() {
+      const categories = document.querySelectorAll('.data-category');
+      const expandedCategories = document.querySelectorAll('.data-category.expanded');
+      const expandedCount = expandedCategories.length;
+      
+      // 모든 카테고리 처리
+      categories.forEach(category => {
+        // 접힌 카테고리는 인라인 스타일 제거
+        if (category.classList.contains('collapsed')) {
+          category.style.removeProperty('flex');
+        }
+      });
+      
+      // 모든 카테고리가 접혀있는 경우 처리
+      if (expandedCount === 0) {
+        return;
+      }
+      
+      // 펼쳐진 카테고리들에 동등한 flex 비율 적용
+      expandedCategories.forEach(category => {
+        category.style.flex = `1 1 0`;
+      });
     }
     
     // 페이지 로드 시 동 목록 토글 기능 초기화
@@ -1655,6 +1718,9 @@
         icon.classList.remove('fa-chevron-up');
         icon.classList.add('fa-chevron-down');
       });
+      
+      // 초기 flex 비율 설정
+      updateCategoryFlexRatio();
     });
     
     // 농장 상세 정보 표시 함수
