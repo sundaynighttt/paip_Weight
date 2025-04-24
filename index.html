@@ -8,6 +8,32 @@
   <link rel="stylesheet" href="nav.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* 로딩 오버레이 스타일 */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    /* 선택된 동 스타일 */
+    .selected-dong {
+      background-color: #f0f7ff !important;
+      border-left: 3px solid #3498db !important;
+    }
+    
+    /* 동 항목 트랜지션 */
+    .dong-item {
+      transition: background-color 0.2s ease-in-out, border-left 0.2s ease-in-out;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -77,7 +103,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0701', 'H01', '미래농장', 34, 'NG', '-85g', '1,680g', '1,765g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0701', 'H01', '미래농장', 34, 'NG', '-85g', '1,680g', '1,765g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -99,7 +125,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0701', 'H02', '미래농장', 34, 'NG', '-95g', '1,670g', '1,765g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0701', 'H02', '미래농장', 34, 'NG', '-95g', '1,670g', '1,765g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -121,7 +147,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0701', 'H03', '미래농장', 34, 'OK', '0g', '1,690g', '1,690g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0701', 'H03', '미래농장', 34, 'OK', '0g', '1,690g', '1,690g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -143,7 +169,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0701', 'H04', '미래농장', 34, 'OK', '0g', '1,685g', '1,685g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0701', 'H04', '미래농장', 34, 'OK', '0g', '1,685g', '1,685g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -193,7 +219,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0300', 'H01', '대성농장', 33, 'NG', '-118g', '1,620g', '1,710g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0300', 'H01', '대성농장', 33, 'NG', '-118g', '1,620g', '1,710g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -215,7 +241,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0300', 'H02', '대성농장', 33, 'NG', '-90g', '1,590g', '1,680g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0300', 'H02', '대성농장', 33, 'NG', '-90g', '1,590g', '1,680g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -237,7 +263,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0300', 'H03', '대성농장', 33, 'OK', '', '1,605g', '1,625g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0300', 'H03', '대성농장', 33, 'OK', '', '1,605g', '1,625g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -259,7 +285,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0300', 'H04', '대성농장', 33, 'OK', '', '1,615g', '1,630g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0300', 'H04', '대성농장', 33, 'OK', '', '1,615g', '1,630g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -309,7 +335,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '해피농장', 35, 'OK', '0g', '1,750g', '1,750g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '해피농장', 35, 'OK', '0g', '1,750g', '1,750g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -331,7 +357,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '해피농장', 35, 'OK', '0g', '1,730g', '1,730g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '해피농장', 35, 'OK', '0g', '1,730g', '1,730g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -353,7 +379,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '해피농장', 35, 'OK', '0g', '1,740g', '1,740g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '해피농장', 35, 'OK', '0g', '1,740g', '1,740g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -375,7 +401,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '해피농장', 35, 'OK', '0g', '1,760g', '1,760g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '해피농장', 35, 'OK', '0g', '1,760g', '1,760g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -425,7 +451,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0502', 'H01', '그린농장', 32, 'OK', '0g', '1,620g', '1,620g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0502', 'H01', '그린농장', 32, 'OK', '0g', '1,620g', '1,620g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -447,7 +473,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0502', 'H02', '그린농장', 32, 'OK', '0g', '1,630g', '1,630g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0502', 'H02', '그린농장', 32, 'OK', '0g', '1,630g', '1,630g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -469,7 +495,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0502', 'H03', '그린농장', 32, 'OK', '0g', '1,640g', '1,640g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0502', 'H03', '그린농장', 32, 'OK', '0g', '1,640g', '1,640g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -491,7 +517,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0502', 'H04', '그린농장', 32, 'OK', '0g', '1,610g', '1,610g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0502', 'H04', '그린농장', 32, 'OK', '0g', '1,610g', '1,610g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -541,7 +567,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0253', 'H01', 'SG컴퍼니', 33, 'OK', '', '1,610g', '1,625g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0253', 'H01', 'SG컴퍼니', 33, 'OK', '', '1,610g', '1,625g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -563,7 +589,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0253', 'H02', 'SG컴퍼니', 33, 'OK', '', '1,615g', '1,630g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0253', 'H02', 'SG컴퍼니', 33, 'OK', '', '1,615g', '1,630g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -585,7 +611,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0253', 'H03', 'SG컴퍼니', 33, 'OK', '', '1,620g', '1,635g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0253', 'H03', 'SG컴퍼니', 33, 'OK', '', '1,620g', '1,635g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -607,7 +633,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0253', 'H04', 'SG컴퍼니', 33, 'OK', '', '1,625g', '1,640g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0253', 'H04', 'SG컴퍼니', 33, 'OK', '', '1,625g', '1,640g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -629,7 +655,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H05" onclick="updateRightPanel('FA0253', 'H05', 'SG컴퍼니', 33, 'OK', '', '1,630g', '1,645g')">
+                <div class="data-item dong-item" data-dong-id="H05" onclick="updateRightPanel('FA0253', 'H05', 'SG컴퍼니', 33, 'OK', '', '1,630g', '1,645g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -679,7 +705,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0603', 'H01', '청정농장', 30, 'OK', '0g', '1,520g', '1,520g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0603', 'H01', '청정농장', 30, 'OK', '0g', '1,520g', '1,520g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -701,7 +727,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0603', 'H02', '청정농장', 30, 'OK', '0g', '1,530g', '1,530g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0603', 'H02', '청정농장', 30, 'OK', '0g', '1,530g', '1,530g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -723,7 +749,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0603', 'H03', '청정농장', 30, 'OK', '0g', '1,540g', '1,540g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0603', 'H03', '청정농장', 30, 'OK', '0g', '1,540g', '1,540g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -745,7 +771,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0603', 'H04', '청정농장', 30, 'OK', '0g', '1,510g', '1,510g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0603', 'H04', '청정농장', 30, 'OK', '0g', '1,510g', '1,510g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -795,7 +821,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0802', 'H01', '푸른농장', 31, 'NG', '-80g', '1,580g', '1,660g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0802', 'H01', '푸른농장', 31, 'NG', '-80g', '1,580g', '1,660g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -817,7 +843,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0802', 'H02', '푸른농장', 31, 'OK', '0g', '1,570g', '1,570g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0802', 'H02', '푸른농장', 31, 'OK', '0g', '1,570g', '1,570g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -839,7 +865,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0802', 'H03', '푸른농장', 31, 'OK', '0g', '1,590g', '1,590g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0802', 'H03', '푸른농장', 31, 'OK', '0g', '1,590g', '1,590g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -861,7 +887,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0802', 'H04', '푸른농장', 31, 'OK', '0g', '1,585g', '1,585g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0802', 'H04', '푸른농장', 31, 'OK', '0g', '1,585g', '1,585g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -922,7 +948,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0326', 'H01', '신농장', 35, 'NG', '-85g', '1,710g', '1,795g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0326', 'H01', '신농장', 35, 'NG', '-85g', '1,710g', '1,795g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -944,7 +970,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0326', 'H02', '신농장', 35, 'OK', '', '1,695g', '1,720g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0326', 'H02', '신농장', 35, 'OK', '', '1,695g', '1,720g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -966,7 +992,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0326', 'H03', '신농장', 35, 'OK', '', '1,705g', '1,725g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0326', 'H03', '신농장', 35, 'OK', '', '1,705g', '1,725g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1016,7 +1042,7 @@
               </div>
               <!-- 동 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '한마음농장', 30, 'OK', '', '1,520g', '1,535g')">
+                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '한마음농장', 30, 'OK', '', '1,520g', '1,535g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1038,7 +1064,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '한마음농장', 30, 'NG', '-95g', '1,490g', '1,585g')">
+                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '한마음농장', 30, 'NG', '-95g', '1,490g', '1,585g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1060,7 +1086,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '한마음농장', 30, 'OK', '', '1,510g', '1,525g')">
+                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '한마음농장', 30, 'OK', '', '1,510g', '1,525g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1082,7 +1108,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '한마음농장', 30, 'OK', '', '1,515g', '1,530g')">
+                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '한마음농장', 30, 'OK', '', '1,515g', '1,530g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1104,7 +1130,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-dong-id="H05" onclick="updateRightPanel('FA0401', 'H05', '한마음농장', 30, 'NG', '-85g', '1,500g', '1,585g')">
+                <div class="data-item dong-item" data-dong-id="H05" onclick="updateRightPanel('FA0401', 'H05', '한마음농장', 30, 'NG', '-85g', '1,500g', '1,585g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1164,7 +1190,7 @@
               </div>
               <!-- 세부 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-stat-detail-id="SD001" onclick="updateRightPanel('STAT001', 'SD001', '일령별 평균', 33, 'OK', '', '1,620g', '1,650g')">
+                <div class="data-item dong-item" data-stat-detail-id="SD001" onclick="updateRightPanel('STAT001', 'SD001', '일령별 평균', 33, 'OK', '', '1,620g', '1,650g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1185,7 +1211,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-stat-detail-id="SD002" onclick="updateRightPanel('STAT001', 'SD002', '일령별 평균', 28, 'OK', '', '1,450g', '1,470g')">
+                <div class="data-item dong-item" data-stat-detail-id="SD002" onclick="updateRightPanel('STAT001', 'SD002', '일령별 평균', 28, 'OK', '', '1,450g', '1,470g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1233,7 +1259,7 @@
               </div>
               <!-- 세부 목록 -->
               <div class="dong-list">
-                <div class="data-item" data-stat-detail-id="SD003" onclick="updateRightPanel('STAT002', 'SD003', '농장별 오차율', 0, 'NG', '-5.2%', '1,600g', '1,685g')">
+                <div class="data-item dong-item" data-stat-detail-id="SD003" onclick="updateRightPanel('STAT002', 'SD003', '농장별 오차율', 0, 'NG', '-5.2%', '1,600g', '1,685g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1254,7 +1280,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-stat-detail-id="SD004" onclick="updateRightPanel('STAT002', 'SD004', '농장별 오차율', 0, 'NG', '-4.8%', '1,710g', '1,795g')">
+                <div class="data-item dong-item" data-stat-detail-id="SD004" onclick="updateRightPanel('STAT002', 'SD004', '농장별 오차율', 0, 'NG', '-4.8%', '1,710g', '1,795g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1275,7 +1301,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="data-item" data-stat-detail-id="SD005" onclick="updateRightPanel('STAT002', 'SD005', '농장별 오차율', 0, 'OK', '', '1,520g', '1,535g')">
+                <div class="data-item dong-item" data-stat-detail-id="SD005" onclick="updateRightPanel('STAT002', 'SD005', '농장별 오차율', 0, 'OK', '', '1,520g', '1,535g')">
                   <div class="farm-item-content">
                     <div class="farm-item-info">
                       <div>
@@ -1303,7 +1329,8 @@
       </div>
       
       <!-- 오른쪽 패널 -->
-      <div class="right-panel">
+      <!-- 오른쪽 패널 (사육) -->
+      <div class="right-panel breeding-panel">
         <div class="data-view">
           <!-- 기본 정보 -->
           <div class="info-card farm-info">
@@ -1434,11 +1461,11 @@
                       </div>
                       <div style="margin-bottom: 8px;">
                         <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">WM 값</label>
-                        <input type="text" value="1,620g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                        <input type="text" class="wm-value" value="1,620g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
                       </div>
                       <div style="margin-bottom: 8px;">
                         <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">체중계 값</label>
-                        <input type="text" value="1,710g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                        <input type="text" class="scale-value" value="1,710g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
                       </div>
                       <div style="margin-bottom: 8px;">
                         <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">새 R2 값</label>
@@ -1528,6 +1555,213 @@
           </div>
         </div>
       </div>
+      
+      <!-- 오른쪽 패널 (출하) -->
+      <div class="right-panel shipping-panel" style="display: none;">
+        <div class="data-view">
+          <!-- 기본 정보 -->
+          <div class="info-card farm-info">
+            <div class="card-header">
+              <div class="basic-info-container">
+                <div class="basic-info-left">
+                  <span class="info-item"><strong>농장ID:</strong> <span class="farm-id">FA0326</span></span>
+                  <span class="info-item"><strong>농장명:</strong> <span class="farm-name">신농장</span></span>
+                </div>
+                <div class="basic-info-right">
+                  <span class="info-item"><strong>회차:</strong> <span class="round">2025-2</span></span>
+                  <span class="info-item"><strong>동:</strong> <span class="dong">S01</span></span>
+                  <span class="info-item"><strong>일령:</strong> <span class="days">35</span></span>
+                  <span class="info-item"><strong>버전:</strong> <span class="version-badge">V2.3</span></span>
+                  <span class="info-item"><strong>상태:</strong> <span class="status ok">OK</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 중량 추이 -->
+          <div class="info-card">
+            <div class="card-header">
+              <h4>중량 추이</h4>
+              <div class="card-controls">
+                <div class="graph-controls">
+                  <button class="tab-btn active">WM</button>
+                  <button class="tab-btn">체중계</button>
+                  <button class="tab-btn">WC</button>
+                </div>
+                <div class="card-actions">
+                  <button class="icon-btn"><i class="fas fa-filter"></i></button>
+                  <button class="icon-btn"><i class="fas fa-expand"></i></button>
+                  <button class="icon-btn"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="graph-container">
+                <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
+                  [최근 7일간 WM, 체중계, WC 값 추이 그래프]
+                  <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
+                    <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
+                    <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
+                    <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- R2 관리와 알림을 가로로 배치하는 컨테이너 -->
+          <div class="horizontal-layout">
+            <!-- R2 관리 -->
+            <div class="info-card r2-management">
+              <div class="card-header">
+                <h4>R2 관리</h4>
+                <div class="card-controls">
+                  <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                    <option>현재 버전 (V2.3)</option>
+                    <option>이전 버전 (V2.2)</option>
+                    <option>이전 버전 (V2.1)</option>
+                  </select>
+                  <div class="card-actions">
+                    <button class="icon-btn"><i class="fas fa-filter"></i></button>
+                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
+                    <button class="icon-btn"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="r2-control" style="display: flex; gap: 10px;">
+                  <div class="r2-table" style="flex: 1;">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>중량 범위</th>
+                          <th>R2 값</th>
+                          <th>적용 시점</th>
+                          <th>변경 사유</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1,601g~</td>
+                          <td>1.020</td>
+                          <td>25-04-29, 10:30</td>
+                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+                        </tr>
+                        <tr>
+                          <td>1,301g~1,600g</td>
+                          <td>1.020</td>
+                          <td>25-04-27, 00:27</td>
+                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+                        </tr>
+                        <tr>
+                          <td>1,001g~1,300g</td>
+                          <td>0.950</td>
+                          <td>25-04-25, 16:53</td>
+                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+                        </tr>
+                        <tr>
+                          <td>701g~1,000g</td>
+                          <td>0.920</td>
+                          <td>25-04-23, 11:30</td>
+                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+                        </tr>
+                        <tr>
+                          <td>~700g</td>
+                          <td>0.885</td>
+                          <td>25-04-20, 11:30</td>
+                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  <div class="r2-adjust" style="flex: 1;">
+                    <form class="r2-adjust-form">
+                      <div style="font-size: 0.8rem; font-weight: 500; margin-bottom: 10px;">R2 값 조정</div>
+                      <div style="margin-bottom: 8px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 중량 범위</label>
+                        <input type="text" value="1,601g~" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                      </div>
+                      <div style="margin-bottom: 8px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 R2 값</label>
+                        <input type="text" value="1.02" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                      </div>
+                      <div style="margin-bottom: 8px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">WM 값</label>
+                        <input type="text" class="wm-value" value="1,620g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                      </div>
+                      <div style="margin-bottom: 8px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">체중계 값</label>
+                        <input type="text" class="scale-value" value="1,710g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                      </div>
+                      <div style="margin-bottom: 8px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">새 R2 값</label>
+                        <input type="text" value="1.06" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                      </div>
+                      <div style="margin-bottom: 8px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 결과(WC)</label>
+                        <input type="text" value="1,717g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                      </div>
+                      <div style="margin-bottom: 10px;">
+                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 사유</label>
+                        <textarea placeholder="R2 값 조정 사유를 입력하세요..." style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; height: 50px; font-size: 0.7rem;">체중계 값과의 오차가 임계치를 초과하여 R2 값을 조정합니다.</textarea>
+                      </div>
+                      <div style="display: flex; gap: 5px;">
+                        <button class="btn btn-primary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #0066cc; background-color: #0066cc; color: white; cursor: pointer; font-weight: 500; font-size: 0.7rem;">적용</button>
+                        <button class="btn btn-secondary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #ddd; background-color: #f5f5f5; color: #666; cursor: pointer; font-weight: 500; font-size: 0.7rem;">취소</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 알림 -->
+            <div class="info-card notifications">
+              <div class="card-header">
+                <h4>알림</h4>
+                <div class="card-controls">
+                  <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
+                    <option>모든 알림</option>
+                    <option>값 변화 알림</option>
+                    <option>버전 변경 알림</option>
+                    <option>R2 조정 알림</option>
+                  </select>
+                  <div class="card-actions">
+                    <button class="icon-btn"><i class="fas fa-filter"></i></button>
+                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
+                    <button class="icon-btn"><i class="fas fa-times"></i></button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content">
+                <div class="notification-list">
+                  <div class="notification-item">
+                    <div class="notification-icon info">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <div class="notification-title">시스템 업데이트 완료</div>
+                      <div class="notification-desc">V2.3 버전으로 업데이트되었습니다.</div>
+                      <div class="notification-time">2025-04-21 09:15</div>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <div class="notification-icon info">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="notification-content">
+                      <div class="notification-title">R2 값 자동 조정</div>
+                      <div class="notification-desc">중량 범위 1,601g~ 의 R2 값이 1.02로 조정됨</div>
+                      <div class="notification-time">2025-04-20 16:30</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1546,13 +1780,57 @@
       // 패널 선택 (사육 또는 출하)
       const panelSelector = isBreeding ? '.breeding-panel' : '.shipping-panel';
       
-      // 기본 정보 업데이트
+      // 선택된 동 강조 표시
+      highlightSelectedDong(dongId);
+      
+      // 각 섹션 업데이트
+      updateBasicInfo(panelSelector, farmId, farmName, dongId, days);
+      updateStatus(panelSelector, status, errorValue);
+      updateR2Form(panelSelector, wmValue, scaleValue);
+      
+      // 알림 섹션 업데이트
+      if (status === 'NG') {
+        updateNotifications(panelSelector, dongId, errorValue);
+      }
+      
+      // 카테고리별 특화 업데이트
+      if (isBreeding) {
+        updateBreedingSpecific(panelSelector, farmId, dongId);
+      } else {
+        updateShippingSpecific(panelSelector, farmId, dongId);
+      }
+    }
+    
+    // 선택된 동 강조 표시 함수
+    function highlightSelectedDong(dongId) {
+      // 모든 동 항목에서 선택 클래스 제거
+      document.querySelectorAll('.dong-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      
+      // 선택된 동에 선택 클래스 추가
+      const selectedItems = document.querySelectorAll(`.dong-item[data-dong-id="${dongId}"]`);
+      selectedItems.forEach(item => {
+        item.classList.add('selected');
+      });
+      
+      // 통계 항목도 처리
+      const selectedStatItems = document.querySelectorAll(`.dong-item[data-stat-detail-id="${dongId}"]`);
+      selectedStatItems.forEach(item => {
+        item.classList.add('selected');
+      });
+    }
+    
+    // 기본 정보 업데이트 함수
+    function updateBasicInfo(panelSelector, farmId, farmName, dongId, days) {
       document.querySelector(panelSelector + ' .farm-id').textContent = farmId;
       document.querySelector(panelSelector + ' .farm-name').textContent = farmName;
       document.querySelector(panelSelector + ' .dong').textContent = dongId;
       document.querySelector(panelSelector + ' .days').textContent = days;
-      
-      // 상태 업데이트
+    }
+    
+    // 상태 업데이트 함수
+    function updateStatus(panelSelector, status, errorValue) {
       const statusElement = document.querySelector(panelSelector + ' .basic-info-right .status');
       if (status === 'NG') {
         statusElement.className = 'status ng';
@@ -1561,22 +1839,237 @@
         statusElement.className = 'status ok';
         statusElement.textContent = 'OK';
       }
-      
-      // R2 조정 폼 업데이트
+    }
+    
+    // R2 조정 폼 업데이트 함수
+    function updateR2Form(panelSelector, wmValue, scaleValue) {
       const wmInput = document.querySelector(panelSelector + ' .r2-adjust-form .wm-value');
       const scaleInput = document.querySelector(panelSelector + ' .r2-adjust-form .scale-value');
       
       if (wmInput) wmInput.value = wmValue;
       if (scaleInput) scaleInput.value = scaleValue;
+    }
+    
+    // 알림 섹션 업데이트 함수
+    function updateNotifications(panelSelector, dongId, errorValue) {
+      const notificationTitle = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-title');
+      const notificationDesc = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-desc');
       
-      // 알림 섹션 첫 번째 항목 업데이트
-      if (status === 'NG') {
-        const notificationTitle = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-title');
-        const notificationDesc = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-desc');
-        
-        if (notificationTitle) notificationTitle.textContent = dongId + ' 동 중량 오차 발생';
-        if (notificationDesc) notificationDesc.textContent = '오차: ' + errorValue + ', 확인이 필요합니다.';
+      if (notificationTitle) notificationTitle.textContent = dongId + ' 동 중량 오차 발생';
+      if (notificationDesc) notificationDesc.textContent = '오차: ' + errorValue + ', 확인이 필요합니다.';
+    }
+    
+    // 사육 패널 특화 업데이트 함수
+    function updateBreedingSpecific(panelSelector, farmId, dongId) {
+      // 사육 카테고리에 특화된 업데이트 로직
+      // 예: 육성률, 특정 R2 값 범위, 사육 관련 알림 등
+      console.log('사육 패널 특화 업데이트:', farmId, dongId);
+      
+      // 1. 사육 카테고리 특화 정보 가져오기
+      const breedingData = getBreedingData(farmId, dongId);
+      
+      // 2. R2 테이블 업데이트 (사육 카테고리는 더 많은 중량 범위를 표시)
+      updateBreedingR2Table(panelSelector, breedingData.r2Ranges);
+      
+      // 3. 육성률 정보 업데이트 (사육 카테고리만 해당)
+      if (breedingData.growthRate) {
+        const growthRateElement = document.querySelector(panelSelector + ' .farm-info .growth-rate');
+        if (growthRateElement) {
+          growthRateElement.textContent = breedingData.growthRate + '%';
+        }
       }
+      
+      // 4. 사육 관련 알림 업데이트
+      updateBreedingNotifications(panelSelector, breedingData.notifications);
+    }
+    
+    // 사육 데이터 가져오기 함수
+    function getBreedingData(farmId, dongId) {
+      // 실제로는 서버에서 데이터를 가져오거나 로컬 데이터베이스에서 조회
+      // 현재는 예시 데이터 반환
+      return {
+        r2Ranges: [
+          { range: '1,601g~', r2: 1.020, appliedAt: '25-04-29, 10:30' },
+          { range: '1,301g~1,600g', r2: 1.020, appliedAt: '25-04-27, 00:27' },
+          { range: '1,001g~1,300g', r2: 0.950, appliedAt: '25-04-25, 16:53' },
+          { range: '701g~1,000g', r2: 0.920, appliedAt: '25-04-23, 11:30' },
+          { range: '~700g', r2: 0.885, appliedAt: '25-04-20, 11:30' }
+        ],
+        growthRate: 97.5,
+        notifications: [
+          {
+            type: 'warning',
+            title: dongId + ' 동 육성률 감소',
+            desc: '전일 대비 1.2% 감소, 사료 섭취량 확인 필요',
+            time: '2025-04-22 14:23'
+          }
+        ]
+      };
+    }
+    
+    // 사육 R2 테이블 업데이트 함수
+    function updateBreedingR2Table(panelSelector, r2Ranges) {
+      const tableBody = document.querySelector(panelSelector + ' .r2-table tbody');
+      if (!tableBody) return;
+      
+      // 테이블 내용 초기화
+      tableBody.innerHTML = '';
+      
+      // R2 범위 데이터로 테이블 채우기
+      r2Ranges.forEach(range => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${range.range}</td>
+          <td>${range.r2}</td>
+          <td>${range.appliedAt}</td>
+          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+    
+    // 사육 알림 업데이트 함수
+    function updateBreedingNotifications(panelSelector, notifications) {
+      const notificationList = document.querySelector(panelSelector + ' .notification-list');
+      if (!notificationList || !notifications || notifications.length === 0) return;
+      
+      // 기존 알림 유지하면서 사육 특화 알림 추가
+      notifications.forEach((notification, index) => {
+        // 첫 번째 알림은 이미 updateNotifications 함수에서 처리했으므로 건너뜀
+        if (index === 0 && notificationList.children.length > 0) return;
+        
+        const notificationItem = document.createElement('div');
+        notificationItem.className = 'notification-item';
+        notificationItem.innerHTML = `
+          <div class="notification-icon ${notification.type}">
+            <i class="fas fa-${notification.type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">${notification.title}</div>
+            <div class="notification-desc">${notification.desc}</div>
+            <div class="notification-time">${notification.time}</div>
+          </div>
+        `;
+        
+        // 알림 목록에 추가
+        notificationList.appendChild(notificationItem);
+      });
+    }
+    
+    // 출하 패널 특화 업데이트 함수
+    function updateShippingSpecific(panelSelector, farmId, dongId) {
+      // 출하 카테고리에 특화된 업데이트 로직
+      // 예: 출하 예정일, 출하 관련 알림, 특정 중량 기준 등
+      console.log('출하 패널 특화 업데이트:', farmId, dongId);
+      
+      // 1. 출하 카테고리 특화 정보 가져오기
+      const shippingData = getShippingData(farmId, dongId);
+      
+      // 2. R2 테이블 업데이트 (출하 카테고리는 다른 중량 범위를 표시할 수 있음)
+      updateShippingR2Table(panelSelector, shippingData.r2Ranges);
+      
+      // 3. 출하 예정일 정보 업데이트 (출하 카테고리만 해당)
+      if (shippingData.scheduledDate) {
+        // 출하 예정일 요소가 없으면 추가
+        let scheduledDateElement = document.querySelector(panelSelector + ' .farm-info .scheduled-date');
+        if (!scheduledDateElement) {
+          const basicInfoRight = document.querySelector(panelSelector + ' .basic-info-right');
+          if (basicInfoRight) {
+            const dateItem = document.createElement('span');
+            dateItem.className = 'info-item';
+            dateItem.innerHTML = '<strong>출하 예정일:</strong> <span class="scheduled-date">' + shippingData.scheduledDate + '</span>';
+            basicInfoRight.appendChild(dateItem);
+          }
+        } else {
+          scheduledDateElement.textContent = shippingData.scheduledDate;
+        }
+      }
+      
+      // 4. 출하 관련 알림 업데이트
+      updateShippingNotifications(panelSelector, shippingData.notifications);
+      
+      // 5. 출하 목표 중량 업데이트
+      if (shippingData.targetWeight) {
+        const targetWeightElement = document.querySelector(panelSelector + ' .r2-adjust-form .target-weight');
+        if (targetWeightElement) {
+          targetWeightElement.value = shippingData.targetWeight;
+        }
+      }
+    }
+    
+    // 출하 데이터 가져오기 함수
+    function getShippingData(farmId, dongId) {
+      // 실제로는 서버에서 데이터를 가져오거나 로컬 데이터베이스에서 조회
+      // 현재는 예시 데이터 반환
+      return {
+        r2Ranges: [
+          { range: '1,601g~', r2: 1.020, appliedAt: '25-04-29, 10:30' },
+          { range: '1,301g~1,600g', r2: 1.020, appliedAt: '25-04-27, 00:27' },
+          { range: '1,001g~1,300g', r2: 0.950, appliedAt: '25-04-25, 16:53' }
+        ],
+        scheduledDate: '2025-05-05',
+        targetWeight: '1,750g',
+        notifications: [
+          {
+            type: 'info',
+            title: dongId + ' 동 출하 일정 변경',
+            desc: '출하 일정이 2025-05-05로 변경되었습니다.',
+            time: '2025-04-23 09:30'
+          },
+          {
+            type: 'warning',
+            title: dongId + ' 동 목표 중량 미달',
+            desc: '현재 중량이 목표 중량보다 50g 미달입니다.',
+            time: '2025-04-22 16:45'
+          }
+        ]
+      };
+    }
+    
+    // 출하 R2 테이블 업데이트 함수
+    function updateShippingR2Table(panelSelector, r2Ranges) {
+      const tableBody = document.querySelector(panelSelector + ' .r2-table tbody');
+      if (!tableBody) return;
+      
+      // 테이블 내용 초기화
+      tableBody.innerHTML = '';
+      
+      // R2 범위 데이터로 테이블 채우기
+      r2Ranges.forEach(range => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${range.range}</td>
+          <td>${range.r2}</td>
+          <td>${range.appliedAt}</td>
+          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+    
+    // 출하 알림 업데이트 함수
+    function updateShippingNotifications(panelSelector, notifications) {
+      const notificationList = document.querySelector(panelSelector + ' .notification-list');
+      if (!notificationList || !notifications || notifications.length === 0) return;
+      
+      // 기존 알림 유지하면서 출하 특화 알림 추가
+      notifications.forEach(notification => {
+        const notificationItem = document.createElement('div');
+        notificationItem.className = 'notification-item';
+        notificationItem.innerHTML = `
+          <div class="notification-icon ${notification.type}">
+            <i class="fas fa-${notification.type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">${notification.title}</div>
+            <div class="notification-desc">${notification.desc}</div>
+            <div class="notification-time">${notification.time}</div>
+          </div>
+        `;
+        
+        // 알림 목록에 추가
+        notificationList.appendChild(notificationItem);
+      });
     }
     
     // 농장 ID로 카테고리 구분 (사육 또는 출하)
@@ -1593,12 +2086,110 @@
       const breedingPanel = document.querySelector('.breeding-panel');
       const shippingPanel = document.querySelector('.shipping-panel');
       
+      // 로딩 상태 표시
+      showLoading(true);
+      
+      // 패널 전환
       if (isBreeding) {
         breedingPanel.style.display = 'block';
         shippingPanel.style.display = 'none';
+        
+        // 패널 활성화 클래스 추가/제거
+        setTimeout(() => {
+          breedingPanel.classList.add('active');
+          shippingPanel.classList.remove('active');
+        }, 50);
       } else {
         breedingPanel.style.display = 'none';
         shippingPanel.style.display = 'block';
+        
+        // 패널 활성화 클래스 추가/제거
+        setTimeout(() => {
+          breedingPanel.classList.remove('active');
+          shippingPanel.classList.add('active');
+        }, 50);
+      }
+      
+      // 로딩 상태 숨김 (0.5초 후)
+      setTimeout(() => {
+        showLoading(false);
+      }, 500);
+    }
+    
+    // 로딩 상태 표시 함수
+    function showLoading(show) {
+      let loadingOverlay = document.querySelector('.loading-overlay');
+      
+      // 로딩 오버레이가 없으면 생성
+      if (!loadingOverlay && show) {
+        loadingOverlay = document.createElement('div');
+        loadingOverlay.className = 'loading-overlay';
+        loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+        document.body.appendChild(loadingOverlay);
+        
+        // 로딩 오버레이 스타일 적용
+        const style = document.createElement('style');
+        style.textContent = `
+          .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+          }
+          .loading-overlay.visible {
+            opacity: 1;
+          }
+          .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0066cc;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          .right-panel {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+          }
+          .right-panel.active {
+            opacity: 1;
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // 기존 패널에 active 클래스 추가
+        const visiblePanel = document.querySelector('.right-panel[style*="display: block"]') || document.querySelector('.right-panel:not([style*="display: none"])');
+        if (visiblePanel) {
+          visiblePanel.classList.add('active');
+        }
+      }
+      
+      // 로딩 오버레이 표시/숨김
+      if (loadingOverlay) {
+        if (show) {
+          loadingOverlay.classList.add('visible');
+        } else {
+          loadingOverlay.classList.remove('visible');
+          
+          // 0.3초 후 완전히 제거
+          setTimeout(() => {
+            if (loadingOverlay.parentNode) {
+              loadingOverlay.parentNode.removeChild(loadingOverlay);
+            }
+          }, 300);
+        }
       }
     }
     
@@ -1653,7 +2244,7 @@
       });
     }
     
-    // 페이지 로드 시 동 목록 토글 기능 초기화
+    // 페이지 로드 시 이벤트 리스너 등록
     document.addEventListener('DOMContentLoaded', function() {
       // 모든 농장 항목의 화살표 아이콘에 클릭 이벤트 추가
       document.querySelectorAll('.farm-toggle-icon').forEach(function(icon) {
