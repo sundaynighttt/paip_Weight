@@ -1,0 +1,155 @@
+<div class="dashboard-grid">
+  <!-- 중량 추이 차트 -->
+  <div class="dashboard-card weight-trend">
+    <div class="card-header">
+      <h3>중량 추이</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="weightTrendChart"></canvas>
+    </div>
+  </div>
+  
+  <!-- 농장/동 모니터 -->
+  <div class="dashboard-card farm-monitor">
+    <div class="card-header">
+      <h3>농장/동 모니터</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="farm-status-grid">
+        <div class="farm-status-row header">
+          <div class="farm-col">농장</div>
+          <div class="dong-col">동</div>
+          <div class="days-col">일령</div>
+          <div class="wm-col">WM</div>
+          <div class="scale-col">체중계</div>
+          <div class="error-col">오차</div>
+          <div class="status-col">상태</div>
+        </div>
+        <!-- 데이터 행들이 동적으로 추가됨 -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- R2값 트렌드 -->
+  <div class="dashboard-card r2-trend">
+    <div class="card-header">
+      <h3>R2값 트렌드</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="r2TrendChart"></canvas>
+    </div>
+  </div>
+  
+  <!-- 오차율 분석 -->
+  <div class="dashboard-card error-analysis">
+    <div class="card-header">
+      <h3>오차율 분석</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="error-stats">
+        <div class="error-stat-item">
+          <div class="error-stat-label">평균 오차</div>
+          <div class="error-stat-value">-45g</div>
+          <div class="error-gauge">
+            <div class="error-gauge-bar" style="width: 45%; background-color: #ffcc00;"></div>
+          </div>
+        </div>
+        
+        <div class="error-stat-item">
+          <div class="error-stat-label">최대 오차</div>
+          <div class="error-stat-value">-118g</div>
+          <div class="error-gauge">
+            <div class="error-gauge-bar" style="width: 80%; background-color: #ff3b30;"></div>
+          </div>
+        </div>
+        
+        <div class="error-stat-item">
+          <div class="error-stat-label">최소 오차</div>
+          <div class="error-stat-value">0g</div>
+          <div class="error-gauge">
+            <div class="error-gauge-bar" style="width: 0%; background-color: #34c759;"></div>
+          </div>
+        </div>
+      </div>
+      
+      <canvas id="errorDistributionChart"></canvas>
+    </div>
+  </div>
+  
+  <!-- 성공률 분석 -->
+  <div class="dashboard-card success-rate">
+    <div class="card-header">
+      <h3>성공률 분석</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="successRateChart"></canvas>
+      
+      <div class="success-rate-stats">
+        <div class="success-stat-item">
+          <div class="success-stat-label">전체 성공률</div>
+          <div class="success-stat-value">92.8%</div>
+        </div>
+        
+        <div class="success-stat-item">
+          <div class="success-stat-label">사육 성공률</div>
+          <div class="success-stat-value">94.2%</div>
+        </div>
+        
+        <div class="success-stat-item">
+          <div class="success-stat-label">출하 성공률</div>
+          <div class="success-stat-value">89.5%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 동별 FCR -->
+  <div class="dashboard-card fcr-analysis">
+    <div class="card-header">
+      <h3>동별 FCR</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <canvas id="fcrChart"></canvas>
+    </div>
+  </div>
+  
+  <!-- 알림 목록 -->
+  <div class="dashboard-card notifications">
+    <div class="card-header">
+      <h3>알림</h3>
+      <div class="card-controls">
+        <button class="control-btn"><i class="fas fa-expand"></i></button>
+        <button class="control-btn"><i class="fas fa-download"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="notification-list">
+        <!-- 알림 항목들이 동적으로 추가됨 -->
+      </div>
+    </div>
+  </div>
+</div>

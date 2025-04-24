@@ -1,5 +1,28 @@
 // 페이지 로드 시 이벤트 리스너 등록
 document.addEventListener('DOMContentLoaded', function() {
+  // 네비게이션 메뉴 클릭 이벤트 처리
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      // 대시보드로 이동
+      if (this.getAttribute('data-view') === 'dashboard') {
+        window.location.href = '../dashboard/index.html';
+        return;
+      }
+      
+      // 기존 active 클래스 제거
+      document.querySelectorAll('.nav-item').forEach(function(navItem) {
+        navItem.classList.remove('active');
+      });
+      
+      // 현재 클릭된 항목에 active 클래스 추가
+      this.classList.add('active');
+      
+      // 다른 뷰 처리 로직 (추후 구현)
+      const view = this.getAttribute('data-view');
+      console.log('뷰 전환:', view);
+    });
+  });
+  
   // 모든 농장 항목의 화살표 아이콘에 클릭 이벤트 추가
   document.querySelectorAll('.farm-toggle-icon').forEach(function(icon) {
     icon.addEventListener('click', function(e) {

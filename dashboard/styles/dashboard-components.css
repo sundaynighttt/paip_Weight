@@ -1,0 +1,256 @@
+/* 농장 모니터 스타일 */
+.farm-status-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.farm-status-row {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.farm-status-row.header {
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.farm-status-row > div {
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+}
+
+.farm-col { width: 25%; }
+.dong-col, .days-col { width: 10%; }
+.wm-col, .scale-col, .error-col { width: 15%; }
+.status-col { width: 10%; }
+
+/* 상태 배지 */
+.status-badge {
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.ok {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34c759;
+}
+
+.status-badge.error {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+}
+
+/* 오차값 스타일 */
+.error-col.error {
+  color: #ff3b30;
+}
+
+.error-col.ok {
+  color: #34c759;
+}
+
+/* 오차율 분석 스타일 */
+.error-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.error-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.error-stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.error-stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.error-gauge {
+  height: 8px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.error-gauge-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 300ms ease-in-out;
+}
+
+/* 성공률 분석 스타일 */
+.success-rate-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.success-stat-item {
+  text-align: center;
+  padding: 12px;
+  background-color: var(--bg-primary);
+  border-radius: 4px;
+  flex: 1;
+  margin: 0 8px;
+}
+
+.success-stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.success-stat-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #34c759;
+}
+
+/* 알림 스타일 */
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notification-item {
+  display: flex;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  transition: all 200ms ease-in-out;
+}
+
+.notification-item:hover {
+  border-color: var(--brand-color);
+}
+
+.notification-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 14px;
+}
+
+.notification-item.error .notification-icon {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+}
+
+.notification-item.warning .notification-icon {
+  background-color: rgba(255, 204, 0, 0.1);
+  color: #ffcc00;
+}
+
+.notification-item.info .notification-icon {
+  background-color: rgba(106, 63, 229, 0.1);
+  color: var(--brand-color);
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.notification-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.notification-time {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* 버튼 스타일 */
+.btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--hover-bg);
+  border-color: var(--brand-color);
+  color: var(--brand-color);
+}
+
+.btn-primary {
+  background-color: var(--brand-color);
+  color: white;
+  border-color: var(--brand-color);
+}
+
+.btn-primary:hover {
+  background-color: #5930cc;
+  border-color: #5930cc;
+}
+
+/* 테이블 스타일 */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+
+.data-table th {
+  background-color: var(--bg-primary);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background-color: var(--hover-bg);
+}
