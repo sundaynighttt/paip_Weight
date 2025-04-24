@@ -1,0 +1,546 @@
+/* 기본 스타일 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-container {
+  max-width: 1500px;
+  max-height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* KPI 요약 섹션 */
+.kpi-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.kpi-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  width: calc(14.28% - 15px);
+  min-width: 160px;
+  margin-bottom: 10px;
+}
+
+.kpi-icon {
+  background-color: #e6f7ff;
+  color: #0066cc;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.kpi-content {
+  flex: 1;
+}
+
+.kpi-title {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.kpi-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* 필터 및 컨트롤 섹션 */
+.filter-controls {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-section {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.filter-section label {
+  font-size: 0.9rem;
+  margin-right: 8px;
+  color: #555;
+}
+
+.filter-section select {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #333;
+  background-color: #fff;
+}
+
+.refresh-btn {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.refresh-btn i {
+  margin-right: 5px;
+}
+
+.refresh-btn:hover {
+  background-color: #0055aa;
+}
+
+/* 대시보드 그리드 */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 20px;
+  grid-template-areas: 
+    "weight-trend weight-trend farm-monitor"
+    "r2-trend r2-distribution farm-monitor"
+    "error-analysis success-rate fcr-analysis"
+    "camera-status camera-status notifications";
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.weight-trend {
+  grid-area: weight-trend;
+}
+
+.farm-monitor {
+  grid-area: farm-monitor;
+}
+
+.r2-trend {
+  grid-area: r2-trend;
+}
+
+.r2-distribution {
+  grid-area: r2-distribution;
+}
+
+.error-analysis {
+  grid-area: error-analysis;
+}
+
+.success-rate {
+  grid-area: success-rate;
+}
+
+.fcr-analysis {
+  grid-area: fcr-analysis;
+}
+
+.camera-status {
+  grid-area: camera-status;
+}
+
+.notifications {
+  grid-area: notifications;
+}
+
+/* 대시보드 카드 스타일 */
+.dashboard-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.card-controls {
+  display: flex;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-left: 5px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.control-btn:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.card-body {
+  padding: 15px;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 농장/동 모니터 스타일 */
+.farm-status-grid {
+  width: 100%;
+  border-collapse: collapse;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.farm-status-row {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  padding: 8px 0;
+}
+
+.farm-status-row.header {
+  font-weight: 600;
+  color: #555;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.farm-status-row > div {
+  padding: 0 5px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+.farm-col {
+  width: 25%;
+}
+
+.dong-col, .days-col {
+  width: 8%;
+}
+
+.wm-col, .scale-col, .error-col {
+  width: 12%;
+}
+
+.status-col, .camera-col {
+  width: 10%;
+  justify-content: center;
+}
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge.ok {
+  background-color: #e6f7e6;
+  color: #2e7d32;
+}
+
+.status-badge.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.camera-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.camera-status.ok {
+  color: #2e7d32;
+}
+
+.camera-status.error {
+  color: #c62828;
+}
+
+.error-col.error {
+  color: #c62828;
+}
+
+.error-col.ok {
+  color: #2e7d32;
+}
+
+/* 오차율 분석 스타일 */
+.error-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.error-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.error-stat-label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.error-stat-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.error-gauge {
+  height: 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.error-gauge-bar {
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* 성공률 분석 스타일 */
+.success-rate-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.success-stat-item {
+  text-align: center;
+}
+
+.success-stat-label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.success-stat-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+/* 카메라 상태 모니터링 스타일 */
+.camera-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.camera-status-item {
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+}
+
+.camera-name {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.camera-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
+}
+
+.camera-indicator.ok {
+  background-color: #e6f7e6;
+  color: #2e7d32;
+}
+
+.camera-indicator.warning {
+  background-color: #fff8e1;
+  color: #f57c00;
+}
+
+.camera-indicator.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.camera-error-message {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: #c62828;
+}
+
+/* 알림 목록 스타일 */
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification-item {
+  display: flex;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.notification-item.error {
+  border-left: 4px solid #c62828;
+}
+
+.notification-item.warning {
+  border-left: 4px solid #f57c00;
+}
+
+.notification-item.info {
+  border-left: 4px solid #0066cc;
+}
+
+.notification-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+.notification-item.error .notification-icon {
+  color: #c62828;
+}
+
+.notification-item.warning .notification-icon {
+  color: #f57c00;
+}
+
+.notification-item.info .notification-icon {
+  color: #0066cc;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.notification-desc {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+      "weight-trend weight-trend"
+      "farm-monitor farm-monitor"
+      "r2-trend r2-distribution"
+      "error-analysis success-rate"
+      "fcr-analysis camera-status"
+      "notifications notifications";
+  }
+  
+  .kpi-card {
+    width: calc(25% - 15px);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "weight-trend"
+      "farm-monitor"
+      "r2-trend"
+      "r2-distribution"
+      "error-analysis"
+      "success-rate"
+      "fcr-analysis"
+      "camera-status"
+      "notifications";
+    max-height: none;
+    overflow-y: visible;
+  }
+  
+  .kpi-card {
+    width: calc(50% - 15px);
+  }
+  
+  .camera-status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dashboard-container {
+    max-height: none;
+    overflow-y: auto;
+  }
+}

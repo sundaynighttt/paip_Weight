@@ -4,1839 +4,477 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R2 관리 대시보드</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../nav.css">
+  <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    /* 로딩 오버레이 스타일 */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-    
-    /* 선택된 동 스타일 */
-    .selected-dong {
-      background-color: #f0f7ff !important;
-      border-left: 3px solid #3498db !important;
-    }
-    
-    /* 동 항목 트랜지션 */
-    .dong-item {
-      transition: background-color 0.2s ease-in-out, border-left 0.2s ease-in-out;
-    }
-    
-    /* 중량추이 박스 스타일 */
-    .chart-box {
-      position: relative;
-      margin-bottom: 15px;
-      transition: all 0.3s ease-in-out;
-    }
-    
-    .chart-box-remove-btn {
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      background-color: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      transition: all 0.2s ease;
-    }
-    
-    .chart-box-remove-btn:hover {
-      background-color: #ff3333;
-      transform: scale(1.1);
-    }
-    
-    .add-chart-box-btn {
-      transition: opacity 0.3s ease;
-    }
-    
-    .add-chart-box-btn[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    .horizontal-layout {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    
-    .horizontal-layout .info-card {
-      flex: 1;
-      min-width: 0;
-    }
-
-    /* 추가할 스타일 */
-  .horizontal-layout .r2-management {
-    flex: 2;  /* R2 관리 섹션에 2배 가중치 부여 */
-    min-width: 0;
-  }
-  
-  .horizontal-layout .notifications {
-    flex: 1;  /* 알림 섹션에 1배 가중치 부여 */
-    min-width: 0;
-  }
-    
-    .info-card {
-      margin-bottom: 15px;
-    }
-    
-    .right-panel .data-view {
-      display: flex;
-      flex-direction: column;
-    }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>R2 관리 대시보드</h1>
-      <div class="version-info" style="font-size: 0.7rem;">
-        시스템 버전: V2.3 | 모델 버전: M1.5 | CCTV 엔진: E1.2 | 중량 조정 범위: ±50g | Ratio 조정 단위: ±15g
+  <div class="dashboard-container">
+    <!-- 상단 KPI 요약 섹션 -->
+    <div class="kpi-summary">
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-weight"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">총 농장 수</div>
+          <div class="kpi-value">110 개</div>
+        </div>
       </div>
-    </header>
+      
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">평균 중량</div>
+          <div class="kpi-value">1,520.5 g</div>
+        </div>
+      </div>
+      
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-percentage"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">평균 R2</div>
+          <div class="kpi-value">0.985</div>
+        </div>
+      </div>
+      
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">일일 측정량</div>
+          <div class="kpi-value">15,957 마리</div>
+        </div>
+      </div>
+      
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">평균 FCR</div>
+          <div class="kpi-value">1.57</div>
+        </div>
+      </div>
+      
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">성공률</div>
+          <div class="kpi-value">92.8 %</div>
+        </div>
+      </div>
+      
+      <div class="kpi-card">
+        <div class="kpi-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-title">알림</div>
+          <div class="kpi-value">3 건</div>
+        </div>
+      </div>
+    </div>
     
-    <div class="dashboard-layout">
-      <!-- 왼쪽 패널: 필터 및 메뉴 -->
-      <div class="left-panel">
-        
-        <div class="nav-section">
-          <h3 style="font-size: 0.9rem; margin: 15px 0 10px 0;">메뉴</h3>
-          <ul class="nav-menu">
-            <li class="nav-item active">
-              <i class="fas fa-weight"></i> 중량 관리
-            </li>
-            <li class="nav-item">
-              <i class="fas fa-video"></i> CCTV 모니터링
-            </li>
-            <li class="nav-item">
-              <i class="fas fa-chart-line"></i> 통계 분석
-            </li>
-            <li class="nav-item">
-              <i class="fas fa-cog"></i> 설정
-            </li>
-          </ul>
+    <!-- 필터 및 컨트롤 섹션 -->
+    <div class="filter-controls">
+      <div class="filter-section">
+        <label for="farm-select">농장:</label>
+        <select id="farm-select">
+          <option value="all">전체 농장</option>
+          <option value="FA0300">대성농장</option>
+          <option value="FA0701">미래농장</option>
+          <option value="FA0401">해피농장</option>
+          <option value="FA0502">그린농장</option>
+          <option value="FA0603">청정농장</option>
+        </select>
+      </div>
+      
+      <div class="filter-section">
+        <label for="dong-select">동:</label>
+        <select id="dong-select">
+          <option value="all">전체 동</option>
+          <option value="H01">H01</option>
+          <option value="H02">H02</option>
+          <option value="H03">H03</option>
+          <option value="H04">H04</option>
+        </select>
+      </div>
+      
+      <div class="filter-section">
+        <label for="date-range">기간:</label>
+        <select id="date-range">
+          <option value="7">최근 7일</option>
+          <option value="14">최근 14일</option>
+          <option value="30">최근 30일</option>
+          <option value="90">최근 90일</option>
+        </select>
+      </div>
+      
+      <div class="filter-section">
+        <button class="refresh-btn"><i class="fas fa-sync-alt"></i> 새로고침</button>
+      </div>
+    </div>
+    
+    <!-- 메인 대시보드 그리드 -->
+    <div class="dashboard-grid">
+      <!-- 중량 추이 그래프 -->
+      <div class="dashboard-card weight-trend">
+        <div class="card-header">
+          <h3>중량 추이</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="weightTrendChart"></canvas>
         </div>
       </div>
       
-      <!-- 중간 패널: 농장/동 목록 -->
-      <div class="middle-panel">
-        <!-- 첫 번째 농장 목록 카테고리 -->
-        <div class="data-category">
-          <div class="data-category-header">
-            <span>1) 사육 (7개농장)</span>
-            <button class="toggle-category-btn" onclick="toggleCategory(this)">
-              <i class="fas fa-chevron-down"></i>
-            </button>
+      <!-- 사육/출하 모니터 -->
+      <div class="dashboard-card farm-monitor">
+        <div class="card-header">
+          <h3>농장/동 모니터</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
           </div>
-          <div class="farm-list">
-            <!-- 농장 항목 1 (새로 추가) - NG 있음 (2개 동) -->
-            <div class="data-item" data-farm-id="FA0701">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0701</strong> - 미래농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 34</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ng">NG (2개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0701', 'H01', '미래농장', 34, 'NG', '-85g', '1,680g', '1,765g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 34</span>
-                          <span class="detail-item">WM: 1,680g</span>
-                          <span class="detail-item">체중계: 1,765g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -85g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0701', 'H02', '미래농장', 34, 'NG', '-95g', '1,670g', '1,765g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 34</span>
-                          <span class="detail-item">WM: 1,670g</span>
-                          <span class="detail-item">체중계: 1,765g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -95g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0701', 'H03', '미래농장', 34, 'OK', '0g', '1,690g', '1,690g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 34</span>
-                          <span class="detail-item">WM: 1,690g</span>
-                          <span class="detail-item">체중계: 1,690g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0701', 'H04', '미래농장', 34, 'OK', '0g', '1,685g', '1,685g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 34</span>
-                          <span class="detail-item">WM: 1,685g</span>
-                          <span class="detail-item">체중계: 1,685g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </div>
+        <div class="card-body">
+          <div class="farm-status-grid">
+            <div class="farm-status-row header">
+              <div class="farm-col">농장</div>
+              <div class="dong-col">동</div>
+              <div class="days-col">일령</div>
+              <div class="wm-col">WM</div>
+              <div class="scale-col">체중계</div>
+              <div class="error-col">오차</div>
+              <div class="status-col">상태</div>
+              <div class="camera-col">카메라</div>
             </div>
             
-            <!-- 농장 항목 1 -->
-            <div class="data-item" data-farm-id="FA0300">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0300</strong> - 대성농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 33</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ng">NG (2개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0300', 'H01', '대성농장', 33, 'NG', '-118g', '1,620g', '1,710g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,620g</span>
-                          <span class="detail-item">체중계: 1,710g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -118g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0300', 'H02', '대성농장', 33, 'NG', '-90g', '1,590g', '1,680g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,590g</span>
-                          <span class="detail-item">체중계: 1,680g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -90g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0300', 'H03', '대성농장', 33, 'OK', '', '1,605g', '1,625g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,605g</span>
-                          <span class="detail-item">체중계: 1,625g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0300', 'H04', '대성농장', 33, 'OK', '', '1,615g', '1,630g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,615g</span>
-                          <span class="detail-item">체중계: 1,630g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="farm-status-row">
+              <div class="farm-col">FA0701 미래농장</div>
+              <div class="dong-col">H01</div>
+              <div class="days-col">34</div>
+              <div class="wm-col">1,680g</div>
+              <div class="scale-col">1,765g</div>
+              <div class="error-col error">-85g</div>
+              <div class="status-col"><span class="status-badge error">NG</span></div>
+              <div class="camera-col"><span class="camera-status ok"><i class="fas fa-video"></i></span></div>
             </div>
             
-            <!-- 농장 항목 3 (새로 추가) - NG 없음 -->
-            <div class="data-item" data-farm-id="FA0401">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0401</strong> - 해피농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 35</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ok">OK (4개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '해피농장', 35, 'OK', '0g', '1,750g', '1,750g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,750g</span>
-                          <span class="detail-item">체중계: 1,750g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '해피농장', 35, 'OK', '0g', '1,730g', '1,730g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,730g</span>
-                          <span class="detail-item">체중계: 1,730g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '해피농장', 35, 'OK', '0g', '1,740g', '1,740g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,740g</span>
-                          <span class="detail-item">체중계: 1,740g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '해피농장', 35, 'OK', '0g', '1,760g', '1,760g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,760g</span>
-                          <span class="detail-item">체중계: 1,760g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="farm-status-row">
+              <div class="farm-col">FA0701 미래농장</div>
+              <div class="dong-col">H02</div>
+              <div class="days-col">34</div>
+              <div class="wm-col">1,670g</div>
+              <div class="scale-col">1,765g</div>
+              <div class="error-col error">-95g</div>
+              <div class="status-col"><span class="status-badge error">NG</span></div>
+              <div class="camera-col"><span class="camera-status ok"><i class="fas fa-video"></i></span></div>
             </div>
             
-            <!-- 농장 항목 4 (새로 추가) - NG 없음 -->
-            <div class="data-item" data-farm-id="FA0502">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0502</strong> - 그린농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 32</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ok">OK (4개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0502', 'H01', '그린농장', 32, 'OK', '0g', '1,620g', '1,620g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 32</span>
-                          <span class="detail-item">WM: 1,620g</span>
-                          <span class="detail-item">체중계: 1,620g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0502', 'H02', '그린농장', 32, 'OK', '0g', '1,630g', '1,630g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 32</span>
-                          <span class="detail-item">WM: 1,630g</span>
-                          <span class="detail-item">체중계: 1,630g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0502', 'H03', '그린농장', 32, 'OK', '0g', '1,640g', '1,640g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 32</span>
-                          <span class="detail-item">WM: 1,640g</span>
-                          <span class="detail-item">체중계: 1,640g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0502', 'H04', '그린농장', 32, 'OK', '0g', '1,610g', '1,610g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 32</span>
-                          <span class="detail-item">WM: 1,610g</span>
-                          <span class="detail-item">체중계: 1,610g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="farm-status-row">
+              <div class="farm-col">FA0300 대성농장</div>
+              <div class="dong-col">H01</div>
+              <div class="days-col">33</div>
+              <div class="wm-col">1,620g</div>
+              <div class="scale-col">1,710g</div>
+              <div class="error-col error">-118g</div>
+              <div class="status-col"><span class="status-badge error">NG</span></div>
+              <div class="camera-col"><span class="camera-status error"><i class="fas fa-video-slash"></i></span></div>
             </div>
             
-            <!-- 농장 항목 3 -->
-            <div class="data-item" data-farm-id="FA0253">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0253</strong> - SG컴퍼니
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 33</span>
-                      <span class="detail-item"><span class="version-badge">V2.2</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ok">OK (5개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0253', 'H01', 'SG컴퍼니', 33, 'OK', '', '1,610g', '1,625g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,610g</span>
-                          <span class="detail-item">체중계: 1,625g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0253', 'H02', 'SG컴퍼니', 33, 'OK', '', '1,615g', '1,630g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,615g</span>
-                          <span class="detail-item">체중계: 1,630g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0253', 'H03', 'SG컴퍼니', 33, 'OK', '', '1,620g', '1,635g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,620g</span>
-                          <span class="detail-item">체중계: 1,635g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0253', 'H04', 'SG컴퍼니', 33, 'OK', '', '1,625g', '1,640g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,625g</span>
-                          <span class="detail-item">체중계: 1,640g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H05" onclick="updateRightPanel('FA0253', 'H05', 'SG컴퍼니', 33, 'OK', '', '1,630g', '1,645g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H05</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 33</span>
-                          <span class="detail-item">WM: 1,630g</span>
-                          <span class="detail-item">체중계: 1,645g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="farm-status-row">
+              <div class="farm-col">FA0300 대성농장</div>
+              <div class="dong-col">H03</div>
+              <div class="days-col">33</div>
+              <div class="wm-col">1,605g</div>
+              <div class="scale-col">1,625g</div>
+              <div class="error-col ok">-20g</div>
+              <div class="status-col"><span class="status-badge ok">OK</span></div>
+              <div class="camera-col"><span class="camera-status ok"><i class="fas fa-video"></i></span></div>
             </div>
             
-            <!-- 농장 항목 5 (새로 추가) - NG 없음 -->
-            <div class="data-item" data-farm-id="FA0603">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0603</strong> - 청정농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 30</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ok">OK (4개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0603', 'H01', '청정농장', 30, 'OK', '0g', '1,520g', '1,520g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,520g</span>
-                          <span class="detail-item">체중계: 1,520g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0603', 'H02', '청정농장', 30, 'OK', '0g', '1,530g', '1,530g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,530g</span>
-                          <span class="detail-item">체중계: 1,530g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0603', 'H03', '청정농장', 30, 'OK', '0g', '1,540g', '1,540g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,540g</span>
-                          <span class="detail-item">체중계: 1,540g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0603', 'H04', '청정농장', 30, 'OK', '0g', '1,510g', '1,510g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,510g</span>
-                          <span class="detail-item">체중계: 1,510g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 농장 항목 2 (새로 추가) - NG 있음 (1개 동) -->
-            <div class="data-item" data-farm-id="FA0802">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0802</strong> - 푸른농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 31</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ng">NG (1개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0802', 'H01', '푸른농장', 31, 'NG', '-80g', '1,580g', '1,660g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 31</span>
-                          <span class="detail-item">WM: 1,580g</span>
-                          <span class="detail-item">체중계: 1,660g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -80g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0802', 'H02', '푸른농장', 31, 'OK', '0g', '1,570g', '1,570g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 31</span>
-                          <span class="detail-item">WM: 1,570g</span>
-                          <span class="detail-item">체중계: 1,570g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0802', 'H03', '푸른농장', 31, 'OK', '0g', '1,590g', '1,590g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 31</span>
-                          <span class="detail-item">WM: 1,590g</span>
-                          <span class="detail-item">체중계: 1,590g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0802', 'H04', '푸른농장', 31, 'OK', '0g', '1,585g', '1,585g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 31</span>
-                          <span class="detail-item">WM: 1,585g</span>
-                          <span class="detail-item">체중계: 1,585g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="farm-status-row">
+              <div class="farm-col">FA0401 해피농장</div>
+              <div class="dong-col">H01</div>
+              <div class="days-col">35</div>
+              <div class="wm-col">1,750g</div>
+              <div class="scale-col">1,750g</div>
+              <div class="error-col ok">0g</div>
+              <div class="status-col"><span class="status-badge ok">OK</span></div>
+              <div class="camera-col"><span class="camera-status ok"><i class="fas fa-video"></i></span></div>
             </div>
           </div>
         </div>
-        
-        <!-- 두 번째 농장 목록 카테고리 -->
-        <div class="data-category">
-          <div class="data-category-header">
-            <span>2) 출하 (2개농장)</span>
-            <button class="toggle-category-btn" onclick="toggleCategory(this)">
-              <i class="fas fa-chevron-down"></i>
-            </button>
+      </div>
+      
+      <!-- 환경 데이터 -->
+      <div class="dashboard-card environment-data">
+        <div class="card-header">
+          <h3>환경 데이터</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
           </div>
-          <div class="farm-list">
-            <!-- 농장 항목 2 -->
-            <div class="data-item" data-farm-id="FA0326">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0326</strong> - 신농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 35</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ng">NG (1개 동)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                </div>
-              </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0326', 'H01', '신농장', 35, 'NG', '-85g', '1,710g', '1,795g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,710g</span>
-                          <span class="detail-item">체중계: 1,795g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -85g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve disabled" style="padding: 3px 8px; font-size: 0.75rem; background-color: #aaa; border-color: #999; color: #666;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0326', 'H02', '신농장', 35, 'OK', '', '1,695g', '1,720g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,695g</span>
-                          <span class="detail-item">체중계: 1,720g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0326', 'H03', '신농장', 35, 'OK', '', '1,705g', '1,725g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 35</span>
-                          <span class="detail-item">WM: 1,705g</span>
-                          <span class="detail-item">체중계: 1,725g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
+        </div>
+        <div class="card-body">
+          <canvas id="environmentChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- R2값 트렌드 -->
+      <div class="dashboard-card r2-trend">
+        <div class="card-header">
+          <h3>R2값 트렌드</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="r2TrendChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- 동별 R2값 분포 -->
+      <div class="dashboard-card r2-distribution">
+        <div class="card-header">
+          <h3>동별 R2값 분포</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="r2DistributionChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- 오차율 분석 -->
+      <div class="dashboard-card error-analysis">
+        <div class="card-header">
+          <h3>오차율 분석</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="error-stats">
+            <div class="error-stat-item">
+              <div class="error-stat-label">평균 오차</div>
+              <div class="error-stat-value">-45g</div>
+              <div class="error-gauge">
+                <div class="error-gauge-bar" style="width: 45%; background-color: #ffcc00;"></div>
               </div>
             </div>
             
-            <!-- 추가 농장 항목 -->
-            <div class="data-item" data-farm-id="FA0401">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>FA0401</strong> - 한마음농장
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">회차: 2025-2</span>
-                      <span class="detail-item">일령: 30</span>
-                      <span class="detail-item"><span class="version-badge">V2.3</span></span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ok">OK</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                </div>
+            <div class="error-stat-item">
+              <div class="error-stat-label">최대 오차</div>
+              <div class="error-stat-value">-118g</div>
+              <div class="error-gauge">
+                <div class="error-gauge-bar" style="width: 80%; background-color: #ff4d4d;"></div>
               </div>
-              <!-- 동 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-dong-id="H01" onclick="updateRightPanel('FA0401', 'H01', '한마음농장', 30, 'OK', '', '1,520g', '1,535g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H01</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,520g</span>
-                          <span class="detail-item">체중계: 1,535g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H02" onclick="updateRightPanel('FA0401', 'H02', '한마음농장', 30, 'NG', '-95g', '1,490g', '1,585g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H02</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,490g</span>
-                          <span class="detail-item">체중계: 1,585g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -95g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H03" onclick="updateRightPanel('FA0401', 'H03', '한마음농장', 30, 'OK', '', '1,510g', '1,525g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H03</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,510g</span>
-                          <span class="detail-item">체중계: 1,525g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H04" onclick="updateRightPanel('FA0401', 'H04', '한마음농장', 30, 'OK', '', '1,515g', '1,530g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H04</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,515g</span>
-                          <span class="detail-item">체중계: 1,530g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-dong-id="H05" onclick="updateRightPanel('FA0401', 'H05', '한마음농장', 30, 'NG', '-85g', '1,500g', '1,585g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>H05</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">일령: 30</span>
-                          <span class="detail-item">WM: 1,500g</span>
-                          <span class="detail-item">체중계: 1,585g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -85g</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">승인</button>
-                    </div>
-                  </div>
-                </div>
+            </div>
+            
+            <div class="error-stat-item">
+              <div class="error-stat-label">최소 오차</div>
+              <div class="error-stat-value">0g</div>
+              <div class="error-gauge">
+                <div class="error-gauge-bar" style="width: 0%; background-color: #4caf50;"></div>
               </div>
+            </div>
+          </div>
+          
+          <div class="error-distribution">
+            <canvas id="errorDistributionChart"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 성공률 분석 -->
+      <div class="dashboard-card success-rate">
+        <div class="card-header">
+          <h3>성공률 분석 (80g 이내)</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="success-rate-chart">
+            <canvas id="successRateChart"></canvas>
+          </div>
+          
+          <div class="success-rate-stats">
+            <div class="success-stat-item">
+              <div class="success-stat-label">전체 성공률</div>
+              <div class="success-stat-value">92.8%</div>
+            </div>
+            
+            <div class="success-stat-item">
+              <div class="success-stat-label">사육 성공률</div>
+              <div class="success-stat-value">94.2%</div>
+            </div>
+            
+            <div class="success-stat-item">
+              <div class="success-stat-label">출하 성공률</div>
+              <div class="success-stat-value">89.5%</div>
             </div>
           </div>
         </div>
-
-        <!-- 통계 요약 카테고리 -->
-        <div class="data-category">
-          <div class="data-category-header">
-            <span>통계 요약</span>
-            <button class="toggle-category-btn" onclick="toggleCategory(this)">
-              <i class="fas fa-chevron-down"></i>
-            </button>
+      </div>
+      
+      <!-- 동별 FCR -->
+      <div class="dashboard-card fcr-analysis">
+        <div class="card-header">
+          <h3>동별 FCR</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
           </div>
-          <div class="farm-list">
-            <!-- 통계 항목 1 -->
-            <div class="data-item" data-stat-id="STAT001">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>일령별 평균</strong>
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">데이터 수: 125</span>
-                      <span class="detail-item">최근 업데이트: 2025-04-23</span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ok">양호</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                </div>
-              </div>
-              <!-- 세부 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-stat-detail-id="SD001" onclick="updateRightPanel('STAT001', 'SD001', '일령별 평균', 33, 'OK', '', '1,620g', '1,650g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>일령 30-35</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">평균 WM: 1,620g</span>
-                          <span class="detail-item">평균 체중계: 1,650g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-stat-detail-id="SD002" onclick="updateRightPanel('STAT001', 'SD002', '일령별 평균', 28, 'OK', '', '1,450g', '1,470g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>일령 25-30</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">평균 WM: 1,450g</span>
-                          <span class="detail-item">평균 체중계: 1,470g</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                    </div>
-                  </div>
-                </div>
+        </div>
+        <div class="card-body">
+          <canvas id="fcrChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- 카메라 상태 모니터링 -->
+      <div class="dashboard-card camera-status">
+        <div class="card-header">
+          <h3>카메라 상태 모니터링</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="camera-status-grid">
+            <div class="camera-status-item">
+              <div class="camera-name">FA0300-H01</div>
+              <div class="camera-indicator error">
+                <i class="fas fa-video-slash"></i>
+                <span class="camera-error-message">연결 오류</span>
               </div>
             </div>
             
-            <!-- 통계 항목 2 -->
-            <div class="data-item" data-stat-id="STAT002">
-              <div class="farm-item-content">
-                <div class="farm-item-info">
-                  <i class="fas fa-chevron-right farm-toggle-icon"></i>
-                  <div>
-                    <div class="farm-item-header">
-                      <strong>농장별 오차율</strong>
-                    </div>
-                    <div class="farm-item-details">
-                      <span class="detail-item">데이터 수: 87</span>
-                      <span class="detail-item">최근 업데이트: 2025-04-22</span>
-                    </div>
-                    <div class="farm-item-status">
-                      <span class="status ng">NG (2개 항목)</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="farm-item-actions">
-                  <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                </div>
+            <div class="camera-status-item">
+              <div class="camera-name">FA0300-H02</div>
+              <div class="camera-indicator ok">
+                <i class="fas fa-video"></i>
               </div>
-              <!-- 세부 목록 -->
-              <div class="dong-list">
-                <div class="data-item dong-item" data-stat-detail-id="SD003" onclick="updateRightPanel('STAT002', 'SD003', '농장별 오차율', 0, 'NG', '-5.2%', '1,600g', '1,685g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>대성농장</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">평균 오차율: 5.2%</span>
-                          <span class="detail-item">동 수: 4</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -5.2%</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-stat-detail-id="SD004" onclick="updateRightPanel('STAT002', 'SD004', '농장별 오차율', 0, 'NG', '-4.8%', '1,710g', '1,795g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>신농장</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">평균 오차율: 4.8%</span>
-                          <span class="detail-item">동 수: 3</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ng">NG <span class="error-value">오차: -4.8%</span></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="data-item dong-item" data-stat-detail-id="SD005" onclick="updateRightPanel('STAT002', 'SD005', '농장별 오차율', 0, 'OK', '', '1,520g', '1,535g')">
-                  <div class="farm-item-content">
-                    <div class="farm-item-info">
-                      <div>
-                        <div class="farm-item-header">
-                          <strong>SG컴퍼니</strong>
-                        </div>
-                        <div class="farm-item-details">
-                          <span class="detail-item">평균 오차율: 1.0%</span>
-                          <span class="detail-item">동 수: 5</span>
-                        </div>
-                        <div class="farm-item-status">
-                          <span class="status ok">OK</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="farm-item-actions">
-                      <button class="action-btn approve" style="padding: 3px 8px; font-size: 0.75rem;">상세보기</button>
-                    </div>
-                  </div>
-                </div>
+            </div>
+            
+            <div class="camera-status-item">
+              <div class="camera-name">FA0300-H03</div>
+              <div class="camera-indicator ok">
+                <i class="fas fa-video"></i>
+              </div>
+            </div>
+            
+            <div class="camera-status-item">
+              <div class="camera-name">FA0300-H04</div>
+              <div class="camera-indicator ok">
+                <i class="fas fa-video"></i>
+              </div>
+            </div>
+            
+            <div class="camera-status-item">
+              <div class="camera-name">FA0701-H01</div>
+              <div class="camera-indicator ok">
+                <i class="fas fa-video"></i>
+              </div>
+            </div>
+            
+            <div class="camera-status-item">
+              <div class="camera-name">FA0701-H02</div>
+              <div class="camera-indicator ok">
+                <i class="fas fa-video"></i>
+              </div>
+            </div>
+            
+            <div class="camera-status-item">
+              <div class="camera-name">FA0701-H03</div>
+              <div class="camera-indicator warning">
+                <i class="fas fa-video"></i>
+                <span class="camera-error-message">간헐적 끊김</span>
+              </div>
+            </div>
+            
+            <div class="camera-status-item">
+              <div class="camera-name">FA0701-H04</div>
+              <div class="camera-indicator ok">
+                <i class="fas fa-video"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
       
-      <!-- 오른쪽 패널 -->
-      <!-- 오른쪽 패널 (사육) -->
-      <div class="right-panel breeding-panel" style="display: none;">
-        <div class="data-view">
-          <!-- 기본 정보 -->
-          <div class="info-card farm-info">
-            <div class="card-header">
-              <div class="basic-info-container">
-                <div class="basic-info-left">
-                  <span class="info-item"><strong>농장ID:</strong> <span class="farm-id">FA0300</span></span>
-                  <span class="info-item"><strong>농장명:</strong> <span class="farm-name">대성농장</span></span>
-                </div>
-                <div class="basic-info-right">
-                  <span class="info-item"><strong>회차:</strong> <span class="round">2025-2</span></span>
-                  <span class="info-item"><strong>동:</strong> <span class="dong">H02</span></span>
-                  <span class="info-item"><strong>일령:</strong> <span class="days">33</span></span>
-                  <span class="info-item"><strong>버전:</strong> <span class="version-badge">V2.3</span></span>
-                  <span class="info-item"><strong>상태:</strong> <span class="status ng">NG <span class="error-value">오차: -118g</span></span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- 중량 추이 -->
-          <div class="info-card">
-            <div class="card-header">
-              <h4>중량 추이</h4>
-              <div class="card-controls">
-                <div class="graph-controls">
-                  <button class="tab-btn active">WM</button>
-                  <button class="tab-btn">체중계</button>
-                  <button class="tab-btn">WC</button>
-                </div>
-                <div class="card-actions">
-                  <button class="icon-btn add-chart-box-btn" onclick="addChartBox('.breeding-panel')"><i class="fas fa-plus"></i></button>
-                  <button class="icon-btn"><i class="fas fa-filter"></i></button>
-                  <button class="icon-btn"><i class="fas fa-expand"></i></button>
-                  <button class="icon-btn"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="chart-boxes-container">
-                <div class="chart-box" id="breeding-chart-1">
-                  <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
-                    [최근 7일간 WM, 체중계, WC 값 추이 그래프]
-                    <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
-                      <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
-                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
-                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
-                    </div>
-                    <button class="chart-box-remove-btn" style="display: none;">×</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>  <!-- 중량추이 섹션 닫기 -->
-          
-          <!-- R2 관리와 알림을 가로로 배치하는 컨테이너 -->
-          <div class="horizontal-layout">
-            <!-- R2 관리 -->
-            <div class="info-card r2-management">
-              <div class="card-header">
-                <h4>R2 관리</h4>
-                <div class="card-controls">
-                  <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                    <option>현재 버전 (V2.3)</option>
-                    <option>이전 버전 (V2.2)</option>
-                    <option>이전 버전 (V2.1)</option>
-                  </select>
-                  <div class="card-actions">
-                    <button class="icon-btn"><i class="fas fa-filter"></i></button>
-                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
-                    <button class="icon-btn"><i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-content">
-                <div class="r2-control" style="display: flex; gap: 10px;">
-                  <div class="r2-table" style="flex: 1;">
-                    <table class="data-table">
-                      <thead>
-                        <tr>
-                          <th>중량 범위</th>
-                          <th>R2 값</th>
-                          <th>적용 시점</th>
-                          <th>변경 사유</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1,601g~</td>
-                          <td>1.020</td>
-                          <td>25-04-29, 10:30</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1,301g~1,600g</td>
-                          <td>1.020</td>
-                          <td>25-04-27, 00:27</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1,001g~1,300g</td>
-                          <td>0.950</td>
-                          <td>25-04-25, 16:53</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>701g~1,000g</td>
-                          <td>0.920</td>
-                          <td>25-04-23, 11:30</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>~700g</td>
-                          <td>0.885</td>
-                          <td>25-04-20, 11:30</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  
-                  <div class="r2-adjust" style="flex: 1;">
-                    <form class="r2-adjust-form">
-                      <div style="font-size: 0.8rem; font-weight: 500; margin-bottom: 10px;">R2 값 조정</div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 중량 범위</label>
-                        <input type="text" value="1,601g~" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 R2 값</label>
-                        <input type="text" value="1.02" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">WM 값</label>
-                        <input type="text" class="wm-value" value="1,620g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">체중계 값</label>
-                        <input type="text" class="scale-value" value="1,710g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">새 R2 값</label>
-                        <input type="text" value="1.06" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 결과(WC)</label>
-                        <input type="text" value="1,717g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 10px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 사유</label>
-                        <textarea placeholder="R2 값 조정 사유를 입력하세요..." style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; height: 50px; font-size: 0.7rem;">체중계 값과의 오차가 임계치를 초과하여 R2 값을 조정합니다.</textarea>
-                      </div>
-                      <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-primary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #0066cc; background-color: #0066cc; color: white; cursor: pointer; font-weight: 500; font-size: 0.7rem;">적용</button>
-                        <button class="btn btn-secondary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #ddd; background-color: #f5f5f5; color: #666; cursor: pointer; font-weight: 500; font-size: 0.7rem;">취소</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 알림 -->
-            <div class="info-card notifications">
-              <div class="card-header">
-                <h4>알림</h4>
-                <div class="card-controls">
-                  <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                    <option>모든 알림</option>
-                    <option>값 변화 알림</option>
-                    <option>버전 변경 알림</option>
-                    <option>R2 조정 알림</option>
-                  </select>
-                  <div class="card-actions">
-                    <button class="icon-btn"><i class="fas fa-filter"></i></button>
-                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
-                    <button class="icon-btn"><i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-content">
-                <div class="notification-list">
-                  <div class="notification-item">
-                    <div class="notification-icon warning">
-                      <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="notification-content">
-                      <div class="notification-title">H02 동 중량 오차 발생</div>
-                      <div class="notification-desc">오차: -118g, 확인이 필요합니다.</div>
-                      <div class="notification-time">2025-04-22 14:23</div>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <div class="notification-icon info">
-                      <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="notification-content">
-                      <div class="notification-title">시스템 업데이트 완료</div>
-                      <div class="notification-desc">V2.3 버전으로 업데이트되었습니다.</div>
-                      <div class="notification-time">2025-04-21 09:15</div>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <div class="notification-icon warning">
-                      <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="notification-content">
-                      <div class="notification-title">H03 동 중량 변화 감지</div>
-                      <div class="notification-desc">전일 대비 5% 증가, 사료 섭취량 확인 필요</div>
-                      <div class="notification-time">2025-04-21 08:45</div>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <div class="notification-icon info">
-                      <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="notification-content">
-                      <div class="notification-title">R2 값 자동 조정</div>
-                      <div class="notification-desc">중량 범위 1,601g~ 의 R2 값이 1.02로 조정됨</div>
-                      <div class="notification-time">2025-04-20 16:30</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <!-- 알림 목록 -->
+      <div class="dashboard-card notifications">
+        <div class="card-header">
+          <h3>알림</h3>
+          <div class="card-controls">
+            <button class="control-btn"><i class="fas fa-expand"></i></button>
+            <button class="control-btn"><i class="fas fa-download"></i></button>
           </div>
         </div>
-      </div>
-      
-      <!-- 오른쪽 패널 (출하) -->
-      <div class="right-panel shipping-panel" style="display: none;">
-        <div class="data-view">
-          <!-- 기본 정보 -->
-          <div class="info-card farm-info">
-            <div class="card-header">
-              <div class="basic-info-container">
-                <div class="basic-info-left">
-                  <span class="info-item"><strong>농장ID:</strong> <span class="farm-id">FA0326</span></span>
-                  <span class="info-item"><strong>농장명:</strong> <span class="farm-name">신농장</span></span>
-                </div>
-                <div class="basic-info-right">
-                  <span class="info-item"><strong>회차:</strong> <span class="round">2025-2</span></span>
-                  <span class="info-item"><strong>동:</strong> <span class="dong">S01</span></span>
-                  <span class="info-item"><strong>일령:</strong> <span class="days">35</span></span>
-                  <span class="info-item"><strong>버전:</strong> <span class="version-badge">V2.3</span></span>
-                  <span class="info-item"><strong>상태:</strong> <span class="status ok">OK</span></span>
-                </div>
+        <div class="card-body">
+          <div class="notification-list">
+            <div class="notification-item error">
+              <div class="notification-icon">
+                <i class="fas fa-exclamation-circle"></i>
               </div>
-            </div>
-          </div>
-          
-          <!-- 중량 추이 -->
-          <div class="info-card">
-            <div class="card-header">
-              <h4>중량 추이</h4>
-              <div class="card-controls">
-                <div class="graph-controls">
-                  <button class="tab-btn active">WM</button>
-                  <button class="tab-btn">체중계</button>
-                  <button class="tab-btn">WC</button>
-                </div>
-                <div class="card-actions">
-                  <button class="icon-btn add-chart-box-btn" onclick="addChartBox('.shipping-panel')"><i class="fas fa-plus"></i></button>
-                  <button class="icon-btn"><i class="fas fa-filter"></i></button>
-                  <button class="icon-btn"><i class="fas fa-expand"></i></button>
-                  <button class="icon-btn"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-            </div>
-            <div class="card-content">
-              <div class="chart-boxes-container">
-                <div class="chart-box" id="shipping-chart-1">
-                  <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
-                    [최근 7일간 WM, 체중계, WC 값 추이 그래프]
-                    <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
-                      <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
-                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
-                      <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
-                    </div>
-                    <button class="chart-box-remove-btn" style="display: none;">×</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>  <!-- 중량추이 섹션 닫기 -->
-          
-          <!-- R2 관리와 알림을 가로로 배치하는 컨테이너 -->
-          <div class="horizontal-layout">
-            <!-- R2 관리 -->
-            <div class="info-card r2-management">
-              <div class="card-header">
-                <h4>R2 관리</h4>
-                <div class="card-controls">
-                  <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                    <option>현재 버전 (V2.3)</option>
-                    <option>이전 버전 (V2.2)</option>
-                    <option>이전 버전 (V2.1)</option>
-                  </select>
-                  <div class="card-actions">
-                    <button class="icon-btn"><i class="fas fa-filter"></i></button>
-                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
-                    <button class="icon-btn"><i class="fas fa-times"></i></button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-content">
-                <div class="r2-control" style="display: flex; gap: 10px;">
-                  <div class="r2-table" style="flex: 1;">
-                    <table class="data-table">
-                      <thead>
-                        <tr>
-                          <th>중량 범위</th>
-                          <th>R2 값</th>
-                          <th>적용 시점</th>
-                          <th>변경 사유</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1,601g~</td>
-                          <td>1.020</td>
-                          <td>25-04-29, 10:30</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1,301g~1,600g</td>
-                          <td>1.020</td>
-                          <td>25-04-27, 00:27</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>1,001g~1,300g</td>
-                          <td>0.950</td>
-                          <td>25-04-25, 16:53</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>701g~1,000g</td>
-                          <td>0.920</td>
-                          <td>25-04-23, 11:30</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                        <tr>
-                          <td>~700g</td>
-                          <td>0.885</td>
-                          <td>25-04-20, 11:30</td>
-                          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  
-                  <div class="r2-adjust" style="flex: 1;">
-                    <form class="r2-adjust-form">
-                      <div style="font-size: 0.8rem; font-weight: 500; margin-bottom: 10px;">R2 값 조정</div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 중량 범위</label>
-                        <input type="text" value="1,601g~" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">현재 R2 값</label>
-                        <input type="text" value="1.02" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">WM 값</label>
-                        <input type="text" class="wm-value" value="1,620g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">체중계 값</label>
-                        <input type="text" class="scale-value" value="1,710g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">새 R2 값</label>
-                        <input type="text" value="1.06" style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 8px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 결과(WC)</label>
-                        <input type="text" value="1,717g" readonly style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                      </div>
-                      <div style="margin-bottom: 10px;">
-                        <label style="display: block; margin-bottom: 3px; font-size: 0.7rem;">조정 사유</label>
-                        <textarea placeholder="R2 값 조정 사유를 입력하세요..." style="width: 100%; padding: 4px; border: 1px solid #ddd; border-radius: 2px; height: 50px; font-size: 0.7rem;">체중계 값과의 오차가 임계치를 초과하여 R2 값을 조정합니다.</textarea>
-                      </div>
-                      <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-primary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #0066cc; background-color: #0066cc; color: white; cursor: pointer; font-weight: 500; font-size: 0.7rem;">적용</button>
-                        <button class="btn btn-secondary" style="padding: 4px 8px; border-radius: 2px; border: 1px solid #ddd; background-color: #f5f5f5; color: #666; cursor: pointer; font-weight: 500; font-size: 0.7rem;">취소</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+              <div class="notification-content">
+                <div class="notification-title">카메라 연결 오류</div>
+                <div class="notification-desc">FA0300-H01 카메라 연결이 끊겼습니다. 점검이 필요합니다.</div>
+                <div class="notification-time">2025-04-24 09:15</div>
               </div>
             </div>
             
-            <!-- 알림 -->
-            <div class="info-card notifications">
-              <div class="card-header">
-                <h4>알림</h4>
-                <div class="card-controls">
-                  <select style="padding: 2px 5px; border: 1px solid #ddd; border-radius: 2px; font-size: 0.7rem;">
-                    <option>모든 알림</option>
-                    <option>값 변화 알림</option>
-                    <option>버전 변경 알림</option>
-                    <option>R2 조정 알림</option>
-                  </select>
-                  <div class="card-actions">
-                    <button class="icon-btn"><i class="fas fa-filter"></i></button>
-                    <button class="icon-btn"><i class="fas fa-expand"></i></button>
-                    <button class="icon-btn"><i class="fas fa-times"></i></button>
-                  </div>
-                </div>
+            <div class="notification-item warning">
+              <div class="notification-icon">
+                <i class="fas fa-exclamation-triangle"></i>
               </div>
-              <div class="card-content">
-                <div class="notification-list">
-                  <div class="notification-item">
-                    <div class="notification-icon info">
-                      <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="notification-content">
-                      <div class="notification-title">시스템 업데이트 완료</div>
-                      <div class="notification-desc">V2.3 버전으로 업데이트되었습니다.</div>
-                      <div class="notification-time">2025-04-21 09:15</div>
-                    </div>
-                  </div>
-                  <div class="notification-item">
-                    <div class="notification-icon info">
-                      <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="notification-content">
-                      <div class="notification-title">R2 값 자동 조정</div>
-                      <div class="notification-desc">중량 범위 1,601g~ 의 R2 값이 1.02로 조정됨</div>
-                      <div class="notification-time">2025-04-20 16:30</div>
-                    </div>
-                  </div>
-                </div>
+              <div class="notification-content">
+                <div class="notification-title">오차 임계값 초과</div>
+                <div class="notification-desc">FA0300-H01 동의 오차가 -118g으로 임계값을 초과했습니다.</div>
+                <div class="notification-time">2025-04-24 08:30</div>
+              </div>
+            </div>
+            
+            <div class="notification-item warning">
+              <div class="notification-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <div class="notification-content">
+                <div class="notification-title">카메라 간헐적 끊김</div>
+                <div class="notification-desc">FA0701-H03 카메라가 간헐적으로 끊기고 있습니다.</div>
+                <div class="notification-time">2025-04-23 14:45</div>
+              </div>
+            </div>
+            
+            <div class="notification-item info">
+              <div class="notification-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="notification-content">
+                <div class="notification-title">시스템 업데이트 완료</div>
+                <div class="notification-desc">시스템이 V2.3 버전으로 업데이트되었습니다.</div>
+                <div class="notification-time">2025-04-23 02:00</div>
               </div>
             </div>
           </div>
@@ -1845,732 +483,6 @@
     </div>
   </div>
 
-  <script src="nav.js"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  
-  <script>
-    // 동을 클릭했을 때 오른쪽 패널 업데이트 함수
-    function updateRightPanel(farmId, dongId, farmName, days, status, errorValue, wmValue, scaleValue) {
-      // 농장 ID로 카테고리 구분 (사육 또는 출하)
-      const isBreeding = isBreedingFarm(farmId);
-      
-      // 적절한 패널 표시
-      showCorrectPanel(isBreeding);
-      
-      // 패널 선택 (사육 또는 출하)
-      const panelSelector = isBreeding ? '.breeding-panel' : '.shipping-panel';
-      
-      // 선택된 동 강조 표시
-      highlightSelectedDong(dongId);
-      
-      // 각 섹션 업데이트
-      updateBasicInfo(panelSelector, farmId, farmName, dongId, days);
-      updateStatus(panelSelector, status, errorValue);
-      updateR2Form(panelSelector, wmValue, scaleValue);
-      
-      // 알림 섹션 업데이트
-      if (status === 'NG') {
-        updateNotifications(panelSelector, dongId, errorValue);
-      }
-      
-      // 카테고리별 특화 업데이트
-      if (isBreeding) {
-        updateBreedingSpecific(panelSelector, farmId, dongId);
-      } else {
-        updateShippingSpecific(panelSelector, farmId, dongId);
-      }
-    }
-    
-    // 선택된 동 강조 표시 함수
-    function highlightSelectedDong(dongId) {
-      // 모든 동 항목에서 선택 클래스 제거
-      document.querySelectorAll('.dong-item').forEach(item => {
-        item.classList.remove('selected');
-      });
-      
-      // 선택된 동에 선택 클래스 추가
-      const selectedItems = document.querySelectorAll(`.dong-item[data-dong-id="${dongId}"]`);
-      selectedItems.forEach(item => {
-        item.classList.add('selected');
-      });
-      
-      // 통계 항목도 처리
-      const selectedStatItems = document.querySelectorAll(`.dong-item[data-stat-detail-id="${dongId}"]`);
-      selectedStatItems.forEach(item => {
-        item.classList.add('selected');
-      });
-    }
-    
-    // 기본 정보 업데이트 함수
-    function updateBasicInfo(panelSelector, farmId, farmName, dongId, days) {
-      document.querySelector(panelSelector + ' .farm-id').textContent = farmId;
-      document.querySelector(panelSelector + ' .farm-name').textContent = farmName;
-      document.querySelector(panelSelector + ' .dong').textContent = dongId;
-      document.querySelector(panelSelector + ' .days').textContent = days;
-    }
-    
-    // 상태 업데이트 함수
-    function updateStatus(panelSelector, status, errorValue) {
-      const statusElement = document.querySelector(panelSelector + ' .basic-info-right .status');
-      if (status === 'NG') {
-        statusElement.className = 'status ng';
-        statusElement.innerHTML = 'NG <span class="error-value">오차: ' + errorValue + '</span>';
-      } else {
-        statusElement.className = 'status ok';
-        statusElement.textContent = 'OK';
-      }
-    }
-    
-    // R2 조정 폼 업데이트 함수
-    function updateR2Form(panelSelector, wmValue, scaleValue) {
-      const wmInput = document.querySelector(panelSelector + ' .r2-adjust-form .wm-value');
-      const scaleInput = document.querySelector(panelSelector + ' .r2-adjust-form .scale-value');
-      
-      if (wmInput) wmInput.value = wmValue;
-      if (scaleInput) scaleInput.value = scaleValue;
-    }
-    
-    // 알림 섹션 업데이트 함수
-    function updateNotifications(panelSelector, dongId, errorValue) {
-      const notificationTitle = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-title');
-      const notificationDesc = document.querySelector(panelSelector + ' .notification-list .notification-item:first-child .notification-desc');
-      
-      if (notificationTitle) notificationTitle.textContent = dongId + ' 동 중량 오차 발생';
-      if (notificationDesc) notificationDesc.textContent = '오차: ' + errorValue + ', 확인이 필요합니다.';
-    }
-    
-    // 사육 패널 특화 업데이트 함수
-    function updateBreedingSpecific(panelSelector, farmId, dongId) {
-      // 사육 카테고리에 특화된 업데이트 로직
-      // 예: 육성률, 특정 R2 값 범위, 사육 관련 알림 등
-      console.log('사육 패널 특화 업데이트:', farmId, dongId);
-      
-      // 1. 사육 카테고리 특화 정보 가져오기
-      const breedingData = getBreedingData(farmId, dongId);
-      
-      // 2. R2 테이블 업데이트 (사육 카테고리는 더 많은 중량 범위를 표시)
-      updateBreedingR2Table(panelSelector, breedingData.r2Ranges);
-      
-      // 3. 육성률 정보 업데이트 (사육 카테고리만 해당)
-      if (breedingData.growthRate) {
-        const growthRateElement = document.querySelector(panelSelector + ' .farm-info .growth-rate');
-        if (growthRateElement) {
-          growthRateElement.textContent = breedingData.growthRate + '%';
-        }
-      }
-      
-      // 4. 사육 관련 알림 업데이트
-      updateBreedingNotifications(panelSelector, breedingData.notifications);
-    }
-    
-    // 사육 데이터 가져오기 함수
-    function getBreedingData(farmId, dongId) {
-      // 실제로는 서버에서 데이터를 가져오거나 로컬 데이터베이스에서 조회
-      // 현재는 예시 데이터 반환
-      return {
-        r2Ranges: [
-          { range: '1,601g~', r2: 1.020, appliedAt: '25-04-29, 10:30' },
-          { range: '1,301g~1,600g', r2: 1.020, appliedAt: '25-04-27, 00:27' },
-          { range: '1,001g~1,300g', r2: 0.950, appliedAt: '25-04-25, 16:53' },
-          { range: '701g~1,000g', r2: 0.920, appliedAt: '25-04-23, 11:30' },
-          { range: '~700g', r2: 0.885, appliedAt: '25-04-20, 11:30' }
-        ],
-        growthRate: 97.5,
-        notifications: [
-          {
-            type: 'warning',
-            title: dongId + ' 동 육성률 감소',
-            desc: '전일 대비 1.2% 감소, 사료 섭취량 확인 필요',
-            time: '2025-04-22 14:23'
-          }
-        ]
-      };
-    }
-    
-    // 사육 R2 테이블 업데이트 함수
-    function updateBreedingR2Table(panelSelector, r2Ranges) {
-      const tableBody = document.querySelector(panelSelector + ' .r2-table tbody');
-      if (!tableBody) return;
-      
-      // 테이블 내용 초기화
-      tableBody.innerHTML = '';
-      
-      // R2 범위 데이터로 테이블 채우기
-      r2Ranges.forEach(range => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${range.range}</td>
-          <td>${range.r2}</td>
-          <td>${range.appliedAt}</td>
-          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-        `;
-        tableBody.appendChild(row);
-      });
-    }
-    
-    // 사육 알림 업데이트 함수
-    function updateBreedingNotifications(panelSelector, notifications) {
-      const notificationList = document.querySelector(panelSelector + ' .notification-list');
-      if (!notificationList || !notifications || notifications.length === 0) return;
-      
-      // 기존 알림 유지하면서 사육 특화 알림 추가
-      notifications.forEach((notification, index) => {
-        // 첫 번째 알림은 이미 updateNotifications 함수에서 처리했으므로 건너뜀
-        if (index === 0 && notificationList.children.length > 0) return;
-        
-        const notificationItem = document.createElement('div');
-        notificationItem.className = 'notification-item';
-        notificationItem.innerHTML = `
-          <div class="notification-icon ${notification.type}">
-            <i class="fas fa-${notification.type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-          </div>
-          <div class="notification-content">
-            <div class="notification-title">${notification.title}</div>
-            <div class="notification-desc">${notification.desc}</div>
-            <div class="notification-time">${notification.time}</div>
-          </div>
-        `;
-        
-        // 알림 목록에 추가
-        notificationList.appendChild(notificationItem);
-      });
-    }
-    
-    // 출하 패널 특화 업데이트 함수
-    function updateShippingSpecific(panelSelector, farmId, dongId) {
-      // 출하 카테고리에 특화된 업데이트 로직
-      // 예: 출하 예정일, 출하 관련 알림, 특정 중량 기준 등
-      console.log('출하 패널 특화 업데이트:', farmId, dongId);
-      
-      // 1. 출하 카테고리 특화 정보 가져오기
-      const shippingData = getShippingData(farmId, dongId);
-      
-      // 2. R2 테이블 업데이트 (출하 카테고리는 다른 중량 범위를 표시할 수 있음)
-      updateShippingR2Table(panelSelector, shippingData.r2Ranges);
-      
-      // 3. 출하 예정일 정보 업데이트 (출하 카테고리만 해당)
-      if (shippingData.scheduledDate) {
-        // 출하 예정일 요소가 없으면 추가
-        let scheduledDateElement = document.querySelector(panelSelector + ' .farm-info .scheduled-date');
-        if (!scheduledDateElement) {
-          const basicInfoRight = document.querySelector(panelSelector + ' .basic-info-right');
-          if (basicInfoRight) {
-            const dateItem = document.createElement('span');
-            dateItem.className = 'info-item';
-            dateItem.innerHTML = '<strong>출하 예정일:</strong> <span class="scheduled-date">' + shippingData.scheduledDate + '</span>';
-            basicInfoRight.appendChild(dateItem);
-          }
-        } else {
-          scheduledDateElement.textContent = shippingData.scheduledDate;
-        }
-      }
-      
-      // 4. 출하 관련 알림 업데이트
-      updateShippingNotifications(panelSelector, shippingData.notifications);
-      
-      // 5. 출하 목표 중량 업데이트
-      if (shippingData.targetWeight) {
-        const targetWeightElement = document.querySelector(panelSelector + ' .r2-adjust-form .target-weight');
-        if (targetWeightElement) {
-          targetWeightElement.value = shippingData.targetWeight;
-        }
-      }
-    }
-    
-    // 출하 데이터 가져오기 함수
-    function getShippingData(farmId, dongId) {
-      // 실제로는 서버에서 데이터를 가져오거나 로컬 데이터베이스에서 조회
-      // 현재는 예시 데이터 반환
-      return {
-        r2Ranges: [
-          { range: '1,601g~', r2: 1.020, appliedAt: '25-04-29, 10:30' },
-          { range: '1,301g~1,600g', r2: 1.020, appliedAt: '25-04-27, 00:27' },
-          { range: '1,001g~1,300g', r2: 0.950, appliedAt: '25-04-25, 16:53' }
-        ],
-        scheduledDate: '2025-05-05',
-        targetWeight: '1,750g',
-        notifications: [
-          {
-            type: 'info',
-            title: dongId + ' 동 출하 일정 변경',
-            desc: '출하 일정이 2025-05-05로 변경되었습니다.',
-            time: '2025-04-23 09:30'
-          },
-          {
-            type: 'warning',
-            title: dongId + ' 동 목표 중량 미달',
-            desc: '현재 중량이 목표 중량보다 50g 미달입니다.',
-            time: '2025-04-22 16:45'
-          }
-        ]
-      };
-    }
-    
-    // 출하 R2 테이블 업데이트 함수
-    function updateShippingR2Table(panelSelector, r2Ranges) {
-      const tableBody = document.querySelector(panelSelector + ' .r2-table tbody');
-      if (!tableBody) return;
-      
-      // 테이블 내용 초기화
-      tableBody.innerHTML = '';
-      
-      // R2 범위 데이터로 테이블 채우기
-      r2Ranges.forEach(range => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${range.range}</td>
-          <td>${range.r2}</td>
-          <td>${range.appliedAt}</td>
-          <td><button class="action-btn" style="padding: 1px 4px; font-size: 0.7rem;">자세히 보기</button></td>
-        `;
-        tableBody.appendChild(row);
-      });
-    }
-    
-    // 출하 알림 업데이트 함수
-    function updateShippingNotifications(panelSelector, notifications) {
-      const notificationList = document.querySelector(panelSelector + ' .notification-list');
-      if (!notificationList || !notifications || notifications.length === 0) return;
-      
-      // 기존 알림 유지하면서 출하 특화 알림 추가
-      notifications.forEach(notification => {
-        const notificationItem = document.createElement('div');
-        notificationItem.className = 'notification-item';
-        notificationItem.innerHTML = `
-          <div class="notification-icon ${notification.type}">
-            <i class="fas fa-${notification.type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-          </div>
-          <div class="notification-content">
-            <div class="notification-title">${notification.title}</div>
-            <div class="notification-desc">${notification.desc}</div>
-            <div class="notification-time">${notification.time}</div>
-          </div>
-        `;
-        
-        // 알림 목록에 추가
-        notificationList.appendChild(notificationItem);
-      });
-    }
-    
-    // 농장 ID로 카테고리 구분 (사육 또는 출하)
-    function isBreedingFarm(farmId) {
-      // 출하 카테고리에 속하는 농장 ID 목록
-      const shippingFarmIds = ['FA0326', 'FA0401']; // 신농장, 한마음농장
-      
-      // 출하 카테고리에 속하면 false, 사육 카테고리에 속하면 true 반환
-      return !shippingFarmIds.includes(farmId);
-    }
-    
-    // 적절한 패널 표시 함수
-    function showCorrectPanel(isBreeding) {
-      const breedingPanel = document.querySelector('.breeding-panel');
-      const shippingPanel = document.querySelector('.shipping-panel');
-      
-      // 로딩 상태 표시
-      showLoading(true);
-      
-      // 패널 전환
-      if (isBreeding) {
-        breedingPanel.style.display = 'block';
-        shippingPanel.style.display = 'none';
-        
-        // 패널 활성화 클래스 추가/제거
-        setTimeout(() => {
-          breedingPanel.classList.add('active');
-          shippingPanel.classList.remove('active');
-        }, 50);
-      } else {
-        breedingPanel.style.display = 'none';
-        shippingPanel.style.display = 'block';
-        
-        // 패널 활성화 클래스 추가/제거
-        setTimeout(() => {
-          breedingPanel.classList.remove('active');
-          shippingPanel.classList.add('active');
-        }, 50);
-      }
-      
-      // 로딩 상태 숨김 (0.5초 후)
-      setTimeout(() => {
-        showLoading(false);
-      }, 500);
-    }
-    
-    // 로딩 상태 표시 함수
-    function showLoading(show) {
-      let loadingOverlay = document.querySelector('.loading-overlay');
-      
-      // 로딩 오버레이가 없으면 생성
-      if (!loadingOverlay && show) {
-        loadingOverlay = document.createElement('div');
-        loadingOverlay.className = 'loading-overlay';
-        loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
-        document.body.appendChild(loadingOverlay);
-        
-        // 로딩 오버레이 스타일 적용
-        const style = document.createElement('style');
-        style.textContent = `
-          .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-          }
-          .loading-overlay.visible {
-            opacity: 1;
-          }
-          .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #0066cc;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-          }
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          .right-panel {
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-          }
-          .right-panel.active {
-            opacity: 1;
-          }
-        `;
-        document.head.appendChild(style);
-        
-        // 기존 패널에 active 클래스 추가
-        const visiblePanel = document.querySelector('.right-panel[style*="display: block"]') || document.querySelector('.right-panel:not([style*="display: none"])');
-        if (visiblePanel) {
-          visiblePanel.classList.add('active');
-        }
-      }
-      
-      // 로딩 오버레이 표시/숨김
-      if (loadingOverlay) {
-        if (show) {
-          loadingOverlay.classList.add('visible');
-        } else {
-          loadingOverlay.classList.remove('visible');
-          
-          // 0.3초 후 완전히 제거
-          setTimeout(() => {
-            if (loadingOverlay.parentNode) {
-              loadingOverlay.parentNode.removeChild(loadingOverlay);
-            }
-          }, 300);
-        }
-      }
-    }
-    
-    // 카테고리 토글 함수
-    function toggleCategory(button) {
-      const category = button.closest('.data-category');
-      const icon = button.querySelector('i');
-      
-      if (category.classList.contains('collapsed')) {
-        // 펼치기
-        category.classList.remove('collapsed');
-        category.classList.add('expanded');
-        icon.classList.remove('fa-chevron-up');
-        icon.classList.add('fa-chevron-down');
-      } else {
-        // 접기
-        category.classList.remove('expanded');
-        category.classList.add('collapsed');
-        icon.classList.remove('fa-chevron-down');
-        icon.classList.add('fa-chevron-up');
-        
-        // 접힌 카테고리의 인라인 스타일 즉시 제거
-        category.style.removeProperty('flex');
-      }
-      
-      // 펼쳐진 카테고리들의 flex 비율 조정
-      updateCategoryFlexRatio();
-    }
-    
-    // 펼쳐진 카테고리들의 flex 비율을 조정하는 함수
-    function updateCategoryFlexRatio() {
-      const categories = document.querySelectorAll('.data-category');
-      const expandedCategories = document.querySelectorAll('.data-category.expanded');
-      const expandedCount = expandedCategories.length;
-      
-      // 모든 카테고리 처리
-      categories.forEach(category => {
-        // 접힌 카테고리는 인라인 스타일 제거
-        if (category.classList.contains('collapsed')) {
-          category.style.removeProperty('flex');
-        }
-      });
-      
-      // 모든 카테고리가 접혀있는 경우 처리
-      if (expandedCount === 0) {
-        return;
-      }
-      
-      // 펼쳐진 카테고리들에 동등한 flex 비율 적용
-      expandedCategories.forEach(category => {
-        category.style.flex = `1 1 0`;
-      });
-    }
-    
-    // 중량추이 박스 관리 함수들
-    
-    // 박스 추가 함수
-    function addChartBox(panelSelector) {
-      // 현재 패널 선택
-      const panel = document.querySelector(panelSelector);
-      if (!panel) return;
-      
-      // 박스 컨테이너 선택
-      const boxesContainer = panel.querySelector('.chart-boxes-container');
-      if (!boxesContainer) return;
-      
-      // 현재 박스 개수 확인
-      const chartBoxes = boxesContainer.querySelectorAll('.chart-box');
-      const boxCount = chartBoxes.length;
-      
-      // 최대 3개 제한
-      if (boxCount >= 3) {
-        alert('최대 3개의 박스만 추가할 수 있습니다.');
-        return;
-      }
-      
-      // 새 박스 ID 설정
-      const prefix = panelSelector === '.breeding-panel' ? 'breeding' : 'shipping';
-      const newBoxId = `${prefix}-chart-${Date.now()}`;
-      
-      // 새 박스 생성
-      const newBox = document.createElement('div');
-      newBox.className = 'chart-box';
-      newBox.id = newBoxId;
-      
-      // 박스 내용 추가
-      newBox.innerHTML = `
-        <div class="chart-placeholder" style="height: 200px; border: 1px solid #eee; border-radius: 2px; display: flex; align-items: center; justify-content: center; color: #999; background-color: #fafafa; position: relative; margin-bottom: 5px;">
-          [새로운 중량 추이 박스 ${boxCount + 1}]
-          <div style="position: absolute; right: 5px; top: 5px; background-color: rgba(255,255,255,0.8); border: 1px solid #ddd; border-radius: 2px; padding: 3px; font-size: 0.7rem;">
-            <div style="margin-bottom: 2px; color: #666;">버전 변경 포인트</div>
-            <div><span style="display: inline-block; width: 8px; height: 8px; background-color: red; border-radius: 50%; margin-right: 3px;"></span> V2.2 → V2.3 (04-20)</div>
-            <div><span style="display: inline-block; width: 8px; height: 8px; background-color: blue; border-radius: 50%; margin-right: 3px;"></span> M1.4 → M1.5 (04-20)</div>
-          </div>
-          <button class="chart-box-remove-btn">×</button>
-        </div>
-      </div>`;
-      
-      // 박스 컨테이너에 추가
-      boxesContainer.appendChild(newBox);
-      
-      // 삭제 버튼에 이벤트 리스너 추가
-      const removeBtn = newBox.querySelector('.chart-box-remove-btn');
-      if (removeBtn) {
-        removeBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          removeChartBox(newBoxId, panelSelector);
-        });
-      }
-      
-      // 박스 상태 업데이트
-      updateChartBoxes(panelSelector);
-    }
-    
-    // 박스 삭제 함수
-    function removeChartBox(boxId, panelSelector) {
-      // 현재 패널 선택
-      const panel = document.querySelector(panelSelector);
-      if (!panel) return;
-      
-      // 박스 찾기
-      const box = document.getElementById(boxId);
-      if (!box) return;
-      
-      // 박스 삭제
-      box.remove();
-      
-      // 박스 상태 업데이트
-      updateChartBoxes(panelSelector);
-    }
-    
-    // 박스 상태 업데이트 함수
-    function updateChartBoxes(panelSelector) {
-      // 현재 패널 선택
-      const panel = document.querySelector(panelSelector);
-      if (!panel) return;
-      
-      // 박스 컨테이너 선택
-      const boxesContainer = panel.querySelector('.chart-boxes-container');
-      if (!boxesContainer) return;
-      
-      // 현재 박스 개수 확인
-      const chartBoxes = boxesContainer.querySelectorAll('.chart-box');
-      const boxCount = chartBoxes.length;
-      
-      // 삭제 버튼 표시/숨김 처리
-      chartBoxes.forEach(box => {
-        const removeBtn = box.querySelector('.chart-box-remove-btn');
-        if (removeBtn) {
-          if (boxCount === 1) {
-            removeBtn.style.display = 'none';
-          } else {
-            removeBtn.style.display = 'block';
-          }
-        }
-      });
-      
-      // 플러스 버튼 활성화/비활성화
-      const addButton = panel.querySelector('.add-chart-box-btn');
-      if (addButton) {
-        if (boxCount >= 3) {
-          addButton.disabled = true;
-          addButton.style.opacity = '0.5';
-          addButton.style.cursor = 'not-allowed';
-        } else {
-          addButton.disabled = false;
-          addButton.style.opacity = '1';
-          addButton.style.cursor = 'pointer';
-        }
-      }
-    }
-    
-    // 중량추이 박스 초기화 함수
-    function initChartBoxes() {
-      // 사육 패널과 출하 패널 모두에 적용
-      const panels = ['.breeding-panel', '.shipping-panel'];
-      
-      panels.forEach(panelSelector => {
-        // 초기 박스 상태 설정
-        updateChartBoxes(panelSelector);
-        
-        // 초기 박스의 삭제 버튼에 이벤트 리스너 추가
-        const initialBoxId = panelSelector === '.breeding-panel' ? 'breeding-chart-1' : 'shipping-chart-1';
-        const initialBox = document.getElementById(initialBoxId);
-        if (initialBox) {
-          const removeBtn = initialBox.querySelector('.chart-box-remove-btn');
-          if (removeBtn) {
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              removeChartBox(initialBoxId, panelSelector);
-            });
-          }
-        }
-      });
-    }
-    
-    // 페이지 로드 시 이벤트 리스너 등록
-    document.addEventListener('DOMContentLoaded', function() {
-      // 모든 농장 항목의 화살표 아이콘에 클릭 이벤트 추가
-      document.querySelectorAll('.farm-toggle-icon').forEach(function(icon) {
-        icon.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const farmItem = this.closest('.data-item');
-          const dongList = farmItem.querySelector('.dong-list');
-          
-          // 동 목록 토글
-          if (dongList.style.display === 'block') {
-            dongList.style.display = 'none';
-            this.classList.remove('fa-chevron-down');
-            this.classList.add('fa-chevron-right');
-          } else {
-            dongList.style.display = 'block';
-            this.classList.remove('fa-chevron-right');
-            this.classList.add('fa-chevron-down');
-          }
-        });
-      });
-      
-      // 농장 항목 클릭 시 동 목록 토글
-      document.querySelectorAll('.data-item[data-farm-id] .farm-item-content, .data-item[data-stat-id] .farm-item-content').forEach(function(content) {
-        content.addEventListener('click', function(e) {
-          // 버튼 클릭은 제외
-          if (e.target.closest('.farm-item-actions')) {
-            return;
-          }
-          
-          const farmItem = this.closest('.data-item');
-          const dongList = farmItem.querySelector('.dong-list');
-          const toggleIcon = farmItem.querySelector('.farm-toggle-icon');
-          
-          // 동 목록 토글
-          if (dongList.style.display === 'block') {
-            dongList.style.display = 'none';
-            toggleIcon.classList.remove('fa-chevron-down');
-            toggleIcon.classList.add('fa-chevron-right');
-          } else {
-            dongList.style.display = 'block';
-            toggleIcon.classList.remove('fa-chevron-right');
-            toggleIcon.classList.add('fa-chevron-down');
-          }
-        });
-      });
-      
-      // 동 항목에 클릭 이벤트 전파 중지 추가
-      document.querySelectorAll('.dong-list .data-item').forEach(function(dongItem) {
-        dongItem.addEventListener('click', function(e) {
-          // 이벤트 전파 중지 (동을 클릭했을 때 동 목록이 접히지 않도록)
-          e.stopPropagation();
-        });
-      });
-      
-      // 카테고리 초기 상태 설정
-      document.querySelectorAll('.data-category').forEach(function(category) {
-        const toggleBtn = category.querySelector('.toggle-category-btn');
-        const icon = toggleBtn.querySelector('i');
-        
-        // 초기 상태는 모두 펼쳐진 상태로 설정
-        category.classList.add('expanded');
-        icon.classList.remove('fa-chevron-up');
-        icon.classList.add('fa-chevron-down');
-      });
-      
-      // 초기 flex 비율 설정
-      updateCategoryFlexRatio();
-      
-      // 중량추이 박스 초기화
-      initChartBoxes();
-    });
-    
-    // 농장 상세 정보 표시 함수
-    function showFarmDetails(farmName) {
-      console.log(`${farmName} 상세 정보 표시`);
-      // 여기에 오른쪽 패널 업데이트 로직 추가
-    }
-    
-    // 동 상세 정보 표시 함수
-    function showDongDetails(farmName, dongName) {
-      console.log(`${farmName} ${dongName} 상세 정보 표시`);
-      // 여기에 오른쪽 패널 업데이트 로직 추가
-    }
-    
-    // 동 승인 함수
-    function approveDong(farmName, dongName) {
-      console.log(`${farmName} ${dongName} 승인 처리`);
-      // 여기에 승인 처리 로직 추가
-      event.stopPropagation();
-    }
-    
-    // 통계 상세 정보 표시 함수
-    function showStatDetails(statName) {
-      console.log(`${statName} 상세 정보 표시`);
-      // 여기에 오른쪽 패널 업데이트 로직 추가
-    }
-    
-    // 통계 세부 항목 상세 정보 표시 함수
-    function showStatSubDetails(statName, subItemName) {
-      console.log(`${statName} ${subItemName} 상세 정보 표시`);
-      // 여기에 오른쪽 패널 업데이트 로직 추가
-    }
-  </script>
-    <script src="../nav.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
