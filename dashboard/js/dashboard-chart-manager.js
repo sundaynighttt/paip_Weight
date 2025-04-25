@@ -14,6 +14,12 @@ const chartColors = {
 const defaultChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
+  layout: {
+    padding: {
+      top: 10,
+      bottom: 10
+    }
+  },
   plugins: {
     legend: {
       position: 'bottom',
@@ -92,6 +98,8 @@ function initializeCharts() {
 // 중량 추이 차트 생성
 function createWeightTrendChart() {
   const ctx = document.getElementById('weightTrendChart').getContext('2d');
+  const chartContainer = ctx.canvas.parentElement;
+  chartContainer.style.height = '300px';
   
   new Chart(ctx, {
     type: 'line',
