@@ -8,8 +8,8 @@ function loadNavigation() {
   // 현재 경로에 따라 nav.html 경로 설정
   let navPath = 'nav.html';
   
-// 현재 URL이 버전 폴더에 있는 경우 상위 경로 추가
-if (window.location.href.includes('/Ver.')) {
+// 현재 URL이 버전 폴더나 대시보드 폴더에 있는 경우 상위 경로 추가
+if (window.location.href.includes('/Ver.') || window.location.href.includes('/dashboard/')) {
   navPath = '../nav.html';
 }
   
@@ -27,6 +27,9 @@ if (window.location.href.includes('/Ver.')) {
       console.log('네비게이션 바 로드 성공');
       // 네비게이션 바를 body의 첫 번째 자식으로 삽입
       document.body.insertAdjacentHTML('afterbegin', data);
+      
+      // body에 클래스 추가
+      document.body.classList.add('has-version-nav');
       
       // 현재 페이지 URL에 따라 활성 버튼 설정
       setActiveButton();
@@ -79,8 +82,8 @@ function setActiveButton() {
     document.getElementById('ver4-btn')?.classList.add('active');
   } else if (currentUrl.includes('/Ver.5')) {
     document.getElementById('ver5-btn')?.classList.add('active');
-  } else if (!currentUrl.includes('/Ver.')) {
-    // 루트 디렉토리의 index.html인 경우 대시보드 버튼 활성화
+  } else if (currentUrl.includes('/dashboard/') || !currentUrl.includes('/Ver.')) {
+    // 대시보드 폴더이거나 루트 디렉토리의 index.html인 경우 대시보드 버튼 활성화
     const dashboardBtn = document.getElementById('dashboard-btn');
     if (dashboardBtn) {
       dashboardBtn.classList.add('active');

@@ -28,14 +28,20 @@ body {
   background-color: var(--bg-primary);
   height: 100vh;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 /* 대시보드 컨테이너 */
 .dashboard-container {
   display: flex;
   height: 100vh;
-  max-height: 100vh;
   overflow: hidden;
+}
+
+/* 버전 네비게이션바가 로드될 때 레이아웃 조정 */
+body.has-version-nav .dashboard-container {
+  padding-left: 145px;
 }
 
 /* 좌측 네비게이션 */
